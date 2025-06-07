@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">yandex school</string>
+    <string name="expenses">Expenses</string>
+    <string name="income">Income</string>
+    <string name="score">Score</string>
+    <string name="articles">Articles</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">yandex school</string>
+    <string name="expenses">Расходы</string>
+    <string name="income">Доходы</string>
+    <string name="score">Cчёт</string>
+    <string name="articles">Статьи</string>
+    <string name="settings">Настройки</string>
+</resources>

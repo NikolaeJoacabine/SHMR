@@ -19,12 +19,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             YandexSchoolTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
-                }
+                FinancialDetectiveApp()
             }
         }
     }
 }
-
-
