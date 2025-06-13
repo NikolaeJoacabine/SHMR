@@ -3,6 +3,7 @@ package com.nikol.yandexschool.ui.customUiComponents
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -55,38 +56,44 @@ fun CustomListItem(
     content: @Composable () -> Unit,
     trailing: @Composable RowScope.() -> Unit = {}
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        // Левый элемент (lead)
-        if (lead != null) {
-            Box(modifier = Modifier.padding(end = 16.dp)) {
-                lead()
-            }
-        }
-
-        // Основной контент
-        Box(modifier = Modifier.weight(1f)) {
-            content()
-        }
-
-        // Правый контент (trailing)
         Row(
-            modifier = Modifier,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = modifier
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            trailing()
+            // Левый элемент (lead)
+            if (lead != null) {
+                Box(modifier = Modifier.padding(end = 16.dp)) {
+                    lead()
+                }
+            }
+
+            // Основной контент
+            Box(modifier = Modifier.weight(1f)) {
+                content()
+            }
+
+            // Правый контент (trailing)
+            Row(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                trailing()
+            }
         }
+        HorizontalDivider()
     }
 }
 
 @Preview(
     showBackground = true,
+    device = "id:pixel_5",
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
+    apiLevel = 35
 )
 @Composable
 private fun PreviewCustomListItem() {

@@ -1,7 +1,8 @@
 package com.nikol.yandexschool.ui.theme
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = Color(0xFF306A42)
+//val primaryLight = Color(0xFF306A42)
+val primaryLight = Color(0xFF2AE881)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFB3F1BF)
 val onPrimaryContainerLight = Color(0xFF15512C)
