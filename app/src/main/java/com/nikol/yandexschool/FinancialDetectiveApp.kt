@@ -68,7 +68,7 @@ fun FinancialDetectiveApp(modifier: Modifier = Modifier) {
                         onClick = {})
 
                     Account.serializer().descriptor.serialName -> AccountTopBar(onClick = {})
-                    Articles.serializer().descriptor.serialName -> DefaultTopBar("Мои статьи")
+                    Articles.serializer().descriptor.serialName -> DefaultTopBar(stringResource(R.string.my_articles))
                     Settings.serializer().descriptor.serialName -> DefaultTopBar(stringResource(R.string.settings))
                     else -> null
                 }

@@ -5,4 +5,9 @@
     <string name="score">Score</string>
     <string name="articles">Articles</string>
     <string name="settings">Settings</string>
+    <string name="currency">Сurrency</string>
+    <string name="find_an_article">Find an article</string>
+    <string name="today">today</string>
+    <string name="my_articles">Мy articles</string>
+    <string name="my_account">My account</string>
 </resources>

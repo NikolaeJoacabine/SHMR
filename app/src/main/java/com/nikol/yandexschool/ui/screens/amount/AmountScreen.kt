@@ -21,7 +21,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.nikol.yandexschool.R
 import com.nikol.yandexschool.domain.state.AmountState
 import com.nikol.yandexschool.domain.useCase.GetAmountUseCase
 import com.nikol.yandexschool.ui.customUiComponents.CustomListItem
@@ -48,7 +50,7 @@ fun AmountScreen(
                     )
                 }
             },
-            placeholder = { Text("Найти статью") }
+            placeholder = { Text(stringResource(R.string.find_an_article)) }
         )
 
         when (state.value) {

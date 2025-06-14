@@ -6,4 +6,9 @@
     <string name="score">Cчёт</string>
     <string name="articles">Статьи</string>
     <string name="settings">Настройки</string>
+    <string name="currency">Валюта</string>
+    <string name="find_an_article">Найти статью</string>
+    <string name="today">сегодня</string>
+    <string name="my_articles">Мои статьи</string>
+    <string name="my_account">Мой счёт</string>
 </resources>

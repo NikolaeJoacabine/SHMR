@@ -21,7 +21,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.nikol.yandexschool.R
 import com.nikol.yandexschool.domain.state.AccountState
 import com.nikol.yandexschool.domain.useCase.GetAccountUseCase
 import com.nikol.yandexschool.ui.customUiComponents.CustomListItem
@@ -89,7 +91,7 @@ fun AccountScreen(
                         .background(MaterialTheme.colorScheme.primaryContainer)
                         .padding(horizontal = 16.dp),
                     content = {
-                        Text("Валюта", style = MaterialTheme.typography.bodyLarge)
+                        Text(stringResource(R.string.currency), style = MaterialTheme.typography.bodyLarge)
                     },
                     trailing = {
                         Text(

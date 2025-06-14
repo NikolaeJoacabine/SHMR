@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.nikol.yandexschool.R
 
 
@@ -18,7 +19,7 @@ import com.nikol.yandexschool.R
 @Composable
 fun TransactionTopBar(title: String, onClick: () -> Unit) {
     CenterAlignedTopAppBar(
-        title = { Text(text = title + "сегодня") },
+        title = { Text(text = title + " ${stringResource(R.string.today)}") },
         actions = {
             IconButton(onClick = onClick) {
                 Icon(painterResource(R.drawable.history), contentDescription = "history")
@@ -34,7 +35,7 @@ fun TransactionTopBar(title: String, onClick: () -> Unit) {
 @Composable
 fun AccountTopBar(onClick: () -> Unit) {
     CenterAlignedTopAppBar(
-        title = { Text(text = "Мой счёт") },
+        title = { Text(text = stringResource(R.string.my_account)) },
         actions = {
             IconButton(onClick = onClick) {
                 Icon(Icons.Default.Create, contentDescription = "create")
