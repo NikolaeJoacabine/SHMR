@@ -1,6 +1,7 @@
 package com.nikol.yandexschool.features.articles.nav
 
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -9,9 +10,10 @@ import com.nikol.yandexschool.features.FeatureApi
 import com.nikol.yandexschool.features.articles.di.DaggerArticlesFeatureComponent
 import com.nikol.yandexschool.ui.nav.Articles
 import com.nikol.yandexschool.features.articles.screnns.articles.ArticlesScreen
+import com.nikol.yandexschool.features.articles.screnns.articles.ArticlesScreenViewModel
 import com.nikol.yandexschool.features.articles.screnns.articles.di.DaggerArticlesScreenComponent
 
-class ArticlesFeatureApi: FeatureApi {
+class ArticlesFeatureApi : FeatureApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavHostController,
@@ -20,13 +22,18 @@ class ArticlesFeatureApi: FeatureApi {
 
         val context = navController.context
         val appComponent = context.appComponent
-        val featureComponent = DaggerArticlesFeatureComponent.factory()
+
+        val articlesFeatureComponent = DaggerArticlesFeatureComponent.factory()
             .create(context, appComponent)
 
-        val screenComponent = DaggerArticlesScreenComponent.factory()
-            .create(context, featureComponent)
+        val articlesScreenComponent = DaggerArticlesScreenComponent.factory()
+            .create(context, articlesFeatureComponent)
+
         navGraphBuilder.composable<Articles> {
-            ArticlesScreen()
+            val viewModel = viewModel<ArticlesScreenViewModel>(
+                factory = articlesScreenComponent.viewModelFactory().create()
+            )
+            ArticlesScreen(viewModel)
         }
     }
 }

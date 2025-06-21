@@ -18,7 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,8 +26,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nikol.domain.state.AccountState
-import com.nikol.domain.useCase.GetAccountUseCase
 import com.nikol.yandexschool.R
+import com.nikol.yandexschool.features.account.screens.account.stait_hoisting.AccountScreensState
 import com.nikol.yandexschool.ui.customUiComponents.AccountTopBar
 import com.nikol.yandexschool.ui.customUiComponents.CustomListItem
 import com.nikol.yandexschool.ui.customUiComponents.EmojiIcon
@@ -35,9 +35,17 @@ import com.nikol.yandexschool.ui.customUiComponents.EmojiIcon
 
 @Composable
 fun AccountScreen(
-    viewModel: AccountScreenViewModel = AccountScreenViewModel(GetAccountUseCase())
+    viewModel: AccountScreenViewModel
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                else -> {}
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -45,28 +53,36 @@ fun AccountScreen(
         }
     ) {
 
-        when (state.value) {
-            is AccountState.Loading -> {
+        when (val currentState = state.value) {
+            is AccountScreensState.Loading -> {
                 Box(
-                    modifier = Modifier.fillMaxSize().padding(it),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
                 }
             }
 
-            is AccountState.Error -> {
+            is AccountScreensState.Error -> {
                 Box(
-                    modifier = Modifier.fillMaxSize().padding(it),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text((state.value as AccountState.Error).message)
+                    Text("ошибка")
                 }
             }
 
-            is AccountState.Success -> {
-                val accounts = (state.value as AccountState.Success).items
-                Column(modifier = Modifier.fillMaxSize().padding(it)) {
+            is AccountScreensState.Content -> {
+                val accounts = currentState.list
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
                     LazyColumn(modifier = Modifier.fillMaxWidth()) {
                         items(accounts, key = { it.id }) { account ->
                             CustomListItem(
@@ -101,7 +117,10 @@ fun AccountScreen(
                             .background(MaterialTheme.colorScheme.primaryContainer)
                             .padding(horizontal = 16.dp),
                         content = {
-                            Text(stringResource(R.string.currency), style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                stringResource(R.string.currency),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
                         },
                         trailing = {
                             Text(
@@ -117,6 +136,10 @@ fun AccountScreen(
                         }
                     )
                 }
+            }
+
+            AccountScreensState.Empty -> {
+
             }
         }
     }

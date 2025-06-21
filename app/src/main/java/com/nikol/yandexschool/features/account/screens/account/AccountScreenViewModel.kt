@@ -3,36 +3,61 @@ package com.nikol.yandexschool.features.account.screens.account
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.nikol.domain.state.AccountState
 import com.nikol.domain.useCase.GetAccountUseCase
-import com.nikol.yandexschool.features.transaction.screens.transaction.TransactionViewModel
+import com.nikol.yandexschool.features.account.screens.account.stait_hoisting.AccountScreenAction
+import com.nikol.yandexschool.features.account.screens.account.stait_hoisting.AccountScreenEffect
+import com.nikol.yandexschool.features.account.screens.account.stait_hoisting.AccountScreensState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.reflect.KClass
 
 class AccountScreenViewModel(
     private val getAccountUseCase: GetAccountUseCase
 ) : ViewModel() {
-    private val _state = MutableStateFlow<AccountState>(AccountState.Loading)
-    val state: StateFlow<AccountState> = _state.asStateFlow()
+    private val _state = MutableStateFlow<AccountScreensState>(AccountScreensState.Loading)
+    val state: StateFlow<AccountScreensState> = _state.asStateFlow()
 
+    private val _effect = MutableSharedFlow<AccountScreenEffect>()
+    val effect = _effect.asSharedFlow()
 
     init {
-        loadAccount()
+        onLoading()
     }
 
-    //после вся вот эта обработка перейдет в модуль обработки данных, это временная мера
-    private fun loadAccount() {
-        _state.value = AccountState.Loading
-        viewModelScope.launch {
-            try {
-                val result = getAccountUseCase()
-                _state.value = AccountState.Success(result)
-            } catch (e: Exception) {
-                _state.value = AccountState.Error("Не удалось загрузить данные")
+    fun onAction(action: AccountScreenAction) {
+        when (action) {
+            AccountScreenAction.OnClickEditButton -> {
+
+            }
+
+            AccountScreenAction.OnScreenEntered -> {
+                onLoading()
+            }
+        }
+    }
+
+    private fun onLoading() {
+        _state.value = AccountScreensState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            getAccountUseCase().let { result ->
+                when (result) {
+                    is AccountState.Error -> {
+                        _state.value = AccountScreensState.Error
+                    }
+
+                    is AccountState.Success -> {
+                        if (result.items.isEmpty()) {
+                            _state.value = AccountScreensState.Empty
+                        } else {
+                            _state.value = AccountScreensState.Content(result.items)
+                        }
+                    }
+                }
             }
         }
     }

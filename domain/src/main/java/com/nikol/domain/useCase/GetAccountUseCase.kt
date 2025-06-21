@@ -1,10 +1,10 @@
 package com.nikol.domain.useCase
 
-import com.nikol.domain.FakeData
-import com.nikol.domain.model.Account
+import com.nikol.domain.repository.AccountRepository
+import com.nikol.domain.state.AccountState
 
-class GetAccountUseCase {
-    operator fun invoke(): List<Account> {
-        return FakeData.listAccount
+class GetAccountUseCase(private val accountRepository: AccountRepository) {
+    suspend operator fun invoke(): AccountState {
+        return accountRepository.getAccount()
     }
 }

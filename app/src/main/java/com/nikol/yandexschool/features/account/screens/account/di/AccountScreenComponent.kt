@@ -6,13 +6,13 @@ import com.nikol.yandexschool.features.account.screens.account.AccountScreenView
 import dagger.BindsInstance
 import dagger.Component
 
-
 @Component(
     dependencies = [AccountFeatureComponent::class],
     modules = [AccountScreenModule::class]
 )
 @AccountScreenScope
 interface AccountScreenComponent {
+
     @Component.Factory
     interface Factory {
         fun create(

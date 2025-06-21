@@ -1,11 +1,11 @@
 package com.nikol.domain.useCase
 
-import com.nikol.domain.FakeData
-import com.nikol.domain.model.Amount
+import com.nikol.domain.repository.ArticlesRepository
+import com.nikol.domain.state.ArticlesState
 
-class GetArticlesUseCase {
+class GetArticlesUseCase(private val articlesRepository: ArticlesRepository) {
 
-    operator fun invoke(): List<Amount> {
-        return FakeData.listAmount
+    suspend operator fun invoke(): ArticlesState {
+        return articlesRepository.getAllArticles()
     }
 }

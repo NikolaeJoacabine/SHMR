@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.nikol.yandexschool.di.appComponent
 import com.nikol.yandexschool.features.FeatureApi
 import com.nikol.yandexschool.features.account.di.DaggerAccountFeatureComponent
@@ -12,6 +13,7 @@ import com.nikol.yandexschool.features.account.screens.account.AccountScreen
 import com.nikol.yandexschool.features.account.screens.account.AccountScreenViewModel
 import com.nikol.yandexschool.features.account.screens.account.di.DaggerAccountScreenComponent
 import com.nikol.yandexschool.ui.nav.Account
+import com.nikol.yandexschool.ui.nav.AccountGraph
 
 class AccountFeatureApi : FeatureApi {
     override fun registerGraph(
@@ -28,12 +30,13 @@ class AccountFeatureApi : FeatureApi {
         val accountScreenComponent = DaggerAccountScreenComponent.factory()
             .create(context, accountFeatureComponent)
 
-
-        navGraphBuilder.composable<Account>{
-            val viewModel = viewModel<AccountScreenViewModel>(
-                factory = accountScreenComponent.viewModelFactoryFactory().create()
-            )
-            AccountScreen()
+        navGraphBuilder.navigation<AccountGraph>(startDestination = Account) {
+            composable<Account> {
+                val viewModel = viewModel<AccountScreenViewModel>(
+                    factory = accountScreenComponent.viewModelFactoryFactory().create()
+                )
+                AccountScreen(viewModel)
+            }
         }
     }
 }

@@ -21,5 +21,5 @@ interface ArticlesScreenComponent {
         ): ArticlesScreenComponent
     }
 
-    val viewModelFactory: ArticlesScreenViewModelFactoryFactory
+    fun viewModelFactory(): ArticlesScreenViewModelFactoryFactory
 }

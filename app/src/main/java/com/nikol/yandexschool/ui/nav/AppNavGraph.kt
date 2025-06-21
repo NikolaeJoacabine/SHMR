@@ -16,16 +16,16 @@ fun FinancialDetectiveNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Splash,
+        startDestination = ExpensesGraph,
         modifier = modifier
     ) {
-        composable<Splash> {
-            SplashScreen {
-                navController.navigate(Expenses) {
-                    popUpTo(Splash) { inclusive = true }
-                }
-            }
-        }
+//        composable<Splash> {
+//            SplashScreen {
+//                navController.navigate(Expenses) {
+//                    popUpTo(Splash) { inclusive = true }
+//                }
+//            }
+//        }
         list.forEach {
             it.registerGraph(this, navController)
         }

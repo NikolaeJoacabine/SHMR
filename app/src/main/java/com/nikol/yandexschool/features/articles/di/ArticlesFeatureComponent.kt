@@ -1,6 +1,7 @@
 package com.nikol.yandexschool.features.articles.di
 
 import android.content.Context
+import com.nikol.domain.repository.ArticlesRepository
 import com.nikol.yandexschool.di.AppComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -19,4 +20,6 @@ interface ArticlesFeatureComponent {
             appComponent: AppComponent
         ): ArticlesFeatureComponent
     }
+
+    fun articlesRepository(): ArticlesRepository
 }

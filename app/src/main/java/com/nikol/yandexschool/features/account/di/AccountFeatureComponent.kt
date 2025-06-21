@@ -1,6 +1,7 @@
 package com.nikol.yandexschool.features.account.di
 
 import android.content.Context
+import com.nikol.domain.repository.AccountRepository
 import com.nikol.yandexschool.di.AppComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -20,4 +21,5 @@ interface AccountFeatureComponent {
         ): AccountFeatureComponent
     }
 
+    fun accountRepository(): AccountRepository
 }

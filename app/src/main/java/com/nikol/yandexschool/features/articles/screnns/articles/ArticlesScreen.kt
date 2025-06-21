@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -24,10 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nikol.domain.state.AmountState
+import com.nikol.domain.state.ArticlesState
 import com.nikol.domain.useCase.GetArticlesUseCase
 import com.nikol.yandexschool.R
-import com.nikol.yandexschool.ui.customUiComponents.AccountTopBar
+import com.nikol.yandexschool.features.articles.screnns.articles.state_hoisting.ArticlesScreenEffect
+import com.nikol.yandexschool.features.articles.screnns.articles.state_hoisting.ArticlesScreenState
 import com.nikol.yandexschool.ui.customUiComponents.CustomListItem
 import com.nikol.yandexschool.ui.customUiComponents.DefaultTopBar
 import com.nikol.yandexschool.ui.customUiComponents.EmojiIcon
@@ -35,17 +37,29 @@ import com.nikol.yandexschool.ui.customUiComponents.EmojiIcon
 
 @Composable
 fun ArticlesScreen(
-    viewModel: ArticlesScreenViewModel = ArticlesScreenViewModel(GetArticlesUseCase())
+    viewModel: ArticlesScreenViewModel
 ) {
     val query = rememberSaveable { mutableStateOf("") }
     val state = viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is ArticlesScreenEffect.ScrollToTop -> {}
+            }
+        }
+    }
     Scaffold(
         topBar = {
             DefaultTopBar(stringResource(R.string.articles))
         }
     ) {
 
-        Column(modifier = Modifier.fillMaxSize().padding(it)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = it.calculateTopPadding())
+        ) {
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = query.value,
@@ -61,21 +75,22 @@ fun ArticlesScreen(
                 placeholder = { Text(stringResource(R.string.find_an_article)) }
             )
 
-            when (state.value) {
-                is AmountState.Loading -> {
+
+            when (val currentState = state.value) {
+                is ArticlesScreenState.Loading -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         CircularProgressIndicator()
                     }
                 }
 
-                is AmountState.Error -> {
+                is ArticlesScreenState.Error -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text((state.value as AmountState.Error).message)
+                        Text("error")
                     }
                 }
 
-                is AmountState.Success -> {
-                    val filteredList = (state.value as AmountState.Success).items
+                is ArticlesScreenState.Content -> {
+                    val filteredList = currentState.list
 
                     LazyColumn {
                         items(filteredList, key = { it.id }) { amount ->
@@ -89,6 +104,8 @@ fun ArticlesScreen(
                         }
                     }
                 }
+
+                is ArticlesScreenState.Empty -> {}
             }
         }
     }

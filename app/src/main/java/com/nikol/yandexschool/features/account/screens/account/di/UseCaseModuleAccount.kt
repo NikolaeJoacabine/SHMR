@@ -1,5 +1,6 @@
 package com.nikol.yandexschool.features.account.screens.account.di
 
+import com.nikol.domain.repository.AccountRepository
 import com.nikol.domain.useCase.GetAccountUseCase
 import dagger.Module
 import dagger.Provides
@@ -9,7 +10,7 @@ class UseCaseModuleAccount {
 
     @AccountScreenScope
     @Provides
-    fun provideGetAccountUseCase(): GetAccountUseCase {
-        return GetAccountUseCase()
+    fun provideGetAccountUseCase(accountRepository: AccountRepository): GetAccountUseCase {
+        return GetAccountUseCase(accountRepository)
     }
 }

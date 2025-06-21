@@ -20,11 +20,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nikol.yandexschool.R
 import com.nikol.yandexschool.features.FeatureApi
-import com.nikol.yandexschool.ui.nav.Account
+import com.nikol.yandexschool.ui.nav.AccountGraph
 import com.nikol.yandexschool.ui.nav.Articles
-import com.nikol.yandexschool.ui.nav.Expenses
+import com.nikol.yandexschool.ui.nav.ExpensesGraph
 import com.nikol.yandexschool.ui.nav.FinancialDetectiveNavGraph
-import com.nikol.yandexschool.ui.nav.Income
+import com.nikol.yandexschool.ui.nav.IncomeGraph
 import com.nikol.yandexschool.ui.nav.Settings
 import com.nikol.yandexschool.ui.nav.Splash
 
@@ -39,9 +39,9 @@ data class TopLevelRoute<T : Any>(
 fun FinancialDetectiveApp(modifier: Modifier = Modifier, listFeature: List<FeatureApi>) {
 
     val list = listOf(
-        TopLevelRoute(R.string.expenses, Expenses, R.drawable.downtrend),
-        TopLevelRoute(R.string.income, Income, R.drawable.uptrend),
-        TopLevelRoute(R.string.score, Account, R.drawable.calculator),
+        TopLevelRoute(R.string.expenses, ExpensesGraph, R.drawable.downtrend),
+        TopLevelRoute(R.string.income, IncomeGraph, R.drawable.uptrend),
+        TopLevelRoute(R.string.score, AccountGraph, R.drawable.calculator),
         TopLevelRoute(R.string.articles, Articles, R.drawable.bar_chart_side),
         TopLevelRoute(R.string.settings, Settings, R.drawable.settings)
     )

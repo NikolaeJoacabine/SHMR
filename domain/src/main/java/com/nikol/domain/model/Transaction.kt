@@ -6,11 +6,13 @@ data class Transaction(
     val comment: String? = null,
     val emoji: String? = null,
     val amount: String,
+    val createdAt: String,
+    val isIncome: Boolean
 )
 
 data class TransactionDetail(
     val id: Int,
-    val incomeType: Amount,
+    val incomeType: Articles,
     val accountType: Account,
     val comment: String,
     val amount: String,
