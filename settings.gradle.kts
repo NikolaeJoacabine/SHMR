@@ -25,4 +25,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "yandex school"
 include(":app")
- 
+include(":domain")
+include(":data")

@@ -10,4 +10,11 @@
     <string name="today">today</string>
     <string name="my_articles">Мy articles</string>
     <string name="my_account">My account</string>
+    <string name="my_history">My history</string>
+    <string name="beginning">Beginning</string>
+    <string name="end">End</string>
+    <string name="amount">Amount</string>
+    <string name="emty_expenses">You didn\'t make any expenses today</string>
+    <string name="retry">Retry</string>
+    <string name="emty_income">You have no income today</string>
 </resources>

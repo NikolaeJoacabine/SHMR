@@ -11,4 +11,11 @@
     <string name="today">сегодня</string>
     <string name="my_articles">Мои статьи</string>
     <string name="my_account">Мой счёт</string>
+    <string name="my_history">Моя история</string>
+    <string name="beginning">Начало</string>
+    <string name="end">Конец</string>
+    <string name="amount">Сумма</string>
+    <string name="emty_expenses">Сегодня вы не совершкили расходов</string>
+    <string name="retry">Повторить</string>
+    <string name="emty_income">Сегодня у вас нет доходов</string>
 </resources>
