@@ -17,7 +17,10 @@ import androidx.compose.ui.unit.dp
 import com.nikol.yandexschool.R
 
 @Composable
-fun NoInternet(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun NoInternet(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxSize(),

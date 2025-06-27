@@ -1,6 +1,7 @@
 package com.nikol.yandexschool.di
 
 import android.content.Context
+import com.nikol.data.account.local.AccountPreferencesDataSource
 import com.nikol.data.network.FinanceAPI
 import com.nikol.data.network.NetworkStatusProvider
 import dagger.BindsInstance
@@ -22,7 +23,6 @@ interface AppComponent {
     fun financeAPI(): FinanceAPI
     fun okHttpClient(): OkHttpClient
     fun networkStatusProvider(): NetworkStatusProvider
-
+    fun dataStore(): AccountPreferencesDataSource
     fun context(): Context
-    fun provideSomeGlobalDependency(): SomeGlobalDep
 }

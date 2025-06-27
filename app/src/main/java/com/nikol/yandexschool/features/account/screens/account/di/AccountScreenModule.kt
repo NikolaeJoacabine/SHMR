@@ -12,7 +12,9 @@ class AccountScreenModule {
 
     @AccountScreenScope
     @Provides
-    fun provideAccountScreenViewModelFactoryFactory(getAccountUseCase: GetAccountUseCase): AccountScreenViewModelFactoryFactory {
+    fun provideAccountScreenViewModelFactoryFactory(
+        getAccountUseCase: GetAccountUseCase
+    ): AccountScreenViewModelFactoryFactory {
         return AccountScreenViewModelFactoryFactory(getAccountUseCase)
     }
 }

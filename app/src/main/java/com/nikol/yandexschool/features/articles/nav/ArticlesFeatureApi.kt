@@ -13,13 +13,18 @@ import com.nikol.yandexschool.features.articles.screnns.articles.ArticlesScreen
 import com.nikol.yandexschool.features.articles.screnns.articles.ArticlesScreenViewModel
 import com.nikol.yandexschool.features.articles.screnns.articles.di.DaggerArticlesScreenComponent
 
+/**
+ * Реализация [FeatureApi] для экрана статей.
+ *
+ * Отвечает за регистрацию навигационного графа, создание
+ * и внедрение зависимостей для экрана статей.
+ */
 class ArticlesFeatureApi : FeatureApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavHostController,
         modifier: Modifier
     ) {
-
         val context = navController.context
         val appComponent = context.appComponent
 

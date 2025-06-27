@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.ZoneOffset
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,7 +21,7 @@ fun ShowDatePickerDialog(
     onDismiss: () -> Unit
 ) {
     val initialDateMillis = remember(initialDate) {
-        initialDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        initialDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
     }
 
     val datePickerState = rememberDatePickerState(initialSelectedDateMillis = initialDateMillis)
@@ -29,10 +30,9 @@ fun ShowDatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
-                val selectedMillis = datePickerState.selectedDateMillis
-                if (selectedMillis != null) {
+                datePickerState.selectedDateMillis?.let { selectedMillis ->
                     val selectedDate = Instant.ofEpochMilli(selectedMillis)
-                        .atZone(ZoneId.systemDefault())
+                        .atZone(ZoneOffset.UTC)
                         .toLocalDate()
                     onDateSelected(selectedDate)
                 }

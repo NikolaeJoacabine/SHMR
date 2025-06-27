@@ -64,11 +64,6 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-    implementation(libs.okhttp.logging)
-    implementation(libs.retrofit)
-
-    api(project(":domain"))
-    api(project(":data"))
-
+    implementation(project(":domain"))
+    implementation(project(":data"))
 }

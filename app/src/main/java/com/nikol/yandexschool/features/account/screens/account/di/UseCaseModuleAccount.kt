@@ -10,7 +10,9 @@ class UseCaseModuleAccount {
 
     @AccountScreenScope
     @Provides
-    fun provideGetAccountUseCase(accountRepository: AccountRepository): GetAccountUseCase {
+    fun provideGetAccountUseCase(
+        accountRepository: AccountRepository
+    ): GetAccountUseCase {
         return GetAccountUseCase(accountRepository)
     }
 }
