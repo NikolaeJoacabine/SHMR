@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -60,4 +61,9 @@ dependencies {
     implementation(libs.compose.navigation)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.dotlottie.android)
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(project(":domain"))
+    implementation(project(":data"))
 }
