@@ -1,6 +1,0 @@
-package com.nikol.yandexschool.features.account.screens.account.stait_hoisting
-
-sealed class AccountScreenAction {
-    object OnScreenEntered : AccountScreenAction()
-    object OnClickEditButton : AccountScreenAction()
-}

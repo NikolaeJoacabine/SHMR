@@ -2,6 +2,7 @@ package com.nikol.yandexschool.features.transaction.screens.history.di
 
 import com.nikol.domain.useCase.CalculateTotalUseCase
 import com.nikol.domain.useCase.GetTransactionsByPeriodUseCase
+import com.nikol.domain.useCase.ValidateDateRangeUseCase
 import com.nikol.yandexschool.features.transaction.screens.history.HistoryScreenViewModelFactoryFactory
 import dagger.Module
 import dagger.Provides
@@ -13,11 +14,13 @@ class HistoryScreenModule {
     @Provides
     fun provideHistoryScreenViewModelFactoryFactory(
         calculateTotalUseCase: CalculateTotalUseCase,
-        getTransactionsByPeriodUseCase: GetTransactionsByPeriodUseCase
+        getTransactionsByPeriodUseCase: GetTransactionsByPeriodUseCase,
+        validateDateRangeUseCase: ValidateDateRangeUseCase
     ): HistoryScreenViewModelFactoryFactory {
         return HistoryScreenViewModelFactoryFactory(
             calculateTotalUseCase,
-            getTransactionsByPeriodUseCase
+            getTransactionsByPeriodUseCase,
+            validateDateRangeUseCase
         )
     }
 }

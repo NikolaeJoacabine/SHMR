@@ -8,14 +8,13 @@ import com.nikol.domain.model.TransactionType
 import com.nikol.domain.state.TransactionState
 import com.nikol.domain.useCase.CalculateTotalUseCase
 import com.nikol.domain.useCase.GetTransactionsForTodayUseCase
-import com.nikol.domain.useCase.GetTransactionsUseCase
-import com.nikol.yandexschool.features.transaction.screens.expenses.state_hoisting.ExpensesScreenAction
-import com.nikol.yandexschool.features.transaction.screens.expenses.state_hoisting.ExpensesScreenEffect
-import com.nikol.yandexschool.features.transaction.screens.expenses.state_hoisting.ExpensesScreenEffect.NavigateToAdded
-import com.nikol.yandexschool.features.transaction.screens.expenses.state_hoisting.ExpensesScreenEffect.NavigateToDetail
-import com.nikol.yandexschool.features.transaction.screens.expenses.state_hoisting.ExpensesScreenEffect.NavigateToHistory
-import com.nikol.yandexschool.features.transaction.screens.expenses.state_hoisting.ExpensesScreenState
-import com.nikol.yandexschool.features.transaction.screens.expenses.state_hoisting.ExpensesScreenState.*
+import com.nikol.yandexschool.features.transaction.models.utils.toUi
+import com.nikol.yandexschool.features.transaction.screens.expenses.stateHoisting.ExpensesScreenAction
+import com.nikol.yandexschool.features.transaction.screens.expenses.stateHoisting.ExpensesScreenEffect
+import com.nikol.yandexschool.features.transaction.screens.expenses.stateHoisting.ExpensesScreenEffect.NavigateToAdded
+import com.nikol.yandexschool.features.transaction.screens.expenses.stateHoisting.ExpensesScreenEffect.NavigateToDetail
+import com.nikol.yandexschool.features.transaction.screens.expenses.stateHoisting.ExpensesScreenEffect.NavigateToHistory
+import com.nikol.yandexschool.features.transaction.screens.expenses.stateHoisting.ExpensesScreenState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,15 +22,25 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-
+/**
+ * ViewModel для экрана расходов.
+ *
+ * Отвечает за:
+ * - Загрузку транзакций за текущий день;
+ * - Формирование состояния экрана на основе результата;
+ * - Обработку пользовательских действий (нажатия на элементы, кнопки и т.д.);
+ * - Эмиссию навигационных эффектов.
+ *
+ * @param getTransactionsForTodayUseCase UseCase для получения транзакций за текущий день.
+ * @param calculateTotalUseCase UseCase для подсчета общей суммы расходов.
+ */
 class ExpensesScreenViewModel(
     private val getTransactionsForTodayUseCase: GetTransactionsForTodayUseCase,
     private val calculateTotalUseCase: CalculateTotalUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<ExpensesScreenState>(Loading)
+    private val _state = MutableStateFlow<ExpensesScreenState>(ExpensesScreenState.Loading)
     val state: StateFlow<ExpensesScreenState> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<ExpensesScreenEffect>()
@@ -74,33 +83,39 @@ class ExpensesScreenViewModel(
 
 
     private fun loadTransaction() {
-        _state.value = Loading
+        _state.value = ExpensesScreenState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             getTransactionsForTodayUseCase(TransactionType.Expenses).let { result ->
                 when (result) {
                     is TransactionState.Success -> {
                         if (result.items.isEmpty()) {
-                            _state.value = EmptyList
+                            _state.value = ExpensesScreenState.EmptyList
                         } else {
-                            _state.value = Content(
-                                result.items,
+                            _state.value = ExpensesScreenState.Content(
+                                result.items.map { it.toUi() },
                                 calculateTotalUseCase(result.items)
                             )
                         }
                     }
 
                     is TransactionState.Error -> {
-                        _state.value = Error
+                        _state.value = ExpensesScreenState.Error
                     }
 
-                    TransactionState.NetworkError -> {
-                        _state.value = NoInternet
+                    is TransactionState.NetworkError -> {
+                        _state.value = ExpensesScreenState.NoInternet
                     }
                 }
             }
         }
     }
 
+    /**
+     * Фабрика для создания экземпляра [ExpensesScreenViewModel].
+     *
+     * @param getTransactionsForTodayUseCase UseCase для загрузки сегодняшних транзакций.
+     * @param calculateTotalUseCase UseCase для подсчета общей суммы.
+     */
     class Factory(
         private val getTransactionsForTodayUseCase: GetTransactionsForTodayUseCase,
         private val calculateTotalUseCase: CalculateTotalUseCase
@@ -108,7 +123,10 @@ class ExpensesScreenViewModel(
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return ExpensesScreenViewModel(getTransactionsForTodayUseCase, calculateTotalUseCase) as T
+            return ExpensesScreenViewModel(
+                getTransactionsForTodayUseCase,
+                calculateTotalUseCase
+            ) as T
         }
     }
 
@@ -118,12 +136,26 @@ class ExpensesScreenViewModel(
     }
 }
 
+/**
+ * Вспомогательная фабрика, создающая [ExpensesScreenViewModel.Factory].
+ *
+ * Используется для внедрения зависимостей в ViewModel через DI-компоненты.
+ *
+ * @param getTransactionsForTodayUseCase UseCase для получения транзакций за текущий день.
+ * @param calculateTotalUseCase UseCase для вычисления общей суммы.
+ */
 class ExpensesScreenViewModelFactoryFactory(
     private val getTransactionsForTodayUseCase: GetTransactionsForTodayUseCase,
     private val calculateTotalUseCase: CalculateTotalUseCase
 ) {
 
+    /**
+     * Создает [ExpensesScreenViewModel.Factory] с необходимыми зависимостями.
+     */
     fun create(): ExpensesScreenViewModel.Factory {
-        return ExpensesScreenViewModel.Factory(getTransactionsForTodayUseCase, calculateTotalUseCase)
+        return ExpensesScreenViewModel.Factory(
+            getTransactionsForTodayUseCase,
+            calculateTotalUseCase
+        )
     }
 }

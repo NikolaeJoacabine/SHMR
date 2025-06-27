@@ -21,8 +21,10 @@ fun FinancialDetectiveNavGraph(
     ) {
 //        composable<Splash> {
 //            SplashScreen {
-//                navController.navigate(Expenses) {
+//                navController.navigate(ExpensesGraph) {
 //                    popUpTo(Splash) { inclusive = true }
+//                    launchSingleTop = true
+//                    restoreState = true
 //                }
 //            }
 //        }

@@ -28,6 +28,9 @@ object Expenses
 @Serializable
 object ExpensesHistory
 
+@Serializable
+object ExpensesDetail
+
 
 @Serializable
 object IncomeGraph
@@ -37,3 +40,6 @@ object Income
 
 @Serializable
 object IncomeHistory
+
+@Serializable
+object IncomeDetail

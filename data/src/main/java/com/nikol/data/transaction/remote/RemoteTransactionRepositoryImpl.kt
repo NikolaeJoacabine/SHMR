@@ -1,93 +1,92 @@
 package com.nikol.data.transaction.remote
 
+import com.nikol.data.model.TransactionDTO
 import com.nikol.data.network.FinanceAPI
 import com.nikol.data.network.NetworkStatusProvider
+import com.nikol.data.util.formater.toApiFormat
 import com.nikol.data.util.mapper.toDomain
 import com.nikol.data.util.retryOnServerError
 import com.nikol.domain.state.TransactionState
-import java.time.Instant
+import retrofit2.Response
 import java.time.LocalDate
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
+/**
+ * Реализация [RemoteTransactionRepository] для получения транзакций
+ * с удалённого API через [FinanceAPI] с учётом состояния сети.
+ *
+ * @property financeAPI API для работы с финансами.
+ * @property networkStatusProvider Провайдер статуса сети.
+ */
 class RemoteTransactionRepositoryImpl(
     private val financeAPI: FinanceAPI,
-    val networkStatusProvider: NetworkStatusProvider
-) :
-    RemoteTransactionRepository {
+    private val networkStatusProvider: NetworkStatusProvider
+) : RemoteTransactionRepository {
 
-
-    override suspend fun transactionForThePeriod(): TransactionState {
-        if (!networkStatusProvider.isConnected()) {
-            return TransactionState.NetworkError
+    /**
+     * Получает транзакции за сегодняшний день для указанного аккаунта.
+     *
+     * @param id Идентификатор аккаунта.
+     * @return Состояние результата загрузки транзакций.
+     */
+    override suspend fun transactionForToday(id: Int): TransactionState {
+        val today = LocalDate.now(ZoneOffset.UTC)
+        return getTransactionsWithCheck {
+            financeAPI.getTransactionForPeriod(
+                accountId = id,
+                startDate = today.toApiFormat(),
+                endDate = today.toApiFormat()
+            )
         }
-
-        return runCatching {
-            retryOnServerError { financeAPI.getTransactionBeginningOfTheMonth() }
-        }
-            .mapCatching { response ->
-                if (response.isSuccessful && response.body() != null) {
-                    TransactionState.Success(response.body()!!.map { it.toDomain() })
-                } else {
-                    TransactionState.Error("ERROR")
-                }
-            }.getOrElse {
-                TransactionState.Error("ERROR")
-            }
     }
 
-    override suspend fun transactionForToday(): TransactionState {
-        if (!networkStatusProvider.isConnected()) {
-            return TransactionState.NetworkError
-        }
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val today = LocalDate.now(ZoneOffset.UTC).format(formatter)
-
-        return runCatching {
-            retryOnServerError {
-                financeAPI.getTransactionForPeriod(
-                    startDate = today,
-                    endDate = today
-                )
-            }
-        }
-            .mapCatching { response ->
-                if (response.isSuccessful && response.body() != null) {
-                    TransactionState.Success(response.body()!!.map { it.toDomain() })
-                } else {
-                    TransactionState.Error("ERROR")
-                }
-            }.getOrElse {
-                TransactionState.Error("ERROR")
-            }
-    }
-
+    /**
+     * Получает транзакции за произвольный период для указанного аккаунта.
+     *
+     * @param id Идентификатор аккаунта.
+     * @param startDate Начальная дата периода.
+     * @param endDate Конечная дата периода.
+     * @return Состояние результата загрузки транзакций.
+     */
     override suspend fun getTransactionsByPeriod(
+        id: Int,
         startDate: LocalDate,
         endDate: LocalDate
+    ): TransactionState {
+        return getTransactionsWithCheck {
+            financeAPI.getTransactionForPeriod(
+                accountId = id,
+                startDate = startDate.toApiFormat(),
+                endDate = endDate.toApiFormat()
+            )
+        }
+    }
+
+    /**
+     * Вспомогательный метод для выполнения API вызова с проверкой подключения к сети,
+     * повторными попытками при ошибках сервера и обработкой результата.
+     *
+     * @param apiCall Функция, выполняющая сетевой запрос.
+     * @return Состояние результата загрузки транзакций.
+     */
+    private suspend fun getTransactionsWithCheck(
+        apiCall: suspend () -> Response<List<TransactionDTO>>
     ): TransactionState {
         if (!networkStatusProvider.isConnected()) {
             return TransactionState.NetworkError
         }
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val startDateStr = startDate.format(formatter)
-        val endDateStr = endDate.format(formatter)
 
         return runCatching {
-            retryOnServerError {
-                financeAPI.getTransactionForPeriod(
-                    startDate = startDateStr,
-                    endDate = endDateStr
-                )
-            }
+            retryOnServerError { apiCall() }
         }.mapCatching { response ->
-            if (response.isSuccessful && response.body() != null) {
-                TransactionState.Success(response.body()!!.map { it.toDomain() })
+            val body = response.body()
+            if (response.isSuccessful && body != null) {
+                TransactionState.Success(body.map { it.toDomain() })
             } else {
-                TransactionState.Error("ERROR")
+                TransactionState.Error("Ошибка получения данных")
             }
         }.getOrElse {
-            TransactionState.Error("ERROR")
+            TransactionState.Error(it.localizedMessage ?: "Неизвестная ошибка")
         }
     }
 }

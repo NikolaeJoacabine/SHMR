@@ -15,6 +15,13 @@ import com.nikol.yandexschool.features.account.screens.account.di.DaggerAccountS
 import com.nikol.yandexschool.ui.nav.Account
 import com.nikol.yandexschool.ui.nav.AccountGraph
 
+/**
+ * Реализация API для функции аккаунта, отвечающая за регистрацию навигационного графа
+ * и создание необходимых компонентов для экрана аккаунта.
+ *
+ * В методе [registerGraph] создаются Dagger-компоненты для feature и screen уровней,
+ * после чего настраивается навигационный граф с начальной точкой входа на экран аккаунта.
+ */
 class AccountFeatureApi : FeatureApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,

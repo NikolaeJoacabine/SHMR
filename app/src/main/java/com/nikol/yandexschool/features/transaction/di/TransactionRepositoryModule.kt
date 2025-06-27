@@ -1,5 +1,11 @@
 package com.nikol.yandexschool.features.transaction.di
 
+import com.nikol.data.account.AccountRepositoryImpl
+import com.nikol.data.account.local.AccountPreferencesDataSource
+import com.nikol.data.account.local.LocalAccountRepository
+import com.nikol.data.account.local.LocalAccountRepositoryImpl
+import com.nikol.data.account.remote.RemoteAccountRepository
+import com.nikol.data.account.remote.RemoteAccountRepositoryImpl
 import com.nikol.data.network.FinanceAPI
 import com.nikol.data.network.NetworkStatusProvider
 import com.nikol.data.transaction.TransactionRepositoryImpl
@@ -7,7 +13,9 @@ import com.nikol.data.transaction.remote.RemoteTransactionRepository
 import com.nikol.data.transaction.remote.RemoteTransactionRepositoryImpl
 import com.nikol.data.util.timeProvider.DefaultTimeProvider
 import com.nikol.domain.common.TimeProvider
+import com.nikol.domain.repository.AccountRepository
 import com.nikol.domain.repository.TransactionRepository
+import com.nikol.yandexschool.features.account.di.AccountComponentScope
 import dagger.Module
 import dagger.Provides
 
@@ -25,7 +33,9 @@ class TransactionRepositoryModule {
 
     @TransactionComponentScope
     @Provides
-    fun provideTransactionRepository(remoteTransactionRepository: RemoteTransactionRepository): TransactionRepository {
+    fun provideTransactionRepository(
+        remoteTransactionRepository: RemoteTransactionRepository
+    ): TransactionRepository {
         return TransactionRepositoryImpl(remoteTransactionRepository)
     }
 
@@ -33,5 +43,34 @@ class TransactionRepositoryModule {
     @Provides
     fun provideTimeProvider(): TimeProvider {
         return DefaultTimeProvider()
+    }
+
+    @TransactionComponentScope
+    @Provides
+    fun provideLocalAccountRepository(
+        accountPreferencesDataSource: AccountPreferencesDataSource
+    ): LocalAccountRepository {
+        return LocalAccountRepositoryImpl(accountPreferencesDataSource)
+    }
+
+    @TransactionComponentScope
+    @Provides
+    fun provideRemoteAccountRepository(
+        financeAPI: FinanceAPI,
+        networkStatusProvider: NetworkStatusProvider
+    ): RemoteAccountRepository {
+        return RemoteAccountRepositoryImpl(financeAPI, networkStatusProvider)
+    }
+
+    @TransactionComponentScope
+    @Provides
+    fun provideAccountRepository(
+        remoteAccountRepository: RemoteAccountRepository,
+        localAccountRepository: LocalAccountRepository
+    ): AccountRepository {
+        return AccountRepositoryImpl(
+            remoteAccountRepository,
+            localAccountRepository
+        )
     }
 }

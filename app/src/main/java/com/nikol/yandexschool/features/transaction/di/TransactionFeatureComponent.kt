@@ -2,6 +2,7 @@ package com.nikol.yandexschool.features.transaction.di
 
 import android.content.Context
 import com.nikol.domain.common.TimeProvider
+import com.nikol.domain.repository.AccountRepository
 import com.nikol.domain.repository.TransactionRepository
 import com.nikol.yandexschool.di.AppComponent
 import dagger.BindsInstance
@@ -23,6 +24,7 @@ interface TransactionFeatureComponent {
     }
 
     fun transactionRepository(): TransactionRepository
+    fun accountRepository(): AccountRepository
 
     fun timeProvider(): TimeProvider
 

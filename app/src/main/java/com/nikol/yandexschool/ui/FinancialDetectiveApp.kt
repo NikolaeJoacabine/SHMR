@@ -27,13 +27,7 @@ import com.nikol.yandexschool.ui.nav.FinancialDetectiveNavGraph
 import com.nikol.yandexschool.ui.nav.IncomeGraph
 import com.nikol.yandexschool.ui.nav.Settings
 import com.nikol.yandexschool.ui.nav.Splash
-
-data class TopLevelRoute<T : Any>(
-    val name: Int,
-    val route: T,
-    val icon: Int
-)
-
+import com.nikol.yandexschool.ui.nav.TopLevelRoute
 
 @Composable
 fun FinancialDetectiveApp(modifier: Modifier = Modifier, listFeature: List<FeatureApi>) {
@@ -53,48 +47,40 @@ fun FinancialDetectiveApp(modifier: Modifier = Modifier, listFeature: List<Featu
     val currentRoute = currentDestination?.route
 
     Scaffold(
-        modifier = modifier,
-        bottomBar = {
+        modifier = modifier, bottomBar = {
             if (currentRoute != null && currentRoute != Splash.serializer().descriptor.serialName) {
                 NavigationBar {
                     list.forEach { topLevelRoute ->
                         NavigationBarItem(
                             icon = {
-                                Icon(
-                                    painter = painterResource(topLevelRoute.icon),
-                                    contentDescription = stringResource(topLevelRoute.name)
-                                )
-                            },
-                            label = {
-                                Text(
-                                    text = stringResource(topLevelRoute.name),
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            },
-                            selected = currentDestination.hierarchy.any {
-                                it.hasRoute(
-                                    topLevelRoute.route::class
-                                )
-                            } == true,
-                            onClick = {
-                                navController.navigate(topLevelRoute.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.primary,
+                            Icon(
+                                painter = painterResource(topLevelRoute.icon),
+                                contentDescription = stringResource(topLevelRoute.name)
                             )
+                        }, label = {
+                            Text(
+                                text = stringResource(topLevelRoute.name),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }, selected = currentDestination.hierarchy.any {
+                            it.hasRoute(topLevelRoute.route::class)
+                        }, onClick = {
+                            navController.navigate(topLevelRoute.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }, colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                        )
                         )
                     }
                 }
             }
-        }
-    ) { innerPadding ->
+        }) { innerPadding ->
         FinancialDetectiveNavGraph(
             navController = navController,
             modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),

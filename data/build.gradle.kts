@@ -46,13 +46,15 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
+    api(libs.okhttp.logging)
 
-    implementation(libs.retrofit)
+    api(libs.retrofit)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
     implementation(project(":domain"))
+
+    implementation(libs.androidx.datastore)
 }
