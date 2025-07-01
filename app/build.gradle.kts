@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.nikol.yandexschool"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.nikol.yandexschool"
@@ -16,8 +16,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -33,8 +31,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+        }
     }
     buildFeatures {
         compose = true
@@ -51,12 +51,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+
 
     implementation(libs.compose.navigation)
     implementation(libs.kotlinx.serialization.json)
@@ -66,4 +61,14 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(project(":domain"))
     implementation(project(":data"))
+
+    implementation(project(":core:navigation"))
+    implementation(project(":core:di"))
+    implementation(project(":core:ui"))
+
+    implementation(project(":features:transaction"))
+    implementation(project(":features:account"))
+    implementation(project(":features:articles"))
+    implementation(project(":features:settings"))
+
 }

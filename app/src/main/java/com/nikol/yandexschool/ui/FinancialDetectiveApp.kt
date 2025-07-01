@@ -18,14 +18,14 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.nikol.navigation.AccountGraph
+import com.nikol.navigation.ArticleGraph
+import com.nikol.navigation.ExpenseGraph
+import com.nikol.navigation.FeatureApi
+import com.nikol.navigation.IncomeGraph
+import com.nikol.navigation.SettingsGraph
 import com.nikol.yandexschool.R
-import com.nikol.yandexschool.features.FeatureApi
-import com.nikol.yandexschool.ui.nav.AccountGraph
-import com.nikol.yandexschool.ui.nav.Articles
-import com.nikol.yandexschool.ui.nav.ExpensesGraph
 import com.nikol.yandexschool.ui.nav.FinancialDetectiveNavGraph
-import com.nikol.yandexschool.ui.nav.IncomeGraph
-import com.nikol.yandexschool.ui.nav.Settings
 import com.nikol.yandexschool.ui.nav.Splash
 import com.nikol.yandexschool.ui.nav.TopLevelRoute
 
@@ -33,11 +33,11 @@ import com.nikol.yandexschool.ui.nav.TopLevelRoute
 fun FinancialDetectiveApp(modifier: Modifier = Modifier, listFeature: List<FeatureApi>) {
 
     val list = listOf(
-        TopLevelRoute(R.string.expenses, ExpensesGraph, R.drawable.downtrend),
+        TopLevelRoute(R.string.expenses, ExpenseGraph, R.drawable.downtrend),
         TopLevelRoute(R.string.income, IncomeGraph, R.drawable.uptrend),
         TopLevelRoute(R.string.score, AccountGraph, R.drawable.calculator),
-        TopLevelRoute(R.string.articles, Articles, R.drawable.bar_chart_side),
-        TopLevelRoute(R.string.settings, Settings, R.drawable.settings)
+        TopLevelRoute(R.string.articles, ArticleGraph, R.drawable.bar_chart_side),
+        TopLevelRoute(R.string.settings, SettingsGraph, R.drawable.settings)
     )
 
     val navController = rememberNavController()
@@ -53,29 +53,29 @@ fun FinancialDetectiveApp(modifier: Modifier = Modifier, listFeature: List<Featu
                     list.forEach { topLevelRoute ->
                         NavigationBarItem(
                             icon = {
-                            Icon(
-                                painter = painterResource(topLevelRoute.icon),
-                                contentDescription = stringResource(topLevelRoute.name)
-                            )
-                        }, label = {
-                            Text(
-                                text = stringResource(topLevelRoute.name),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }, selected = currentDestination.hierarchy.any {
-                            it.hasRoute(topLevelRoute.route::class)
-                        }, onClick = {
-                            navController.navigate(topLevelRoute.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+                                Icon(
+                                    painter = painterResource(topLevelRoute.icon),
+                                    contentDescription = stringResource(topLevelRoute.name)
+                                )
+                            }, label = {
+                                Text(
+                                    text = stringResource(topLevelRoute.name),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }, selected = currentDestination.hierarchy.any {
+                                it.hasRoute(topLevelRoute.route::class)
+                            }, onClick = {
+                                navController.navigate(topLevelRoute.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }, colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = MaterialTheme.colorScheme.primary,
-                        )
+                            }, colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = MaterialTheme.colorScheme.primary,
+                            )
                         )
                     }
                 }

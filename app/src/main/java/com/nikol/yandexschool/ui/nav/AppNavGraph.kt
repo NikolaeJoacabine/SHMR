@@ -4,9 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.nikol.yandexschool.features.FeatureApi
-import com.nikol.yandexschool.ui.screens.SplashScreen
+import com.nikol.navigation.ExpenseGraph
+import com.nikol.navigation.FeatureApi
 
 @Composable
 fun FinancialDetectiveNavGraph(
@@ -16,7 +15,7 @@ fun FinancialDetectiveNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ExpensesGraph,
+        startDestination = ExpenseGraph,
         modifier = modifier
     ) {
 //        composable<Splash> {

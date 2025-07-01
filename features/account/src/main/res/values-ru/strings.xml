@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">yandex school</string>
+    <string name="expenses">Расходы</string>
+    <string name="income">Доходы</string>
+    <string name="score">Cчёт</string>
+    <string name="articles">Статьи</string>
+    <string name="settings">Настройки</string>
+    <string name="currency">Валюта</string>
+    <string name="find_an_article">Найти статью</string>
+    <string name="today">сегодня</string>
+    <string name="my_articles">Мои статьи</string>
+    <string name="my_account">Мой счёт</string>
+    <string name="my_history">Моя история</string>
+    <string name="beginning">Начало</string>
+    <string name="end">Конец</string>
+    <string name="amount">Сумма</string>
+    <string name="emty_expenses">Сегодня вы не совершкили расходов</string>
+    <string name="retry">Повторить</string>
+    <string name="emty_income">Сегодня у вас нет доходов</string>
+    <string name="dark_theme">Тёмная тема</string>
+    <string name="primary_color">Основной цвет</string>
+    <string name="sounds">Звуки</string>
+    <string name="haptics">Хаптики</string>
+    <string name="passcode">Код пароль</string>
+    <string name="sync">Синхронизация</string>
+    <string name="language">Язык</string>
+    <string name="about">О программе</string>
+</resources>
