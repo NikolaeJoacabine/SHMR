@@ -2,7 +2,12 @@ package com.nikol.data.account
 
 import com.nikol.data.account.local.LocalAccountRepository
 import com.nikol.data.account.remote.RemoteAccountRepository
+import com.nikol.domain.model.AccountUpdateRequest
+import com.nikol.domain.model.CurrencyType
 import com.nikol.domain.repository.AccountRepository
+import com.nikol.domain.state.AccountByIdState
+import com.nikol.domain.state.AccountDeleteState
+import com.nikol.domain.state.AccountEditState
 import com.nikol.domain.state.AccountIdState
 import com.nikol.domain.state.AccountState
 
@@ -51,5 +56,34 @@ class AccountRepositoryImpl(
             }
             return result
         }
+    }
+
+    override suspend fun getAccountById(id: Int): AccountByIdState {
+        return remoteAccountRepository.getAccountById(id)
+    }
+
+    override suspend fun getCurrentCurrency(): CurrencyType {
+        val res = localAccountRepository.getCurrentCurrency()
+        return when (res) {
+            "RUB" -> CurrencyType.RUB
+            "EUR" -> CurrencyType.EUR
+            "USD" -> CurrencyType.USD
+            else -> CurrencyType.RUB
+        }
+    }
+
+    override suspend fun saveCurrency(currencyType: CurrencyType) {
+        localAccountRepository.saveCurrency(currencyType.type)
+    }
+
+    override suspend fun editAccount(
+        accountUpdateRequest: AccountUpdateRequest,
+        id: Int
+    ): AccountEditState {
+        return remoteAccountRepository.editAccount(accountUpdateRequest, id)
+    }
+
+    override suspend fun deleteAccount(id: Int): AccountDeleteState {
+        return remoteAccountRepository.deleteAccount(id)
     }
 }

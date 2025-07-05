@@ -2,9 +2,15 @@ package com.nikol.data.account.remote
 
 import com.nikol.data.network.FinanceAPI
 import com.nikol.data.network.NetworkStatusProvider
+import com.nikol.data.util.mapper.toDTO
 import com.nikol.data.util.mapper.toDomain
 import com.nikol.data.util.retryOnServerError
+import com.nikol.domain.model.AccountUpdateRequest
+import com.nikol.domain.state.AccountByIdState
+import com.nikol.domain.state.AccountDeleteState
+import com.nikol.domain.state.AccountEditState
 import com.nikol.domain.state.AccountState
+import retrofit2.HttpException
 
 /**
  * Реализация [RemoteAccountRepository], которая получает данные аккаунта
@@ -47,4 +53,71 @@ class RemoteAccountRepositoryImpl(
                 AccountState.Error("")
             }
     }
+
+    override suspend fun getAccountById(id: Int): AccountByIdState {
+        if (!networkStatusProvider.isConnected()) {
+            return AccountByIdState.NoInternet
+        }
+
+        return runCatching { retryOnServerError { financeAPI.getAccountById(id) } }
+            .mapCatching { response ->
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    AccountByIdState.Success(body.toDomain())
+                } else {
+                    AccountByIdState.Error("")
+                }
+            }
+            .getOrElse {
+                AccountByIdState.Error("")
+            }
+    }
+
+    override suspend fun editAccount(
+        accountUpdateRequest: AccountUpdateRequest,
+        id: Int
+    ): AccountEditState {
+        if (!networkStatusProvider.isConnected()) {
+            return AccountEditState.NoInternet
+        }
+
+        return runCatching {
+            retryOnServerError {
+                financeAPI.editAccount(
+                    id = id,
+                    accountUpdateRequest = accountUpdateRequest.toDTO()
+                )
+            }
+        }
+            .mapCatching { response ->
+                if (response.isSuccessful) {
+                    AccountEditState.Success
+                } else {
+                    AccountEditState.Error
+                }
+            }
+            .getOrElse {
+                AccountEditState.Error
+            }
+
+    }
+
+    override suspend fun deleteAccount(id: Int): AccountDeleteState {
+        if (!networkStatusProvider.isConnected()) {
+            return AccountDeleteState.NoInternet
+        }
+
+        return runCatching {
+            retryOnServerError { financeAPI.deleteAccount(id) }
+        }.map { response ->
+            when {
+                response.isSuccessful -> AccountDeleteState.Success
+                response.code() == 409 -> AccountDeleteState.Conflict
+                else -> AccountDeleteState.Error
+            }
+        }.getOrElse {
+            AccountDeleteState.Error
+        }
+    }
+
 }

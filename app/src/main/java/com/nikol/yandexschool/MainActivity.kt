@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.nikol.ui.theme.YandexSchoolTheme
 import com.nikol.yandexschool.di.DaggerNavigationComponent
 import com.nikol.yandexschool.di.appComponent
 import com.nikol.yandexschool.ui.FinancialDetectiveApp
-import com.nikol.yandexschool.ui.theme.YandexSchoolTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         val appComponent = applicationContext.appComponent
 
         val navigationComponent = DaggerNavigationComponent.factory()
-            .create(this, appComponent)
+            .create(appComponent)
 
         enableEdgeToEdge()
 

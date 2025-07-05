@@ -22,9 +22,9 @@ suspend fun <T> retryOnServerError(
 ): Response<T> {
     repeat(repeat - 1) {
         val response = block()
-        if (response.isSuccessful && response.code() != 500) {
-            return response
-        }
+        val code = response.code()
+
+        if (code !in 500..599) return response
         delay(delayMillis)
     }
     return block()

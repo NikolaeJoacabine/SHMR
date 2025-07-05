@@ -1,8 +1,10 @@
 package com.nikol.data.account.local
 
 import android.content.Context
+import android.icu.util.Currency
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 
@@ -18,6 +20,7 @@ class AccountPreferencesDataSource(context: Context) {
 
     companion object {
         private val CURRENT_ACCOUNT_ID = intPreferencesKey("current_account_id")
+        private val CURRENT_CURRENCY = stringPreferencesKey("current_currency")
     }
 
     /**
@@ -39,5 +42,26 @@ class AccountPreferencesDataSource(context: Context) {
     suspend fun getAccountId(): Int? {
         val prefs = dataStore.data.first()
         return prefs[CURRENT_ACCOUNT_ID]
+    }
+
+    /**
+     * Сохраняет текущую валюту в DataStore.
+     *
+     * @param currency тип валюты (только RUB, USD, EUR)
+     */
+    suspend fun saveCurrentCurrency(currency: String){
+        dataStore.edit { preferences ->
+            preferences[CURRENT_CURRENCY] = currency
+        }
+    }
+
+    /**
+     * Получает текущую валюту из DataStore.
+     *
+     * @return сохранённая валюта или null, если не найдена
+     */
+    suspend fun getCurrentCurrency(): String?{
+        val pref = dataStore.data.first()
+        return pref[CURRENT_CURRENCY]
     }
 }

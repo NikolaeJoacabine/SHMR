@@ -7,12 +7,10 @@ plugins {
 
 android {
     namespace = "com.nikol.data"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField("String", "TOKEN", "\"gHeljRylS1BWmVXaqUPHGSVf\"")
@@ -32,11 +30,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
     }
 }
 
