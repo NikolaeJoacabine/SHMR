@@ -21,4 +21,12 @@ class LocalAccountRepositoryImpl(
     override suspend fun getCurrentAccountId(): Int? {
         return accountPreferencesDataSource.getAccountId()
     }
+
+    override suspend fun getCurrentCurrency(): String {
+        return accountPreferencesDataSource.getCurrentCurrency() ?: "RUB"
+    }
+
+    override suspend fun saveCurrency(currency: String) {
+        accountPreferencesDataSource.saveCurrentCurrency(currency)
+    }
 }

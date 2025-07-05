@@ -50,7 +50,7 @@ fun NavGraphBuilder.registerIncomeGraph(
             HistoryScreen(
                 viewModel = viewModel,
                 onNavigateAnalyticScreen = {},
-                onNavigateBack = { navController.popBackStack(Income, inclusive = false) },
+                onNavigateBack = { navController.popBackStack() },
                 onNavigateToEditTransactionScreen = {}
             )
         }

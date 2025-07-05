@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.nikol.domain.model.CurrencyType
 import com.nikol.transaction.models.TransactionUi
 import com.nikol.transaction.screens.income.stateHoisting.IncomeScreenAction
 import com.nikol.ui.customUiComponents.CustomListItem
@@ -21,7 +22,8 @@ import com.nikol.ui.customUiComponents.CustomListItem
 @Composable
 fun IncomeTransactionsList(
     transactions: List<TransactionUi>,
-    onAction: (IncomeScreenAction) -> Unit
+    onAction: (IncomeScreenAction) -> Unit,
+    currencyType: CurrencyType
 ) {
     LazyColumn {
         items(transactions, key = { it.id }) { transaction ->
@@ -48,7 +50,7 @@ fun IncomeTransactionsList(
                 },
                 trailing = {
                     Text(
-                        text = "${transaction.amount} ₽",
+                        text = "${transaction.amount} ${currencyType.str}",
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Icon(

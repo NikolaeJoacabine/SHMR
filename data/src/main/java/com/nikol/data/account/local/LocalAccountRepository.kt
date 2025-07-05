@@ -1,5 +1,7 @@
 package com.nikol.data.account.local
 
+import android.icu.util.Currency
+
 /**
  * Интерфейс для локального хранилища текущего идентификатора аккаунта.
  * Определяет операции сохранения и получения текущего ID аккаунта.
@@ -19,4 +21,8 @@ interface LocalAccountRepository {
      * @return идентификатор аккаунта или null, если он не был сохранён.
      */
     suspend fun getCurrentAccountId(): Int?
+
+    suspend fun getCurrentCurrency(): String
+
+    suspend fun saveCurrency(currency: String)
 }

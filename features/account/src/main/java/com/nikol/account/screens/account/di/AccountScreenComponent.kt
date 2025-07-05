@@ -9,7 +9,7 @@ import dagger.Component
     dependencies = [AccountFeatureComponent::class],
     modules = [UseCaseModule::class]
 )
-interface AccountScreenComponent {
+internal interface AccountScreenComponent {
 
     @Component.Factory
     interface Factory {

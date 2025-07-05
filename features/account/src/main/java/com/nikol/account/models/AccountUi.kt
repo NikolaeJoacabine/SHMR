@@ -12,7 +12,7 @@ package com.nikol.account.models
  * @property createdAt Дата создания аккаунта в формате строки.
  * @property updatedAt Дата последнего обновления аккаунта в формате строки.
  */
-data class AccountUi(
+internal data class AccountUi(
     val id: Int,
     val userId: Int,
     val name: String,

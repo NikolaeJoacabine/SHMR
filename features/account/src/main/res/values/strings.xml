@@ -26,4 +26,6 @@
     <string name="sync">Sync</string>
     <string name="language">Language</string>
     <string name="about">About</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="cancel">Cancel</string>
 </resources>

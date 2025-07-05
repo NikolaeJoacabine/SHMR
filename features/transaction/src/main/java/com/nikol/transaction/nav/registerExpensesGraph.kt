@@ -51,7 +51,7 @@ fun NavGraphBuilder.registerExpensesGraph(
             HistoryScreen(
                 viewModel = viewModel,
                 onNavigateAnalyticScreen = {},
-                onNavigateBack = { navController.popBackStack(Expenses, inclusive = false) },
+                onNavigateBack = { navController.popBackStack() },
                 onNavigateToEditTransactionScreen = {}
             )
         }

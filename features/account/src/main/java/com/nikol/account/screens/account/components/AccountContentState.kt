@@ -12,9 +12,10 @@ import androidx.compose.ui.Modifier
 import com.nikol.account.screens.account.stateHoisting.AccountScreensState
 
 @Composable
-fun AccountContentState(
+internal fun AccountContentState(
     state: AccountScreensState.Content,
-    padding: PaddingValues
+    padding: PaddingValues,
+    onClickCurrency: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -23,9 +24,9 @@ fun AccountContentState(
     ) {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             items(state.list, key = { it.id }) { account ->
-                AccountListItem(account)
+                AccountListItem(account, state.currentCurrency)
             }
         }
-        CurrencyListItem()
+        CurrencyListItem(onClick = onClickCurrency, currencyType = state.currentCurrency)
     }
 }

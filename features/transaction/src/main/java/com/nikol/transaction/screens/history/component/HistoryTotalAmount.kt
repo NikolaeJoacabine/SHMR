@@ -10,17 +10,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nikol.data.util.formater.formatAmount
+import com.nikol.domain.model.CurrencyType
 import com.nikol.transaction.R
 import com.nikol.ui.customUiComponents.CustomListItem
 
 @Composable
-fun HistoryTotalAmount(amount: String) {
+fun HistoryTotalAmount(
+    amount: String,
+    currencyType: CurrencyType
+) {
     CustomListItem(
         modifier = Modifier
             .height(56.dp)
             .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(horizontal = 16.dp),
         content = { Text(stringResource(R.string.amount)) },
-        trailing = { Text(formatAmount(amount) + " ₽") }
+        trailing = { Text(formatAmount(amount) + " ${currencyType.str}") }
     )
 }

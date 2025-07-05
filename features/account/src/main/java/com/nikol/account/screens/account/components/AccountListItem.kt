@@ -16,11 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.nikol.account.models.AccountUi
+import com.nikol.domain.model.CurrencyType
 import com.nikol.ui.customUiComponents.CustomListItem
 import com.nikol.ui.customUiComponents.EmojiIcon
 
 @Composable
-fun AccountListItem(account: AccountUi) {
+internal fun AccountListItem(
+    account: AccountUi,
+    currentCurrencyType: CurrencyType
+) {
     CustomListItem(
         modifier = Modifier
             .height(57.dp)
@@ -37,7 +41,7 @@ fun AccountListItem(account: AccountUi) {
         trailing = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "${account.balance} ₽",
+                    text = "${account.balance} ${currentCurrencyType.str}",
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyLarge
                 )

@@ -26,4 +26,6 @@
     <string name="sync">Синхронизация</string>
     <string name="language">Язык</string>
     <string name="about">О программе</string>
+    <string name="delete_account">Удалить счёт</string>
+    <string name="cancel">Отмена</string>
 </resources>

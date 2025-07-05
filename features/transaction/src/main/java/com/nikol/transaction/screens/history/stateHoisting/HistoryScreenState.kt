@@ -1,5 +1,6 @@
 package com.nikol.transaction.screens.history.stateHoisting
 
+import com.nikol.domain.model.CurrencyType
 import com.nikol.transaction.models.TransactionHistoryUi
 import java.time.LocalDate
 
@@ -19,6 +20,7 @@ sealed class HistoryScreenState {
         val historyTransaction: HistoryTransaction,
         val startDate: LocalDate,
         val endDate: LocalDate,
+        val currencyType: CurrencyType
     ) : HistoryScreenState()
 }
 

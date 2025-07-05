@@ -18,15 +18,6 @@ fun FinancialDetectiveNavGraph(
         startDestination = ExpenseGraph,
         modifier = modifier
     ) {
-//        composable<Splash> {
-//            SplashScreen {
-//                navController.navigate(ExpensesGraph) {
-//                    popUpTo(Splash) { inclusive = true }
-//                    launchSingleTop = true
-//                    restoreState = true
-//                }
-//            }
-//        }
         list.forEach {
             it.registerGraph(this, navController)
         }

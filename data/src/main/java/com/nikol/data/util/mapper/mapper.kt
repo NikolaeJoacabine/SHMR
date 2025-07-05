@@ -1,11 +1,13 @@
 package com.nikol.data.util.mapper
 
 import com.nikol.data.model.AccountDTO
+import com.nikol.data.model.AccountUpdateRequestDTO
 import com.nikol.data.model.ArticlesDTO
 import com.nikol.data.model.TransactionDTO
 import com.nikol.data.util.formater.formatAmountToInt
 import com.nikol.data.util.formater.parseCreatedAt
 import com.nikol.domain.model.Account
+import com.nikol.domain.model.AccountUpdateRequest
 import com.nikol.domain.model.Articles
 import com.nikol.domain.model.Transaction
 
@@ -64,5 +66,13 @@ fun AccountDTO.toDomain(): Account {
         currency = currency ?: "",
         createdAt = createdAt ?: "",
         updatedAt = updatedAt ?: ""
+    )
+}
+
+fun AccountUpdateRequest.toDTO(): AccountUpdateRequestDTO {
+    return AccountUpdateRequestDTO(
+        name = name,
+        balance = balance.toString(),
+        currency = "RUB"
     )
 }

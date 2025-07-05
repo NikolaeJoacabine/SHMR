@@ -5,6 +5,15 @@ package com.nikol.account.screens.account.stateHoisting
  * такие как навигация или показ уведомлений.
  */
 sealed class AccountScreenEffect {
-    /** Эффект навигации к экрану настроек деталей аккаунта. */
-    data object NavigateDetailSettings : AccountScreenEffect()
+    /** Эффект навигации к экрану редактирования счёта*/
+    data class NavigateToEditScreen(
+        val id: Int,
+        val name: String
+    ) : AccountScreenEffect()
+
+    /** Эффект открытия нижнего листа*/
+    data object OpenModalBottomSheet : AccountScreenEffect()
+
+    /** Эффект скрытия нижнего листа*/
+    data object ClosedModalBottomSheet : AccountScreenEffect()
 }

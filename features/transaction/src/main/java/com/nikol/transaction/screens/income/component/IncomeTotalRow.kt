@@ -8,10 +8,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.nikol.domain.model.CurrencyType
 import com.nikol.ui.customUiComponents.CustomListItem
 
 @Composable
-fun IncomeTotalRow(total: String) {
+fun IncomeTotalRow(
+    total: String,
+    currencyType: CurrencyType
+) {
     CustomListItem(
         modifier = Modifier
             .height(56.dp)
@@ -21,7 +25,7 @@ fun IncomeTotalRow(total: String) {
             Text("Всего", style = MaterialTheme.typography.bodyLarge)
         },
         trailing = {
-            Text("$total ₽", style = MaterialTheme.typography.bodyLarge)
+            Text("$total ${currencyType.str}", style = MaterialTheme.typography.bodyLarge)
         }
     )
 }

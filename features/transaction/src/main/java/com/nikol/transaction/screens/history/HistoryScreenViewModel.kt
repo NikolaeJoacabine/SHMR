@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.nikol.domain.model.CurrencyType
 import com.nikol.domain.model.TransactionType
 import com.nikol.domain.state.TransactionState
 import com.nikol.domain.useCase.CalculateTotalUseCase
+import com.nikol.domain.useCase.GetCurrentCurrencyUseCase
 import com.nikol.domain.useCase.GetTransactionsByPeriodUseCase
 import com.nikol.domain.useCase.ValidateDateRangeUseCase
 import com.nikol.transaction.models.utils.toHistoryUi
@@ -44,7 +46,8 @@ class HistoryScreenViewModel(
     private val transactionType: TransactionType,
     private val calculateTotalUseCase: CalculateTotalUseCase,
     private val getTransactionsByPeriodUseCase: GetTransactionsByPeriodUseCase,
-    private val validateDateRangeUseCase: ValidateDateRangeUseCase
+    private val validateDateRangeUseCase: ValidateDateRangeUseCase,
+    private val getCurrentCurrencyUseCase: GetCurrentCurrencyUseCase
 ) : ViewModel() {
 
 
@@ -55,7 +58,8 @@ class HistoryScreenViewModel(
         HistoryScreenState.Content(
             historyTransaction = HistoryTransaction.Loading,
             startDate = startDate,
-            endDate = endDate
+            endDate = endDate,
+            currencyType = CurrencyType.RUB
         )
     )
     val state = _state.asStateFlow()
@@ -114,7 +118,7 @@ class HistoryScreenViewModel(
     private fun loadTransactions() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = getTransactionsByPeriodUseCase(transactionType, startDate, endDate)
-
+            val currency = getCurrency()
             val currentState = _state.value as? HistoryScreenState.Content ?: return@launch
 
             val newTransactionState = when (result) {
@@ -126,7 +130,7 @@ class HistoryScreenViewModel(
                         val total = calculateTotalUseCase(list)
                         HistoryTransaction.Content(
                             transactions = list.map { it.toHistoryUi() },
-                            totalSum = total.toString()
+                            totalSum = total.toString(),
                         )
                     }
                 }
@@ -135,7 +139,10 @@ class HistoryScreenViewModel(
                 is TransactionState.Error -> HistoryTransaction.Error
             }
 
-            _state.value = currentState.copy(historyTransaction = newTransactionState)
+            _state.value = currentState.copy(
+                historyTransaction = newTransactionState,
+                currencyType = currency
+            )
         }
     }
 
@@ -146,8 +153,8 @@ class HistoryScreenViewModel(
         }
     }
 
-    override fun onCleared() {
-        Log.d("ViewModel", "HistoryScreenViewModel destroy")
+    private suspend fun getCurrency(): CurrencyType {
+        return getCurrentCurrencyUseCase()
     }
 
     /**
@@ -162,7 +169,8 @@ class HistoryScreenViewModel(
         @Assisted private val transactionType: TransactionType,
         private val calculateTotalUseCase: CalculateTotalUseCase,
         private val getTransactionsByPeriodUseCase: GetTransactionsByPeriodUseCase,
-        private val validateDateRangeUseCase: ValidateDateRangeUseCase
+        private val validateDateRangeUseCase: ValidateDateRangeUseCase,
+        private val getCurrentCurrencyUseCase: GetCurrentCurrencyUseCase
 
     ) : ViewModelProvider.Factory {
 
@@ -172,7 +180,8 @@ class HistoryScreenViewModel(
                 transactionType = transactionType,
                 calculateTotalUseCase = calculateTotalUseCase,
                 getTransactionsByPeriodUseCase = getTransactionsByPeriodUseCase,
-                validateDateRangeUseCase = validateDateRangeUseCase
+                validateDateRangeUseCase = validateDateRangeUseCase,
+                getCurrentCurrencyUseCase = getCurrentCurrencyUseCase
             ) as T
         }
 

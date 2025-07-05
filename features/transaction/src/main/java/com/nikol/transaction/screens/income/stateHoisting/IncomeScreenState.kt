@@ -1,5 +1,6 @@
 package com.nikol.transaction.screens.income.stateHoisting
 
+import com.nikol.domain.model.CurrencyType
 import com.nikol.transaction.models.TransactionUi
 
 /**
@@ -18,7 +19,8 @@ sealed class IncomeScreenState {
      */
     data class Date(
         val list: List<TransactionUi>,
-        val total: Int
+        val total: Int,
+        val currencyType: CurrencyType
     ) : IncomeScreenState()
 
     /** Состояние, когда данные успешно загружены, но список пуст. */

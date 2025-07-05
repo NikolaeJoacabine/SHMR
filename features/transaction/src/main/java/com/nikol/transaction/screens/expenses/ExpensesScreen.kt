@@ -42,6 +42,10 @@ fun ExpensesScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.onIntent(ExpensesScreenAction.OnScreenEntered)
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {

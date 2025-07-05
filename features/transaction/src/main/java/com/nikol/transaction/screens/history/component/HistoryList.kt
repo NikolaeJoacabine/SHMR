@@ -16,12 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.nikol.domain.model.CurrencyType
 import com.nikol.transaction.models.TransactionHistoryUi
 import com.nikol.ui.customUiComponents.CustomListItem
 import com.nikol.ui.customUiComponents.EmojiIcon
 
 @Composable
-fun HistoryList(transactions: List<TransactionHistoryUi>) {
+fun HistoryList(
+    transactions: List<TransactionHistoryUi>,
+    currencyType: CurrencyType
+) {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         items(items = transactions, key = { it.id }) { transaction ->
             CustomListItem(
@@ -51,7 +55,7 @@ fun HistoryList(transactions: List<TransactionHistoryUi>) {
                 trailing = {
                     Column(horizontalAlignment = Alignment.End) {
                         Text(
-                            text = transaction.amount + " ₽",
+                            text = transaction.amount + " ${currencyType.str}",
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(

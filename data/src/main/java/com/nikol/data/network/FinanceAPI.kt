@@ -1,10 +1,16 @@
 package com.nikol.data.network
 
 import com.nikol.data.model.AccountDTO
+import com.nikol.data.model.AccountEditDTO
+import com.nikol.data.model.AccountUpdateRequestDTO
 import com.nikol.data.model.ArticlesDTO
 import com.nikol.data.model.TransactionDTO
+import com.nikol.domain.model.AccountUpdateRequest
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -44,4 +50,24 @@ interface FinanceAPI {
      */
     @GET("accounts")
     suspend fun getAccount(): Response<List<AccountDTO>>
+
+    /**
+     * Получить аккаунт по id.
+     *
+     * @param id Идентификатор аккаунта.
+     * @return [Response] с аккаунтом ([AccountDTO]) или ошибкой.
+     */
+    @GET("accounts/{id}")
+    suspend fun getAccountById(
+        @Path("id") id: Int
+    ): Response<AccountDTO>
+
+    @PUT("accounts/{id}")
+    suspend fun editAccount(
+        @Path("id") id: Int,
+        @Body accountUpdateRequest: AccountUpdateRequestDTO
+    ): Response<Unit>
+
+    @DELETE("accounts/{id}")
+    suspend fun deleteAccount(@Path("id") id: Int): Response<Unit>
 }

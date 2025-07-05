@@ -10,7 +10,7 @@ import com.nikol.ui.customUiComponents.NoInternet
 
 
 @Composable
-fun NoInternetState(
+internal fun NoInternetState(
     padding: PaddingValues,
     onRetryClick: () -> Unit
 ) {

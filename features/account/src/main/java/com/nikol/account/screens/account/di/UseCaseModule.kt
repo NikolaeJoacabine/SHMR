@@ -2,11 +2,14 @@ package com.nikol.account.screens.account.di
 
 import com.nikol.domain.repository.AccountRepository
 import com.nikol.domain.useCase.GetAccountUseCase
+import com.nikol.domain.useCase.GetAllCurrencyUseCase
+import com.nikol.domain.useCase.GetCurrentCurrencyUseCase
+import com.nikol.domain.useCase.SaveCurrencyUseCase
 import dagger.Module
 import dagger.Provides
 
 @Module
-object UseCaseModule {
+internal object UseCaseModule {
 
     @AccountScreenScope
     @Provides
@@ -14,5 +17,27 @@ object UseCaseModule {
         accountRepository: AccountRepository
     ): GetAccountUseCase {
         return GetAccountUseCase(accountRepository)
+    }
+
+    @Provides
+    @AccountScreenScope
+    fun provideGetAllCurrencyUseCase(): GetAllCurrencyUseCase {
+        return GetAllCurrencyUseCase()
+    }
+
+    @Provides
+    @AccountScreenScope
+    fun provideGetCurrentCurrencyUseCase(
+        accountRepository: AccountRepository
+    ): GetCurrentCurrencyUseCase {
+        return GetCurrentCurrencyUseCase(accountRepository)
+    }
+
+    @Provides
+    @AccountScreenScope
+    fun provideSaveCurrencyUseCase(
+        accountRepository: AccountRepository
+    ): SaveCurrencyUseCase {
+        return SaveCurrencyUseCase(accountRepository)
     }
 }

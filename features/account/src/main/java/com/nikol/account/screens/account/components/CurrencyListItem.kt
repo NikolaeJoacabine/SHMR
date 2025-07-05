@@ -16,14 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nikol.account.R
+import com.nikol.domain.model.CurrencyType
 import com.nikol.ui.customUiComponents.CustomListItem
 
 @Composable
-fun CurrencyListItem() {
+internal fun CurrencyListItem(
+    currencyType: CurrencyType,
+    onClick: () -> Unit
+) {
     CustomListItem(
         modifier = Modifier
             .height(56.dp)
-            .clickable { }
+            .clickable { onClick() }
             .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(horizontal = 16.dp),
         content = {
@@ -35,7 +39,7 @@ fun CurrencyListItem() {
         trailing = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "₽",
+                    text = currencyType.str,
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyLarge
                 )

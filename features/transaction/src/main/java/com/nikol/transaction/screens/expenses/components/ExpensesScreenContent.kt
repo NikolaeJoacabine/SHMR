@@ -23,8 +23,15 @@ fun ExpensesScreenContent(
     when (state) {
         is ExpensesScreenState.Content -> {
             Column(modifier = modifier) {
-                TotalRow(total = formatAmount(state.total.toString()))
-                TransactionsList(transactions = state.expenses, onAction = onAction)
+                TotalRow(
+                    total = formatAmount(state.total.toString()),
+                    state.currencyType
+                )
+                TransactionsList(
+                    transactions = state.expenses,
+                    onAction = onAction,
+                    currencyType = state.currencyType
+                )
             }
         }
 

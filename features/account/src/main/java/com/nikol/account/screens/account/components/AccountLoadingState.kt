@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AccountLoadingState(padding: PaddingValues) {
+internal fun AccountLoadingState(padding: PaddingValues) {
     Box(
         modifier = Modifier
             .fillMaxSize()

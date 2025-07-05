@@ -26,7 +26,6 @@ import com.nikol.navigation.IncomeGraph
 import com.nikol.navigation.SettingsGraph
 import com.nikol.yandexschool.R
 import com.nikol.yandexschool.ui.nav.FinancialDetectiveNavGraph
-import com.nikol.yandexschool.ui.nav.Splash
 import com.nikol.yandexschool.ui.nav.TopLevelRoute
 
 @Composable
@@ -48,7 +47,7 @@ fun FinancialDetectiveApp(modifier: Modifier = Modifier, listFeature: List<Featu
 
     Scaffold(
         modifier = modifier, bottomBar = {
-            if (currentRoute != null && currentRoute != Splash.serializer().descriptor.serialName) {
+            if (currentRoute != null) {
                 NavigationBar {
                     list.forEach { topLevelRoute ->
                         NavigationBarItem(

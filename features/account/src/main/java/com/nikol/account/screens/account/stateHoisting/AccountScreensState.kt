@@ -1,11 +1,12 @@
 package com.nikol.account.screens.account.stateHoisting
 
 import com.nikol.account.models.AccountUi
+import com.nikol.domain.model.CurrencyType
 
 /**
  * Состояния экрана аккаунтов, отражающие текущее состояние UI.
  */
-sealed class AccountScreensState {
+internal sealed class AccountScreensState {
     /** Состояние загрузки данных. */
     object Loading : AccountScreensState()
 
@@ -19,5 +20,9 @@ sealed class AccountScreensState {
     object NoInternet : AccountScreensState()
 
     /** Состояние с успешно загруженными данными аккаунтов. */
-    data class Content(val list: List<AccountUi>) : AccountScreensState()
+    data class Content(
+        val list: List<AccountUi>,
+        val currency: List<CurrencyType> = emptyList(),
+        val currentCurrency: CurrencyType
+    ) : AccountScreensState()
 }

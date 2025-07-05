@@ -23,8 +23,15 @@ fun IncomeScreenContent(
     when (state) {
         is IncomeScreenState.Date -> {
             Column(modifier = modifier) {
-                IncomeTotalRow(total = formatAmount(state.total.toString()))
-                IncomeTransactionsList(transactions = state.list, onAction = onAction)
+                IncomeTotalRow(
+                    total = formatAmount(state.total.toString()),
+                    currencyType = state.currencyType
+                )
+                IncomeTransactionsList(
+                    transactions = state.list,
+                    onAction = onAction,
+                    currencyType = state.currencyType
+                )
             }
         }
 

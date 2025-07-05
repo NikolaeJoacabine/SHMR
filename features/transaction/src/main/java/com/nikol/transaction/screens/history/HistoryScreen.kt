@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nikol.transaction.screens.expenses.stateHoisting.ExpensesScreenAction
 import com.nikol.transaction.screens.history.component.ErrorDateDialog
 import com.nikol.transaction.screens.history.component.HistoryContentSection
 import com.nikol.transaction.screens.history.component.HistoryTopBar
@@ -18,6 +19,7 @@ import com.nikol.transaction.screens.history.component.ShowDatePickerDialog
 import com.nikol.transaction.screens.history.stateHoisting.HistoryScreenAction
 import com.nikol.transaction.screens.history.stateHoisting.HistoryScreenEffect
 import com.nikol.transaction.screens.history.stateHoisting.HistoryScreenState
+import com.nikol.transaction.screens.income.stateHoisting.IncomeScreenAction
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,6 +50,8 @@ fun HistoryScreen(
             }
         }
     }
+
+
 
     Scaffold(
         topBar = { HistoryTopBar { viewModel.onAction(HistoryScreenAction.OnBackButtonClicked) } }

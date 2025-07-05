@@ -1,5 +1,6 @@
 package com.nikol.transaction.screens.expenses.stateHoisting
 
+import com.nikol.domain.model.CurrencyType
 import com.nikol.transaction.models.TransactionUi
 
 /**
@@ -17,7 +18,8 @@ sealed class ExpensesScreenState {
      */
     data class Content(
         val expenses: List<TransactionUi>,
-        val total: Int
+        val total: Int,
+        val currencyType: CurrencyType
     ) : ExpensesScreenState()
 
     /** Состояние, когда список расходов пуст. */

@@ -38,6 +38,11 @@ fun IncomeScreen(
             }
         }
     }
+
+    LaunchedEffect(Unit) {
+        viewModel.onIntent(IncomeScreenAction.OnScreenEntered)
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {

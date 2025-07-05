@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.nikol.domain.model.CurrencyType
 import com.nikol.domain.model.TransactionType
 import com.nikol.domain.state.TransactionState
 import com.nikol.domain.useCase.CalculateTotalUseCase
+import com.nikol.domain.useCase.GetCurrentCurrencyUseCase
 import com.nikol.domain.useCase.GetTransactionsForTodayUseCase
 import com.nikol.transaction.models.utils.toUi
 import com.nikol.transaction.screens.expenses.stateHoisting.ExpensesScreenAction
@@ -37,7 +39,8 @@ import javax.inject.Inject
  */
 class ExpensesScreenViewModel(
     private val getTransactionsForTodayUseCase: GetTransactionsForTodayUseCase,
-    private val calculateTotalUseCase: CalculateTotalUseCase
+    private val calculateTotalUseCase: CalculateTotalUseCase,
+    private val getCurrentCurrencyUseCase: GetCurrentCurrencyUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<ExpensesScreenState>(ExpensesScreenState.Loading)
@@ -45,11 +48,6 @@ class ExpensesScreenViewModel(
 
     private val _effect = MutableSharedFlow<ExpensesScreenEffect>()
     val effect: SharedFlow<ExpensesScreenEffect> = _effect
-
-    init {
-        Log.d("ViewModel", "ExpensesScreenViewModel created")
-        loadTransaction()
-    }
 
     fun onIntent(action: ExpensesScreenAction) {
         when (action) {
@@ -94,8 +92,9 @@ class ExpensesScreenViewModel(
                             _state.value = ExpensesScreenState.EmptyList
                         } else {
                             _state.value = ExpensesScreenState.Content(
-                                result.items.map { it.toUi() },
-                                calculateTotalUseCase(result.items)
+                                expenses = result.items.map { it.toUi() },
+                                total = calculateTotalUseCase(result.items),
+                                currencyType = getCurrency()
                             )
                         }
                     }
@@ -112,6 +111,10 @@ class ExpensesScreenViewModel(
         }
     }
 
+    private suspend fun getCurrency(): CurrencyType {
+        return getCurrentCurrencyUseCase()
+    }
+
     /**
      * Фабрика для создания экземпляра [ExpensesScreenViewModel].
      *
@@ -120,14 +123,16 @@ class ExpensesScreenViewModel(
      */
     class Factory @AssistedInject constructor(
         private val getTransactionsForTodayUseCase: GetTransactionsForTodayUseCase,
-        private val calculateTotalUseCase: CalculateTotalUseCase
+        private val calculateTotalUseCase: CalculateTotalUseCase,
+        private val getCurrentCurrencyUseCase: GetCurrentCurrencyUseCase
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ExpensesScreenViewModel(
                 getTransactionsForTodayUseCase,
-                calculateTotalUseCase
+                calculateTotalUseCase,
+                getCurrentCurrencyUseCase
             ) as T
         }
 

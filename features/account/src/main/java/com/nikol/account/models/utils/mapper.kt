@@ -4,7 +4,7 @@ import com.nikol.account.models.AccountUi
 import com.nikol.domain.model.Account
 import com.nikol.ui.utils.formatAmountToUi
 
-fun Account.toUi(): AccountUi {
+internal fun Account.toUi(): AccountUi {
     return AccountUi(
         id = id,
         userId = userId,

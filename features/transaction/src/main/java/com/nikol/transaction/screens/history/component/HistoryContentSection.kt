@@ -60,8 +60,8 @@ fun HistoryContentSection(
         )
 
         is HistoryTransaction.Content -> {
-            HistoryTotalAmount(txState.totalSum)
-            HistoryList(transactions = txState.transactions)
+            HistoryTotalAmount(amount = txState.totalSum, currencyType = content.currencyType)
+            HistoryList(transactions = txState.transactions, currencyType = content.currencyType)
         }
     }
 }

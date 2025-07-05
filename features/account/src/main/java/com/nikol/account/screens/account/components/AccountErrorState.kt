@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AccountErrorState(padding: PaddingValues) {
+internal fun AccountErrorState(padding: PaddingValues) {
     Box(
         modifier = Modifier
             .fillMaxSize()
