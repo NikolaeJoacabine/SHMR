@@ -4,12 +4,14 @@ import com.nikol.data.model.AccountDTO
 import com.nikol.data.model.AccountEditDTO
 import com.nikol.data.model.AccountUpdateRequestDTO
 import com.nikol.data.model.ArticlesDTO
+import com.nikol.data.model.CreateTransactionDTO
 import com.nikol.data.model.TransactionDTO
 import com.nikol.domain.model.AccountUpdateRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -70,4 +72,21 @@ interface FinanceAPI {
 
     @DELETE("accounts/{id}")
     suspend fun deleteAccount(@Path("id") id: Int): Response<Unit>
+
+    @POST("transactions")
+    suspend fun createTransaction(
+        @Body createTransactionDTO: CreateTransactionDTO
+    ): Response<Unit>
+
+    @GET("transactions/{id}")
+    suspend fun getTransactionById(@Path("id") id: Int): Response<TransactionDTO>
+
+    @PUT("transactions/{id}")
+    suspend fun updateTransaction(
+        @Path("id") id: Int,
+        @Body createTransactionDTO: CreateTransactionDTO
+    ): Response<Unit>
+
+    @DELETE("transactions/{id}")
+    suspend fun deleteTransaction(@Path("id") id: Int): Response<Unit>
 }

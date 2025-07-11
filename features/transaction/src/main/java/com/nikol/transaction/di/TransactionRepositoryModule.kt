@@ -6,6 +6,9 @@ import com.nikol.data.account.local.LocalAccountRepository
 import com.nikol.data.account.local.LocalAccountRepositoryImpl
 import com.nikol.data.account.remote.RemoteAccountRepository
 import com.nikol.data.account.remote.RemoteAccountRepositoryImpl
+import com.nikol.data.articles.ArticlesRepositoryImpl
+import com.nikol.data.articles.remote.RemoteArticlesRepository
+import com.nikol.data.articles.remote.RemoteArticlesRepositoryImpl
 import com.nikol.data.network.FinanceAPI
 import com.nikol.data.network.NetworkStatusProvider
 import com.nikol.data.transaction.TransactionRepositoryImpl
@@ -14,6 +17,7 @@ import com.nikol.data.transaction.remote.RemoteTransactionRepositoryImpl
 import com.nikol.data.util.timeProvider.DefaultTimeProvider
 import com.nikol.domain.common.TimeProvider
 import com.nikol.domain.repository.AccountRepository
+import com.nikol.domain.repository.ArticlesRepository
 import com.nikol.domain.repository.TransactionRepository
 import dagger.Module
 import dagger.Provides
@@ -71,5 +75,25 @@ class TransactionRepositoryModule {
             remoteAccountRepository,
             localAccountRepository
         )
+    }
+
+    @TransactionComponentScope
+    @Provides
+    fun provideRemoteArticlesRepository(
+        financeAPI: FinanceAPI,
+        networkStatusProvider: NetworkStatusProvider
+    ): RemoteArticlesRepository {
+        return RemoteArticlesRepositoryImpl(
+            financeAPI,
+            networkStatusProvider
+        )
+    }
+
+    @TransactionComponentScope
+    @Provides
+    fun provideArticlesRepository(
+        remoteArticlesRepository: RemoteArticlesRepository
+    ): ArticlesRepository {
+        return ArticlesRepositoryImpl(remoteArticlesRepository)
     }
 }

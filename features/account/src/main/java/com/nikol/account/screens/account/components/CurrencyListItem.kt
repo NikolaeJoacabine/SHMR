@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nikol.account.R
 import com.nikol.domain.model.CurrencyType
+import com.nikol.ui.customUiComponents.ChevronRight
 import com.nikol.ui.customUiComponents.CustomListItem
 
 @Composable
@@ -43,11 +44,7 @@ internal fun CurrencyListItem(
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyLarge
                 )
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.3f)
-                )
+                ChevronRight()
             }
         }
     )

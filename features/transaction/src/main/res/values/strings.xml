@@ -26,4 +26,13 @@
     <string name="sync">Sync</string>
     <string name="language">Language</string>
     <string name="about">About</string>
+    <string name="my_expenses">My expenses</string>
+    <string name="my_income">My income</string>
+    <string name="adding_transaction">Adding</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="coment">Comment</string>
+    <string name="create_transaction">Create transaction</string>
+    <string name="editing">Editing</string>
+    <string name="delete_account">Delete account</string>
 </resources>

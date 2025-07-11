@@ -1,6 +1,12 @@
 package com.nikol.domain.repository
 
+import com.nikol.domain.model.CreateTransaction
+import com.nikol.domain.model.UpdateTransaction
+import com.nikol.domain.state.CreateTransactionState
+import com.nikol.domain.state.DeleteTransactionState
+import com.nikol.domain.state.DetailTransactionState
 import com.nikol.domain.state.TransactionState
+import com.nikol.domain.state.UpdateTransactionState
 import java.time.LocalDate
 
 /**
@@ -31,4 +37,17 @@ interface TransactionRepository {
         startDate: LocalDate,
         endDate: LocalDate
     ): TransactionState
+
+    suspend fun createTransaction(
+        createTransaction: CreateTransaction
+    ): CreateTransactionState
+
+    suspend fun getDetailTransaction(id: Int): DetailTransactionState
+
+    suspend fun updateTransaction(
+        id: Int,
+        updateTransaction: UpdateTransaction
+    ): UpdateTransactionState
+
+    suspend fun deleteTransaction(id: Int): DeleteTransactionState
 }

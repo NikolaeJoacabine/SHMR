@@ -23,7 +23,7 @@ import com.nikol.ui.customUiComponents.TransactionTopBar
 @Composable
 fun IncomeScreen(
     viewModel: IncomeScreenViewModel,
-    onNavigateToDetail: (String) -> Unit,
+    onNavigateToDetail: (Int) -> Unit,
     onNavigateToHistory: () -> Unit,
     onNavigateToAdded: () -> Unit
 ) {

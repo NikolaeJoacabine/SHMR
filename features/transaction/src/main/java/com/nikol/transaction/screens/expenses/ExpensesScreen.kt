@@ -25,7 +25,7 @@ import com.nikol.ui.customUiComponents.TransactionTopBar
 @Composable
 fun ExpensesScreen(
     viewModel: ExpensesScreenViewModel,
-    onNavigateToDetail: (String) -> Unit,
+    onNavigateToDetail: (Int) -> Unit,
     onNavigateToAdded: () -> Unit,
     onNavigateToHistory: () -> Unit
 ) {
@@ -35,7 +35,7 @@ fun ExpensesScreen(
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                is ExpensesScreenEffect.NavigateToDetail -> onNavigateToDetail(effect.transactionId)
+                is ExpensesScreenEffect.NavigateToDetail -> onNavigateToDetail(effect.transactionId.toInt())
                 is ExpensesScreenEffect.NavigateToAdded -> onNavigateToAdded()
                 is ExpensesScreenEffect.NavigateToHistory -> onNavigateToHistory()
             }

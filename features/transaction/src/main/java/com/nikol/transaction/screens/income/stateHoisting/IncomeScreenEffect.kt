@@ -17,5 +17,5 @@ sealed class IncomeScreenEffect {
      *
      * @param transactionId идентификатор выбранной транзакции
      */
-    data class NavigateToDetail(val transactionId: String) : IncomeScreenEffect()
+    data class NavigateToDetail(val transactionId: Int) : IncomeScreenEffect()
 }

@@ -11,7 +11,7 @@ sealed class HistoryScreenAction {
     object OnScreenEntered : HistoryScreenAction()
 
     /** Нажатие на транзакцию с указанным идентификатором. */
-    data class OnTransactionClick(val id: String) : HistoryScreenAction()
+    data class OnTransactionClick(val id: Int) : HistoryScreenAction()
 
     /** Нажатие на кнопку перехода к аналитике. */
     data object OnAnalyticsButtonClick : HistoryScreenAction()

@@ -1,5 +1,6 @@
 package com.nikol.transaction.screens.history.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,19 +19,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.nikol.domain.model.CurrencyType
 import com.nikol.transaction.models.TransactionHistoryUi
+import com.nikol.ui.customUiComponents.ChevronRight
 import com.nikol.ui.customUiComponents.CustomListItem
 import com.nikol.ui.customUiComponents.EmojiIcon
 
 @Composable
 fun HistoryList(
     transactions: List<TransactionHistoryUi>,
-    currencyType: CurrencyType
+    currencyType: CurrencyType,
+    onTransactionClick: (Int) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         items(items = transactions, key = { it.id }) { transaction ->
             CustomListItem(
                 modifier = Modifier
                     .height(70.dp)
+                    .clickable{ onTransactionClick(transaction.id) }
                     .padding(horizontal = 16.dp),
                 lead = { EmojiIcon(transaction.emoji.toString()) },
                 content = {
@@ -62,11 +66,7 @@ fun HistoryList(
                             text = transaction.createdAt, style = MaterialTheme.typography.bodyLarge
                         )
                     }
-                    Icon(
-                        Icons.Default.KeyboardArrowRight,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.tertiary.copy(0.3f)
-                    )
+                    ChevronRight()
                 }
             )
         }

@@ -61,7 +61,10 @@ fun HistoryContentSection(
 
         is HistoryTransaction.Content -> {
             HistoryTotalAmount(amount = txState.totalSum, currencyType = content.currencyType)
-            HistoryList(transactions = txState.transactions, currencyType = content.currencyType)
+            HistoryList(
+                transactions = txState.transactions,
+                currencyType = content.currencyType,
+                onTransactionClick = { onAction(HistoryScreenAction.OnTransactionClick(it)) })
         }
     }
 }

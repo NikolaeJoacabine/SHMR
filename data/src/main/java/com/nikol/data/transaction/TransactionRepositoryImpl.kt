@@ -1,8 +1,15 @@
 package com.nikol.data.transaction
 
 import com.nikol.data.transaction.remote.RemoteTransactionRepository
+import com.nikol.data.util.mapper.toData
+import com.nikol.domain.model.CreateTransaction
+import com.nikol.domain.model.UpdateTransaction
 import com.nikol.domain.repository.TransactionRepository
+import com.nikol.domain.state.CreateTransactionState
+import com.nikol.domain.state.DeleteTransactionState
+import com.nikol.domain.state.DetailTransactionState
 import com.nikol.domain.state.TransactionState
+import com.nikol.domain.state.UpdateTransactionState
 import java.time.LocalDate
 
 /**
@@ -42,5 +49,24 @@ class TransactionRepositoryImpl(
         endDate: LocalDate
     ): TransactionState {
         return remoteTransactionRepository.getTransactionsByPeriod(id, startDate, endDate)
+    }
+
+    override suspend fun createTransaction(createTransaction: CreateTransaction): CreateTransactionState {
+        return remoteTransactionRepository.createTransaction(createTransaction.toData())
+    }
+
+    override suspend fun getDetailTransaction(id: Int): DetailTransactionState {
+        return remoteTransactionRepository.getTransactionById(id)
+    }
+
+    override suspend fun updateTransaction(
+        id: Int,
+        updateTransaction: UpdateTransaction
+    ): UpdateTransactionState {
+        return remoteTransactionRepository.updateTransaction(id, updateTransaction.toData())
+    }
+
+    override suspend fun deleteTransaction(id: Int): DeleteTransactionState {
+        return remoteTransactionRepository.deleteTransaction(id)
     }
 }

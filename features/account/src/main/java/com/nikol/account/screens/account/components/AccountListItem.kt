@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.nikol.account.models.AccountUi
 import com.nikol.domain.model.CurrencyType
+import com.nikol.ui.customUiComponents.ChevronRight
 import com.nikol.ui.customUiComponents.CustomListItem
 import com.nikol.ui.customUiComponents.EmojiIcon
 
@@ -45,11 +46,7 @@ internal fun AccountListItem(
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodyLarge
                 )
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.3f)
-                )
+                ChevronRight()
             }
         }
     )

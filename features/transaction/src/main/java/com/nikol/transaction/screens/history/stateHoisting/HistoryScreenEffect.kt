@@ -9,10 +9,10 @@ import java.time.LocalDate
 sealed class HistoryScreenEffect {
 
     /** Навигация назад. */
-    object NavigateBack : HistoryScreenEffect()
+    data object NavigateBack : HistoryScreenEffect()
 
     /** Навигация на экран редактирования транзакции. */
-    object NavigateEditTransactionScreen : HistoryScreenEffect()
+    data class NavigateEditTransactionScreen(val id: Int) : HistoryScreenEffect()
 
     /** Навигация на экран аналитики. */
     object NavigateAnalyticScreen : HistoryScreenEffect()

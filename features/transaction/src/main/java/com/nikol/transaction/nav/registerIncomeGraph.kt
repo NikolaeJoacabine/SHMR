@@ -5,8 +5,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import com.nikol.domain.model.TransactionType
 import com.nikol.navigation.IncomeGraph
+import com.nikol.transaction.screens.add.AddTransactionScreen
+import com.nikol.transaction.screens.add.AddTransactionScreenViewModel
+import com.nikol.transaction.screens.add.di.AddTransactionScreenComponent
+import com.nikol.transaction.screens.edit.EditTransactionScreen
+import com.nikol.transaction.screens.edit.EditTransactionScreenViewModel
+import com.nikol.transaction.screens.edit.di.EditTransactionScreenComponent
 import com.nikol.transaction.screens.history.HistoryScreen
 import com.nikol.transaction.screens.history.HistoryScreenViewModel
 import com.nikol.transaction.screens.history.di.HistoryScreenComponent
@@ -21,10 +28,12 @@ import com.nikol.transaction.screens.income.di.IncomeScreenComponent
  * @param incomeComponent Dagger-компонент, предоставляющий зависимости для экрана доходов.
  * @param historyComponent Dagger-компонент, предоставляющий зависимости для экрана истории транзакций.
  */
-fun NavGraphBuilder.registerIncomeGraph(
+internal fun NavGraphBuilder.registerIncomeGraph(
     navController: NavHostController,
     incomeComponent: IncomeScreenComponent,
-    historyComponent: HistoryScreenComponent
+    historyComponent: HistoryScreenComponent,
+    addComponent: AddTransactionScreenComponent,
+    editComponent: EditTransactionScreenComponent,
 ) {
     navigation<IncomeGraph>(startDestination = Income) {
 
@@ -34,8 +43,8 @@ fun NavGraphBuilder.registerIncomeGraph(
             )
             IncomeScreen(
                 viewModel = viewModel,
-                onNavigateToDetail = {},
-                onNavigateToAdded = {},
+                onNavigateToDetail = { navController.navigate(IncomeEdit(it)) },
+                onNavigateToAdded = { navController.navigate(IncomeAdd) },
                 onNavigateToHistory = {
                     navController.navigate(IncomeHistory)
                 }
@@ -51,7 +60,30 @@ fun NavGraphBuilder.registerIncomeGraph(
                 viewModel = viewModel,
                 onNavigateAnalyticScreen = {},
                 onNavigateBack = { navController.popBackStack() },
-                onNavigateToEditTransactionScreen = {}
+                onNavigateToEditTransactionScreen = {
+                    navController.navigate(IncomeEdit(it))
+                }
+            )
+        }
+
+        composable<IncomeAdd> {
+            val viewModel = viewModel<AddTransactionScreenViewModel>(
+                factory = addComponent.viewModelFactory().create(TransactionType.Income)
+            )
+            AddTransactionScreen(
+                viewModel = viewModel,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable<IncomeEdit> {
+            val id = it.toRoute<IncomeEdit>().id
+            val viewModel = viewModel<EditTransactionScreenViewModel>(
+                factory = editComponent.viewModelFactory().create(id, TransactionType.Income)
+            )
+            EditTransactionScreen(
+                viewModel = viewModel,
+                navigateBack = { navController.popBackStack() }
             )
         }
     }

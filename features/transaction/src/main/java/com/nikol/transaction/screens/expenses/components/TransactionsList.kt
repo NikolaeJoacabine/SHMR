@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.nikol.domain.model.CurrencyType
 import com.nikol.transaction.models.TransactionUi
 import com.nikol.transaction.screens.expenses.stateHoisting.ExpensesScreenAction
+import com.nikol.ui.customUiComponents.ChevronRight
 import com.nikol.ui.customUiComponents.CustomListItem
 import com.nikol.ui.customUiComponents.EmojiIcon
 
@@ -55,10 +56,7 @@ fun TransactionsList(
                         text = "${transaction.amount} ${currencyType.str}",
                         style = MaterialTheme.typography.bodyLarge
                     )
-                    Icon(
-                        Icons.Default.KeyboardArrowRight,
-                        contentDescription = null
-                    )
+                    ChevronRight()
                 }
             )
         }
