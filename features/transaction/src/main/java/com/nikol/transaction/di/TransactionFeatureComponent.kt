@@ -3,6 +3,7 @@ package com.nikol.transaction.di
 import com.nikol.di.FeatureDependencies
 import com.nikol.domain.common.TimeProvider
 import com.nikol.domain.repository.AccountRepository
+import com.nikol.domain.repository.ArticlesRepository
 import com.nikol.domain.repository.TransactionRepository
 import dagger.Component
 
@@ -22,5 +23,6 @@ interface TransactionFeatureComponent {
 
     fun transactionRepository(): TransactionRepository
     fun accountRepository(): AccountRepository
+    fun articlesRepository(): ArticlesRepository
     fun timeProvider(): TimeProvider
 }

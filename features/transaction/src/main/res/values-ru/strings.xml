@@ -26,4 +26,13 @@
     <string name="sync">Синхронизация</string>
     <string name="language">Язык</string>
     <string name="about">О программе</string>
+    <string name="my_expenses">Мои расходы</string>
+    <string name="my_income">Мои доходы</string>
+    <string name="adding_transaction">Добавление</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+    <string name="coment">Комментарий</string>
+    <string name="create_transaction">Создать транзакцию</string>
+    <string name="editing">Редактирование</string>
+    <string name="delete_account">Удалить транзакцию</string>
 </resources>

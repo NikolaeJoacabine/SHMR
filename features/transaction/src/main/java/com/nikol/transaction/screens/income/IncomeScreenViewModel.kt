@@ -72,7 +72,7 @@ class IncomeScreenViewModel(
 
             is IncomeScreenAction.IncomeClicked -> {
                 viewModelScope.launch {
-                    _effect.emit(IncomeScreenEffect.NavigateToDetail(action.id.toString()))
+                    _effect.emit(IncomeScreenEffect.NavigateToDetail(action.id))
                 }
             }
         }

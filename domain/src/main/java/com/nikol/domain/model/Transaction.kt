@@ -36,10 +36,19 @@ data class Transaction(
  */
 data class TransactionDetail(
     val id: Int,
-    val incomeType: Articles,
-    val accountType: Account,
-    val comment: String,
+    val incomeType: CategoryType,
+    val accountType: AccountType,
+    val comment: String? = null,
     val amount: String,
     val createdAt: String,
     val updatedAt: String,
+)
+data class AccountType(
+    val id: Int,
+    val name: String
+)
+
+data class CategoryType(
+    val id: Int,
+    val name: String,
 )
