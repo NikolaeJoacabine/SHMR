@@ -44,4 +44,6 @@ interface RemoteTransactionRepository {
     suspend fun updateTransaction(id: Int, createTransactionDTO: CreateTransactionDTO): UpdateTransactionState
 
     suspend fun deleteTransaction(id: Int): DeleteTransactionState
+
+    suspend fun getAllTransactions(): TransactionState
 }

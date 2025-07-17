@@ -1,7 +1,6 @@
-package com.nikol.data.account.local
+package com.nikol.data.account.local.dataStore
 
 import android.content.Context
-import android.icu.util.Currency
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey

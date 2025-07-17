@@ -5,6 +5,7 @@ import com.nikol.data.model.AccountEditDTO
 import com.nikol.data.model.AccountUpdateRequestDTO
 import com.nikol.data.model.ArticlesDTO
 import com.nikol.data.model.CreateTransactionDTO
+import com.nikol.data.model.CreateTransactionResultDTO
 import com.nikol.data.model.TransactionDTO
 import com.nikol.domain.model.AccountUpdateRequest
 import retrofit2.Response
@@ -76,7 +77,7 @@ interface FinanceAPI {
     @POST("transactions")
     suspend fun createTransaction(
         @Body createTransactionDTO: CreateTransactionDTO
-    ): Response<Unit>
+    ): Response<CreateTransactionResultDTO>
 
     @GET("transactions/{id}")
     suspend fun getTransactionById(@Path("id") id: Int): Response<TransactionDTO>

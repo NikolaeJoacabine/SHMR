@@ -1,6 +1,8 @@
 package com.nikol.data.account.local
 
 import android.icu.util.Currency
+import com.nikol.data.account.local.database.AccountEntity
+import com.nikol.domain.model.Account
 
 /**
  * Интерфейс для локального хранилища текущего идентификатора аккаунта.
@@ -25,4 +27,21 @@ interface LocalAccountRepository {
     suspend fun getCurrentCurrency(): String
 
     suspend fun saveCurrency(currency: String)
+
+    suspend fun getAllAccounts(): List<AccountEntity>
+
+    suspend fun insertAll(accounts: List<AccountEntity>)
+
+    suspend fun getAccountById(id: Int): AccountEntity?
+
+    suspend fun deleteAccount(id: Int): Boolean
+
+    suspend fun insertAccount(account: AccountEntity)
+    suspend fun upsertAll(accounts: List<AccountEntity>)
+    suspend fun getTransactionCountForAccount(id: Int): Int
+    suspend fun getDeletedAccountIds(): List<Int>
+    suspend fun removeDeletedId(id: Int)
+    suspend fun saveDeletedAccountId(id: Int)
+    suspend fun updateAccount(account: AccountEntity)
+    suspend fun getUnsyncedAccounts(): List<AccountEntity>
 }

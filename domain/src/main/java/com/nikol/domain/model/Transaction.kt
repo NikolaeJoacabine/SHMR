@@ -20,7 +20,10 @@ data class Transaction(
     val emoji: String? = null,
     val amount: Int,
     val createdAt: Instant,
-    val isIncome: Boolean
+    val isIncome: Boolean,
+    val accountId: Int,
+    val articleId: Int,
+    val updatedAt: Instant,
 )
 
 /**
@@ -51,4 +54,5 @@ data class AccountType(
 data class CategoryType(
     val id: Int,
     val name: String,
+    val isIncome: Boolean
 )

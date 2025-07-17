@@ -11,6 +11,7 @@ import com.nikol.domain.state.AccountDeleteState
 import com.nikol.domain.state.AccountEditState
 import com.nikol.domain.state.AccountState
 import retrofit2.HttpException
+import javax.inject.Inject
 
 /**
  * Реализация [RemoteAccountRepository], которая получает данные аккаунта
@@ -24,7 +25,7 @@ import retrofit2.HttpException
  * @property financeAPI API для взаимодействия с удалённым сервером.
  * @property networkStatusProvider провайдер состояния сети.
  */
-class RemoteAccountRepositoryImpl(
+class RemoteAccountRepositoryImpl @Inject constructor(
     private val financeAPI: FinanceAPI,
     private val networkStatusProvider: NetworkStatusProvider
 ) : RemoteAccountRepository {

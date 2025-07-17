@@ -19,9 +19,9 @@ data class ArticlesDTO(
     @SerialName("emoji")
     val emoji: String? = null,
     @SerialName("id")
-    val id: Int? = null,
+    val id: Int,
     @SerialName("isIncome")
-    val isIncome: Boolean? = null,
+    val isIncome: Boolean,
     @SerialName("name")
-    val name: String? = null
+    val name: String
 )

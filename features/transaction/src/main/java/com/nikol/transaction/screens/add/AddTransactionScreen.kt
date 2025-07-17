@@ -67,6 +67,11 @@ internal fun AddTransactionScreen(
                     dialogMessage.value = "Счёт или категория не найдены"
                     showDialog.value = true
                 }
+
+                is AddTransactionScreenEffect.OnOfflineSavedTransaction -> {
+                    Toast.makeText(context, "Создано локально.", Toast.LENGTH_SHORT).show()
+                    onNavigateBack()
+                }
             }
         }
     }

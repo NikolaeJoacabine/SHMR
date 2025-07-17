@@ -5,6 +5,7 @@ import com.nikol.data.network.NetworkStatusProvider
 import com.nikol.data.util.mapper.toDomain
 import com.nikol.data.util.retryOnServerError
 import com.nikol.domain.state.ArticlesState
+import jakarta.inject.Inject
 import retrofit2.HttpException
 
 /**
@@ -12,7 +13,7 @@ import retrofit2.HttpException
  *
  * Использует [financeAPI] для сетевых запросов и [networkStatusProvider] для проверки подключения к сети.
  */
-class RemoteArticlesRepositoryImpl(
+class RemoteArticlesRepositoryImpl @Inject constructor(
     private val financeAPI: FinanceAPI,
     private val networkStatusProvider: NetworkStatusProvider
 ) : RemoteArticlesRepository {

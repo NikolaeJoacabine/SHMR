@@ -56,6 +56,8 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.lottie.compose)
+
     implementation(project(":domain"))
     implementation(project(":data"))
 
@@ -67,5 +69,6 @@ dependencies {
     implementation(project(":features:account"))
     implementation(project(":features:articles"))
     implementation(project(":features:settings"))
+
 
 }

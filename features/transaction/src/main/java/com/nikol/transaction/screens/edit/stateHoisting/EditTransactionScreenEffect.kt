@@ -11,7 +11,8 @@ sealed class EditTransactionScreenEffect {
     data object OpenPickTimeDialog : EditTransactionScreenEffect()
 
     data object SuccessfulUpdate : EditTransactionScreenEffect()
-
+    data object SuccessfulDeleteOffline : EditTransactionScreenEffect()
     object SuccessfulDelete : EditTransactionScreenEffect()
     object ShowNotFoundDialog : EditTransactionScreenEffect()
+    object SuccessfulUpdateOffline : EditTransactionScreenEffect()
 }

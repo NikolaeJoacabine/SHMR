@@ -49,7 +49,9 @@ fun HistoryScreen(
         }
     }
 
-
+    LaunchedEffect(Unit) {
+        viewModel.onAction(HistoryScreenAction.OnScreenEntered)
+    }
 
     Scaffold(
         topBar = { HistoryTopBar { viewModel.onAction(HistoryScreenAction.OnBackButtonClicked) } }

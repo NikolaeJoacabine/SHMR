@@ -2,6 +2,7 @@ package com.nikol.transaction.screens.history.component
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,11 +25,11 @@ fun HistoryTopBar(onBackClick: () -> Unit) {
         title = { Text(stringResource(R.string.my_history)) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
         },
         actions = {
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { }) {
                 Icon(
                     painter = painterResource(R.drawable.analys),
                     contentDescription = null,
