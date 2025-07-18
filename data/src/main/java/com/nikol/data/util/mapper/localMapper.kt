@@ -104,7 +104,8 @@ fun TransactionEntity.toDomain(
         comment = comment.sanitizeComment(),
         amount = amount.toInt().toString(),
         createdAt = createdAtFromServer.toString(),
-        updatedAt = updatedAtFromServer.toString()
+        updatedAt = updatedAtFromServer.toString(),
+        lastSynchronized = lastSyncedAt
     )
 }
 

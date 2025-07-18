@@ -45,6 +45,7 @@ data class TransactionDetail(
     val amount: String,
     val createdAt: String,
     val updatedAt: String,
+    val lastSynchronized: Long?
 )
 data class AccountType(
     val id: Int,

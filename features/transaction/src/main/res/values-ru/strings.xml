@@ -15,9 +15,9 @@
     <string name="beginning">Начало</string>
     <string name="end">Конец</string>
     <string name="amount">Сумма</string>
-    <string name="emty_expenses">Сегодня вы не совершкили расходов</string>
+    <string name="empty_expenses">Сегодня вы не совершкили расходов</string>
     <string name="retry">Повторить</string>
-    <string name="emty_income">Сегодня у вас нет доходов</string>
+    <string name="empty_income">Сегодня у вас нет доходов</string>
     <string name="dark_theme">Тёмная тема</string>
     <string name="primary_color">Основной цвет</string>
     <string name="sounds">Звуки</string>
@@ -31,8 +31,9 @@
     <string name="adding_transaction">Добавление</string>
     <string name="date">Дата</string>
     <string name="time">Время</string>
-    <string name="coment">Комментарий</string>
+    <string name="comment">Комментарий</string>
     <string name="create_transaction">Создать транзакцию</string>
     <string name="editing">Редактирование</string>
     <string name="delete_account">Удалить транзакцию</string>
+    <string name="analysis">Анализ</string>
 </resources>

@@ -37,7 +37,7 @@ fun IncomeScreenContent(
 
         is IncomeScreenState.Empty -> {
             Box(modifier = modifier, contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.emty_income))
+                Text(stringResource(R.string.empty_income))
             }
         }
 

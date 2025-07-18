@@ -100,8 +100,14 @@ internal fun EditTransactionContent(
             value = transaction.comment ?: "",
             onValueChange = { onAction(EditTransactionScreenAction.UpdateComment(it)) },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text(stringResource(R.string.coment)) }
+            placeholder = { Text(stringResource(R.string.comment)) }
         )
+        Spacer(Modifier.size(15.dp))
+        Text(
+            text = "Синхронизированно: ${transaction.lastSynchronized ?: "никогда"}",
+            style = MaterialTheme.typography.bodySmall
+        )
+
 
         Spacer(Modifier.size(32.dp))
 

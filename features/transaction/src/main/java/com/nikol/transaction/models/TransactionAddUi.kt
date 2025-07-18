@@ -9,5 +9,6 @@ data class TransactionAddUi(
     val articlesId: Int? = null,
     val amount: Int? = null,
     val dateTime: LocalDateTime = LocalDateTime.now(),
-    val comment: String? = null
+    val comment: String? = null,
+    val lastSynchronized: String? = null
 )

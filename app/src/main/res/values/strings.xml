@@ -14,9 +14,9 @@
     <string name="beginning">Beginning</string>
     <string name="end">End</string>
     <string name="amount">Amount</string>
-    <string name="emty_expenses">You didn\'t make any expenses today</string>
+    <string name="empty_expenses">You didn\'t make any expenses today</string>
     <string name="retry">Retry</string>
-    <string name="emty_income">You have no income today</string>
+    <string name="empty_income">You have no income today</string>
     <string name="dark_theme">Dark theme</string>
     <string name="primary_color">Primary color</string>
     <string name="sounds">Sounds</string>

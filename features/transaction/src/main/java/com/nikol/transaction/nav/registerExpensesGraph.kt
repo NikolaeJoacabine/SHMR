@@ -11,6 +11,9 @@ import com.nikol.navigation.ExpenseGraph
 import com.nikol.transaction.screens.add.AddTransactionScreen
 import com.nikol.transaction.screens.add.AddTransactionScreenViewModel
 import com.nikol.transaction.screens.add.di.AddTransactionScreenComponent
+import com.nikol.transaction.screens.analysis.AnalysisScreen
+import com.nikol.transaction.screens.analysis.AnalysisScreenViewModel
+import com.nikol.transaction.screens.analysis.di.AnalysisScreenComponent
 import com.nikol.transaction.screens.edit.EditTransactionScreen
 import com.nikol.transaction.screens.edit.EditTransactionScreenViewModel
 import com.nikol.transaction.screens.edit.di.EditTransactionScreenComponent
@@ -35,6 +38,7 @@ internal fun NavGraphBuilder.registerExpensesGraph(
     historyComponent: HistoryScreenComponent,
     addComponent: AddTransactionScreenComponent,
     editComponent: EditTransactionScreenComponent,
+    analysisComponent: AnalysisScreenComponent
 ) {
     navigation<ExpenseGraph>(startDestination = Expenses) {
 
@@ -64,7 +68,7 @@ internal fun NavGraphBuilder.registerExpensesGraph(
             )
             HistoryScreen(
                 viewModel = viewModel,
-                onNavigateAnalyticScreen = {},
+                onNavigateAnalyticScreen = { navController.navigate(ExpensesAnalysis) },
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToEditTransactionScreen = {
                     navController.navigate(ExpensesEdit(it))
@@ -90,6 +94,16 @@ internal fun NavGraphBuilder.registerExpensesGraph(
             EditTransactionScreen(
                 viewModel = viewModel,
                 navigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable<ExpensesAnalysis>{
+            val viewModel = viewModel<AnalysisScreenViewModel>(
+                factory = analysisComponent.viewModelFactory().create(TransactionType.Expenses)
+            )
+            AnalysisScreen(
+                viewModel = viewModel,
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }

@@ -101,7 +101,7 @@ internal fun AddTransactionScreenContent(
         value = comment,
         onValueChange = onEditText,
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(stringResource(R.string.coment)) }
+        placeholder = { Text(stringResource(R.string.comment)) }
     )
     Spacer(Modifier.size(32.dp))
     Button(

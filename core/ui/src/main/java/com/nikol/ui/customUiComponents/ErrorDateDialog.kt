@@ -1,4 +1,4 @@
-package com.nikol.transaction.screens.history.component
+package com.nikol.ui.customUiComponents
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme

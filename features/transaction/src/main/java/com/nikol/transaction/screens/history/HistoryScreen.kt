@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nikol.transaction.screens.history.component.ErrorDateDialog
+import com.nikol.ui.customUiComponents.ErrorDateDialog
 import com.nikol.transaction.screens.history.component.HistoryContentSection
 import com.nikol.transaction.screens.history.component.HistoryTopBar
 import com.nikol.transaction.screens.history.stateHoisting.HistoryScreenAction
@@ -37,7 +37,10 @@ fun HistoryScreen(
             when (effect) {
                 is HistoryScreenEffect.NavigateAnalyticScreen -> onNavigateAnalyticScreen()
                 is HistoryScreenEffect.NavigateBack -> onNavigateBack()
-                is HistoryScreenEffect.NavigateEditTransactionScreen -> onNavigateToEditTransactionScreen(effect.id)
+                is HistoryScreenEffect.NavigateEditTransactionScreen -> onNavigateToEditTransactionScreen(
+                    effect.id
+                )
+
                 is HistoryScreenEffect.OpenDatePicker -> {
                     showDatePicker.value = effect.initialDate to effect.isStart
                 }
@@ -54,7 +57,12 @@ fun HistoryScreen(
     }
 
     Scaffold(
-        topBar = { HistoryTopBar { viewModel.onAction(HistoryScreenAction.OnBackButtonClicked) } }
+        topBar = {
+            HistoryTopBar(
+                onBackClick = { viewModel.onAction(HistoryScreenAction.OnBackButtonClicked) },
+                onClickAnalysis = { viewModel.onAction(HistoryScreenAction.OnAnalyticsButtonClick) }
+            )
+        }
     ) { padding ->
         Column(
             modifier = Modifier

@@ -119,7 +119,8 @@ fun TransactionDTO.toDomainDetail(): TransactionDetail {
         comment = comment,
         amount = amount?.toDoubleOrNull()?.toInt()?.toString() ?: "0",
         createdAt = createdAt ?: "",
-        updatedAt = updatedAt ?: ""
+        updatedAt = updatedAt ?: "",
+        lastSynchronized = System.currentTimeMillis()
     )
 }
 

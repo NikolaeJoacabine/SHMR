@@ -20,7 +20,10 @@ import com.nikol.transaction.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryTopBar(onBackClick: () -> Unit) {
+fun HistoryTopBar(
+    onBackClick: () -> Unit,
+    onClickAnalysis: () -> Unit
+) {
     CenterAlignedTopAppBar(
         title = { Text(stringResource(R.string.my_history)) },
         navigationIcon = {
@@ -29,7 +32,7 @@ fun HistoryTopBar(onBackClick: () -> Unit) {
             }
         },
         actions = {
-            IconButton(onClick = { }) {
+            IconButton(onClick = { onClickAnalysis() }) {
                 Icon(
                     painter = painterResource(R.drawable.analys),
                     contentDescription = null,

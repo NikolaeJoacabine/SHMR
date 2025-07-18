@@ -5,6 +5,7 @@ import com.nikol.domain.model.TransactionDetail
 import com.nikol.transaction.models.TransactionAddUi
 import com.nikol.transaction.models.TransactionHistoryUi
 import com.nikol.transaction.models.TransactionUi
+import com.nikol.ui.formatter.toDateTimeString
 import com.nikol.ui.utils.formatAmountToUi
 import com.nikol.ui.utils.formatCreatedAt
 import com.nikol.ui.utils.formatCreatedAtHistory
@@ -46,6 +47,7 @@ fun TransactionDetail.toUi(): TransactionAddUi {
         dateTime = Instant.parse(updatedAt)
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime(),
-        comment = comment
+        comment = comment,
+        lastSynchronized = lastSynchronized?.toDateTimeString()
     )
 }
