@@ -1,5 +1,9 @@
 package com.nikol.yandexschool.ui.splash
 
+import android.content.Context
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -12,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.work.WorkManager
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
@@ -20,6 +25,7 @@ import com.nikol.data.sync.SyncOrchestrator
 import com.nikol.yandexschool.R
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -27,30 +33,45 @@ internal fun SplashScreen(
     viewModel: SplashScreenViewModel,
     onGoToScreenAfterSplash: () -> Unit
 ) {
-    val dateLoad = remember { mutableStateOf(false) }
+    val dataLoaded = remember { mutableStateOf(false) }
+    val animationFinished = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.syncAllOrdered {
-            dateLoad.value = true
+            dataLoaded.value = true
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
-        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.file))
-        val logoAnimationState = animateLottieCompositionAsState(composition = composition)
-        LottieAnimation(
-            composition = composition,
-            progress = { logoAnimationState.progress },
-        )
-        if (logoAnimationState.isAtEnd && logoAnimationState.isPlaying && dateLoad.value) {
-            onGoToScreenAfterSplash()
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.file))
+    val animationState = animateLottieCompositionAsState(
+        composition = composition,
+        speed = 0.8f,
+        iterations = 1
+    )
+
+
+    LaunchedEffect(animationState.isAtEnd, dataLoaded.value) {
+        if (animationState.isAtEnd && dataLoaded.value) {
+            delay(300)
+            animationFinished.value = true
         }
     }
+
+    if (animationFinished.value) {
+        onGoToScreenAfterSplash()
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        LottieAnimation(
+            composition = composition,
+            progress = { animationState.progress },
+        )
+    }
 }
+
 
 class SplashScreenViewModel(
     private val orchestrator: SyncOrchestrator

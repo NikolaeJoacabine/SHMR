@@ -1,6 +1,10 @@
 package com.nikol.data.transaction.local.database
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.nikol.data.account.local.database.AccountEntity
 import com.nikol.data.articles.local.database.ArticleEntity
 import java.time.Instant

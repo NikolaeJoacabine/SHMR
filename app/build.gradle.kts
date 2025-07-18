@@ -57,6 +57,7 @@ dependencies {
     ksp(libs.dagger.compiler)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.lottie.compose)
+    implementation(libs.androidx.work.runtime.ktx)
 
     implementation(project(":domain"))
     implementation(project(":data"))

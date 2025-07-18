@@ -11,6 +11,8 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class])
 @Singleton
 interface AppComponent : FeatureDependencies {
+
+    fun inject(app: App)
     @Component.Factory
     interface Factory {
         fun create(@BindsInstance context: Context): AppComponent
