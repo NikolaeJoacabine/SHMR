@@ -12,4 +12,5 @@ internal sealed class AddTransactionScreenEffect {
     data object OpenDatePickerDialog : AddTransactionScreenEffect()
     data object OpenTimePickerDialog : AddTransactionScreenEffect()
     data object OnShowNotFoundDialog : AddTransactionScreenEffect()
+    data object OnOfflineSavedTransaction : AddTransactionScreenEffect()
 }

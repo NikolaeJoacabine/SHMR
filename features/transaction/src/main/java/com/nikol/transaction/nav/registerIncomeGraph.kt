@@ -11,6 +11,9 @@ import com.nikol.navigation.IncomeGraph
 import com.nikol.transaction.screens.add.AddTransactionScreen
 import com.nikol.transaction.screens.add.AddTransactionScreenViewModel
 import com.nikol.transaction.screens.add.di.AddTransactionScreenComponent
+import com.nikol.transaction.screens.analysis.AnalysisScreen
+import com.nikol.transaction.screens.analysis.AnalysisScreenViewModel
+import com.nikol.transaction.screens.analysis.di.AnalysisScreenComponent
 import com.nikol.transaction.screens.edit.EditTransactionScreen
 import com.nikol.transaction.screens.edit.EditTransactionScreenViewModel
 import com.nikol.transaction.screens.edit.di.EditTransactionScreenComponent
@@ -34,6 +37,7 @@ internal fun NavGraphBuilder.registerIncomeGraph(
     historyComponent: HistoryScreenComponent,
     addComponent: AddTransactionScreenComponent,
     editComponent: EditTransactionScreenComponent,
+    analysisComponent: AnalysisScreenComponent
 ) {
     navigation<IncomeGraph>(startDestination = Income) {
 
@@ -58,7 +62,7 @@ internal fun NavGraphBuilder.registerIncomeGraph(
             )
             HistoryScreen(
                 viewModel = viewModel,
-                onNavigateAnalyticScreen = {},
+                onNavigateAnalyticScreen = { navController.navigate(IncomeAnalysis) },
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToEditTransactionScreen = {
                     navController.navigate(IncomeEdit(it))
@@ -84,6 +88,16 @@ internal fun NavGraphBuilder.registerIncomeGraph(
             EditTransactionScreen(
                 viewModel = viewModel,
                 navigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable<IncomeAnalysis> {
+            val viewModel = viewModel<AnalysisScreenViewModel>(
+                factory = analysisComponent.viewModelFactory().create(TransactionType.Income)
+            )
+            AnalysisScreen(
+                viewModel = viewModel,
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }

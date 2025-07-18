@@ -15,6 +15,9 @@ internal data object ExpensesAdd
 internal data class ExpensesEdit(val id: Int)
 
 @Serializable
+internal data object ExpensesAnalysis
+
+@Serializable
 internal data object Income
 
 @Serializable
@@ -25,3 +28,6 @@ internal data object IncomeAdd
 
 @Serializable
 internal data class IncomeEdit(val id: Int)
+
+@Serializable
+internal data object IncomeAnalysis

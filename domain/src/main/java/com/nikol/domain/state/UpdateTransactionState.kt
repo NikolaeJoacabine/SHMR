@@ -5,4 +5,5 @@ sealed class UpdateTransactionState {
     data object Error : UpdateTransactionState()
     data object NoInternet : UpdateTransactionState()
     data object NotFound : UpdateTransactionState()
+    object OfflineUpdated : UpdateTransactionState()
 }

@@ -43,12 +43,25 @@ internal fun AddTransactionScreen(
                     Toast.makeText(context, "Транзакция добавлена", Toast.LENGTH_SHORT).show()
                     onNavigateBack()
                 }
-                is AddTransactionScreenEffect.OpenModalBottomSheetsWithAllAccount -> showBottomSheetAccount.value = true
-                is AddTransactionScreenEffect.OpenModalBottomSheetsWithAllArticles -> showBottomSheetArticles.value = true
-                is AddTransactionScreenEffect.CloseModalBottomSheetsWithAllAccount -> showBottomSheetAccount.value = false
-                is AddTransactionScreenEffect.CloseModalBottomSheetsWithAllArticles -> showBottomSheetArticles.value = false
-                is AddTransactionScreenEffect.CloseAmountDialog -> showAmountDialog.value = false
-                is AddTransactionScreenEffect.OpenAmountDialog -> showAmountDialog.value = true
+
+                is AddTransactionScreenEffect.OpenModalBottomSheetsWithAllAccount ->
+                    showBottomSheetAccount.value = true
+
+                is AddTransactionScreenEffect.OpenModalBottomSheetsWithAllArticles ->
+                    showBottomSheetArticles.value = true
+
+                is AddTransactionScreenEffect.CloseModalBottomSheetsWithAllAccount ->
+                    showBottomSheetAccount.value = false
+
+                is AddTransactionScreenEffect.CloseModalBottomSheetsWithAllArticles ->
+                    showBottomSheetArticles.value = false
+
+                is AddTransactionScreenEffect.CloseAmountDialog ->
+                    showAmountDialog.value = false
+
+                is AddTransactionScreenEffect.OpenAmountDialog ->
+                    showAmountDialog.value = true
+
                 is AddTransactionScreenEffect.OpenDatePickerDialog -> {
                     val currentState = viewModel.state.value
                     if (currentState is AddTransactionScreenState.Content) {
@@ -56,6 +69,7 @@ internal fun AddTransactionScreen(
                         selectedInitialDate.value = currentState.transaction.dateTime.toLocalDate()
                     }
                 }
+
                 is AddTransactionScreenEffect.OpenTimePickerDialog -> {
                     val currentState = viewModel.state.value
                     if (currentState is AddTransactionScreenState.Content) {
@@ -63,9 +77,15 @@ internal fun AddTransactionScreen(
                         initialTime.value = currentState.transaction.dateTime.toLocalTime()
                     }
                 }
+
                 is AddTransactionScreenEffect.OnShowNotFoundDialog -> {
                     dialogMessage.value = "Счёт или категория не найдены"
                     showDialog.value = true
+                }
+
+                is AddTransactionScreenEffect.OnOfflineSavedTransaction -> {
+                    Toast.makeText(context, "Создано локально.", Toast.LENGTH_SHORT).show()
+                    onNavigateBack()
                 }
             }
         }

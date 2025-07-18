@@ -7,6 +7,7 @@ import com.nikol.data.model.CreateTransactionDTO
 import com.nikol.data.model.TransactionDTO
 import com.nikol.data.util.formater.formatAmountToInt
 import com.nikol.data.util.formater.parseCreatedAt
+import com.nikol.data.util.sanitizeComment
 import com.nikol.domain.model.Account
 import com.nikol.domain.model.AccountType
 import com.nikol.domain.model.AccountUpdateRequest
@@ -16,8 +17,6 @@ import com.nikol.domain.model.CreateTransaction
 import com.nikol.domain.model.Transaction
 import com.nikol.domain.model.TransactionDetail
 import com.nikol.domain.model.UpdateTransaction
-import java.time.Instant
-import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Locale
 
@@ -33,11 +32,14 @@ fun TransactionDTO.toDomain(): Transaction {
     return Transaction(
         id = id ?: 1,
         category = categoryDTO?.name ?: "",
-        comment = if (comment == "") null else comment,
+        comment = comment.sanitizeComment(),
         emoji = categoryDTO?.emoji ?: "",
         amount = formatAmountToInt(amount),
         isIncome = categoryDTO?.isIncome == true,
-        createdAt = parseCreatedAt(createdAt)
+        createdAt = parseCreatedAt(createdAt),
+        accountId = accountDTO?.id ?: 1,
+        articleId = categoryDTO?.id ?: 1,
+        updatedAt = parseCreatedAt(updatedAt)
     )
 }
 
@@ -51,10 +53,10 @@ fun TransactionDTO.toDomain(): Transaction {
  */
 fun ArticlesDTO.toDomain(): Articles {
     return Articles(
-        id = id ?: 1,
-        name = name ?: "",
+        id = id ,
+        name = name ,
         emoji = emoji ?: "",
-        isIncome = isIncome == true
+        isIncome = isIncome
     )
 }
 
@@ -98,7 +100,7 @@ fun CreateTransaction.toData(): CreateTransactionDTO {
         categoryId = categoryId,
         amount = String.format(Locale.US, "%.2f", amount.toDouble()),
         transactionDate = isoDate,
-        comment = if (comment == "") null else comment
+        comment = comment.sanitizeComment()
     )
 }
 
@@ -107,7 +109,8 @@ fun TransactionDTO.toDomainDetail(): TransactionDetail {
         id = id ?: -1,
         incomeType = CategoryType(
             id = categoryDTO?.id ?: -1,
-            name = categoryDTO?.name ?: "Без категории"
+            name = categoryDTO?.name ?: "Без категории",
+            isIncome = categoryDTO?.isIncome ?: false
         ),
         accountType = AccountType(
             id = accountDTO?.id ?: -1,
@@ -116,7 +119,8 @@ fun TransactionDTO.toDomainDetail(): TransactionDetail {
         comment = comment,
         amount = amount?.toDoubleOrNull()?.toInt()?.toString() ?: "0",
         createdAt = createdAt ?: "",
-        updatedAt = updatedAt ?: ""
+        updatedAt = updatedAt ?: "",
+        lastSynchronized = System.currentTimeMillis()
     )
 }
 
@@ -131,6 +135,6 @@ fun UpdateTransaction.toData(): CreateTransactionDTO {
         categoryId = categoryId,
         amount = String.format(Locale.US, "%.2f", amount.toDouble()),
         transactionDate = isoDate,
-        comment = if (comment == "") null else comment
+        comment = comment.sanitizeComment()
     )
 }

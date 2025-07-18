@@ -128,6 +128,7 @@ internal class EditTransactionScreenViewModel(
             when (result) {
                 is UpdateTransactionState.Success -> emitEffect(EditTransactionScreenEffect.SuccessfulUpdate)
                 is UpdateTransactionState.NotFound -> emitEffect(EditTransactionScreenEffect.ShowNotFoundDialog)
+                is UpdateTransactionState.OfflineUpdated -> emitEffect(EditTransactionScreenEffect.SuccessfulUpdateOffline)
                 else -> _state.value = st
             }
         }
@@ -141,6 +142,10 @@ internal class EditTransactionScreenViewModel(
                 is DeleteTransactionState.Success -> emitEffect(EditTransactionScreenEffect.SuccessfulDelete)
                 is DeleteTransactionState.NotFound -> {
                     emitEffect(EditTransactionScreenEffect.ShowNotFoundDialog)
+                    _state.value = st
+                }
+                is DeleteTransactionState.OfflineDeleted -> {
+                    emitEffect(EditTransactionScreenEffect.SuccessfulDeleteOffline)
                     _state.value = st
                 }
                 else -> _state.value = st

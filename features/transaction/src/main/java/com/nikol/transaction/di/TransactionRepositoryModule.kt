@@ -1,99 +1,89 @@
 package com.nikol.transaction.di
 
 import com.nikol.data.account.AccountRepositoryImpl
-import com.nikol.data.account.local.AccountPreferencesDataSource
 import com.nikol.data.account.local.LocalAccountRepository
 import com.nikol.data.account.local.LocalAccountRepositoryImpl
 import com.nikol.data.account.remote.RemoteAccountRepository
 import com.nikol.data.account.remote.RemoteAccountRepositoryImpl
 import com.nikol.data.articles.ArticlesRepositoryImpl
+import com.nikol.data.articles.local.LocalArticlesRepository
+import com.nikol.data.articles.local.LocalArticlesRepositoryImpl
 import com.nikol.data.articles.remote.RemoteArticlesRepository
 import com.nikol.data.articles.remote.RemoteArticlesRepositoryImpl
-import com.nikol.data.network.FinanceAPI
-import com.nikol.data.network.NetworkStatusProvider
+import com.nikol.data.sync.conflictStrategy.LastWriteWinsTransactionStrategy
+import com.nikol.data.sync.conflictStrategy.SyncConflictStrategy
 import com.nikol.data.transaction.TransactionRepositoryImpl
+import com.nikol.data.transaction.local.LocalTransactionRepository
+import com.nikol.data.transaction.local.LocalTransactionRepositoryImpl
+import com.nikol.data.transaction.local.database.TransactionEntity
 import com.nikol.data.transaction.remote.RemoteTransactionRepository
 import com.nikol.data.transaction.remote.RemoteTransactionRepositoryImpl
-import com.nikol.data.util.timeProvider.DefaultTimeProvider
-import com.nikol.domain.common.TimeProvider
 import com.nikol.domain.repository.AccountRepository
 import com.nikol.domain.repository.ArticlesRepository
 import com.nikol.domain.repository.TransactionRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
-class TransactionRepositoryModule {
+interface TransactionRepositoryModule {
 
     @TransactionComponentScope
-    @Provides
-    fun provideRemoteTransactionRepository(
-        financeAPI: FinanceAPI,
-        networkStatusProvider: NetworkStatusProvider
-    ): RemoteTransactionRepository {
-        return RemoteTransactionRepositoryImpl(financeAPI, networkStatusProvider)
-    }
+    @Binds
+    fun bindsLocalTransactionRepository(
+        localTransactionRepositoryImpl: LocalTransactionRepositoryImpl
+    ): LocalTransactionRepository
 
     @TransactionComponentScope
-    @Provides
-    fun provideTransactionRepository(
-        remoteTransactionRepository: RemoteTransactionRepository
-    ): TransactionRepository {
-        return TransactionRepositoryImpl(remoteTransactionRepository)
-    }
+    @Binds
+    fun bindsRemoteTransactionRepository(
+        remoteTransactionRepositoryImpl: RemoteTransactionRepositoryImpl
+    ): RemoteTransactionRepository
 
     @TransactionComponentScope
-    @Provides
-    fun provideTimeProvider(): TimeProvider {
-        return DefaultTimeProvider()
-    }
+    @Binds
+    fun bindsTransactionRepository(
+        transactionRepositoryImpl: TransactionRepositoryImpl
+    ): TransactionRepository
 
     @TransactionComponentScope
-    @Provides
-    fun provideLocalAccountRepository(
-        accountPreferencesDataSource: AccountPreferencesDataSource
-    ): LocalAccountRepository {
-        return LocalAccountRepositoryImpl(accountPreferencesDataSource)
-    }
+    @Binds
+    fun bindsLocalAccountRepository(
+        localAccountRepositoryImpl: LocalAccountRepositoryImpl
+    ): LocalAccountRepository
 
     @TransactionComponentScope
-    @Provides
-    fun provideRemoteAccountRepository(
-        financeAPI: FinanceAPI,
-        networkStatusProvider: NetworkStatusProvider
-    ): RemoteAccountRepository {
-        return RemoteAccountRepositoryImpl(financeAPI, networkStatusProvider)
-    }
+    @Binds
+    fun bindsRemoteAccountRepository(
+        remoteAccountRepositoryImpl: RemoteAccountRepositoryImpl
+    ): RemoteAccountRepository
 
     @TransactionComponentScope
-    @Provides
-    fun provideAccountRepository(
-        remoteAccountRepository: RemoteAccountRepository,
-        localAccountRepository: LocalAccountRepository
-    ): AccountRepository {
-        return AccountRepositoryImpl(
-            remoteAccountRepository,
-            localAccountRepository
-        )
-    }
+    @Binds
+    fun bindsAccountRepository(
+        accountRepositoryImpl: AccountRepositoryImpl
+    ): AccountRepository
 
     @TransactionComponentScope
-    @Provides
-    fun provideRemoteArticlesRepository(
-        financeAPI: FinanceAPI,
-        networkStatusProvider: NetworkStatusProvider
-    ): RemoteArticlesRepository {
-        return RemoteArticlesRepositoryImpl(
-            financeAPI,
-            networkStatusProvider
-        )
-    }
+    @Binds
+    fun bindRemoteArticlesRepository(
+        remoteArticlesRepositoryImpl: RemoteArticlesRepositoryImpl
+    ): RemoteArticlesRepository
 
     @TransactionComponentScope
-    @Provides
-    fun provideArticlesRepository(
-        remoteArticlesRepository: RemoteArticlesRepository
-    ): ArticlesRepository {
-        return ArticlesRepositoryImpl(remoteArticlesRepository)
-    }
+    @Binds
+    fun bindsLocalArticlesRepository(
+        localArticlesRepositoryImpl: LocalArticlesRepositoryImpl
+    ): LocalArticlesRepository
+
+    @TransactionComponentScope
+    @Binds
+    fun bindsArticlesRepository(
+        articlesRepositoryImpl: ArticlesRepositoryImpl
+    ): ArticlesRepository
+
+    @TransactionComponentScope
+    @Binds
+    fun bindsConflictStrategy(
+        lastWriteWinsTransactionStrategy: LastWriteWinsTransactionStrategy
+    ): SyncConflictStrategy<TransactionEntity>
 }

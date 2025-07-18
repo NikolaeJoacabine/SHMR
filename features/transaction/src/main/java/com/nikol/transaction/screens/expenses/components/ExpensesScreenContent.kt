@@ -37,7 +37,7 @@ fun ExpensesScreenContent(
 
         is ExpensesScreenState.EmptyList -> {
             Box(modifier = modifier, contentAlignment = Alignment.Center) {
-                Text(text = stringResource(R.string.emty_expenses))
+                Text(text = stringResource(R.string.empty_expenses))
             }
         }
 

@@ -100,6 +100,15 @@ internal fun EditTransactionScreen(
                     Toast.makeText(context, "Транзакция удалена", Toast.LENGTH_SHORT).show()
                     navigateBack()
                 }
+
+                is EditTransactionScreenEffect.SuccessfulDeleteOffline -> {
+                    Toast.makeText(context, "Транзакция удалена локально", Toast.LENGTH_SHORT).show()
+                    navigateBack()
+                }
+                is EditTransactionScreenEffect.SuccessfulUpdateOffline -> {
+                    Toast.makeText(context, "Транзакция обновлена локально", Toast.LENGTH_SHORT).show()
+                    navigateBack()
+                }
             }
         }
     }

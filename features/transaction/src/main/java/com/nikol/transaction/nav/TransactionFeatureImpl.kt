@@ -7,6 +7,7 @@ import com.nikol.di.FeatureDependencies
 import com.nikol.navigation.FeatureApi
 import com.nikol.transaction.di.DaggerTransactionFeatureComponent
 import com.nikol.transaction.screens.add.di.DaggerAddTransactionScreenComponent
+import com.nikol.transaction.screens.analysis.di.DaggerAnalysisScreenComponent
 import com.nikol.transaction.screens.edit.di.DaggerEditTransactionScreenComponent
 import com.nikol.transaction.screens.expenses.di.DaggerExpensesScreenComponent
 import com.nikol.transaction.screens.history.di.DaggerHistoryScreenComponent
@@ -27,6 +28,7 @@ class TransactionFeatureImpl(
         val incomeComponent = DaggerIncomeScreenComponent.factory().create(featureComponent)
         val addComponent = DaggerAddTransactionScreenComponent.factory().create(featureComponent)
         val editComponent = DaggerEditTransactionScreenComponent.factory().create(featureComponent)
+        val analysisComponent = DaggerAnalysisScreenComponent.factory().create(featureComponent)
 
         navGraphBuilder.registerExpensesGraph(
             navController = navController,
@@ -34,6 +36,7 @@ class TransactionFeatureImpl(
             historyComponent = historyComponent,
             addComponent = addComponent,
             editComponent = editComponent,
+            analysisComponent = analysisComponent
         )
         navGraphBuilder.registerIncomeGraph(
             navController = navController,
@@ -41,6 +44,7 @@ class TransactionFeatureImpl(
             historyComponent = historyComponent,
             addComponent = addComponent,
             editComponent = editComponent,
+            analysisComponent = analysisComponent
         )
     }
 }

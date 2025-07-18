@@ -15,8 +15,10 @@ import com.nikol.domain.state.DetailTransactionState
 import com.nikol.domain.state.TransactionState
 import com.nikol.domain.state.UpdateTransactionState
 import retrofit2.Response
+import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneOffset
+import javax.inject.Inject
 
 /**
  * Реализация [RemoteTransactionRepository] для получения транзакций
@@ -25,7 +27,7 @@ import java.time.ZoneOffset
  * @property financeAPI API для работы с финансами.
  * @property networkStatusProvider Провайдер статуса сети.
  */
-class RemoteTransactionRepositoryImpl(
+class RemoteTransactionRepositoryImpl @Inject constructor(
     private val financeAPI: FinanceAPI,
     private val networkStatusProvider: NetworkStatusProvider
 ) : RemoteTransactionRepository {
@@ -43,6 +45,16 @@ class RemoteTransactionRepositoryImpl(
                 accountId = id,
                 startDate = today.toApiFormat(),
                 endDate = today.toApiFormat()
+            )
+        }
+    }
+
+    override suspend fun getAllTransactions(): TransactionState {
+        return getTransactionsWithCheck {
+            financeAPI.getTransactionForPeriod(
+                accountId = 218,
+                startDate = LocalDate.now().withDayOfYear(1).toApiFormat(),
+                endDate = LocalDate.now().toApiFormat()
             )
         }
     }
@@ -81,7 +93,7 @@ class RemoteTransactionRepositoryImpl(
         }
             .mapCatching { response ->
                 when (response.code()) {
-                    201 -> CreateTransactionState.Success
+                    201 -> CreateTransactionState.Success(response.body()!!.id)
                     404 -> CreateTransactionState.NotFound
                     else -> CreateTransactionState.Error
                 }

@@ -55,6 +55,10 @@ dependencies {
     ksp(libs.dagger.compiler)
 
     implementation(project(":domain"))
+    implementation(libs.androidx.work.runtime.ktx)
 
     implementation(libs.androidx.datastore)
+    implementation(libs.androidx.room)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 }

@@ -86,6 +86,7 @@ internal class AddTransactionScreenViewModel(
                     is CreateTransactionState.Success -> _effect.emit(AddTransactionScreenEffect.OnSuccessfulAddedTransaction)
                     is CreateTransactionState.NotFound -> _effect.emit(AddTransactionScreenEffect.OnShowNotFoundDialog)
                     is CreateTransactionState.Error, is CreateTransactionState.NetworkError -> _state.value = currentState
+                    is CreateTransactionState.OfflineSaved -> _effect.emit(AddTransactionScreenEffect.OnOfflineSavedTransaction)
                 }
             }
         }

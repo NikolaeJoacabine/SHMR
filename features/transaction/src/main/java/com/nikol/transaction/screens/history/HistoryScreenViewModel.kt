@@ -98,12 +98,8 @@ class HistoryScreenViewModel(
             is HistoryScreenAction.OnBackButtonClicked -> emitEffect(HistoryScreenEffect.NavigateBack)
             is HistoryScreenAction.OnAnalyticsButtonClick -> emitEffect(HistoryScreenEffect.NavigateAnalyticScreen)
             is HistoryScreenAction.OnTransactionClick -> emitEffect(HistoryScreenEffect.NavigateEditTransactionScreen(action.id))
-            is HistoryScreenAction.OnScreenEntered -> Unit
+            is HistoryScreenAction.OnScreenEntered -> loadTransactions()
         }
-    }
-
-    init {
-        loadTransactions()
     }
 
     private fun updateLoadingState() {
