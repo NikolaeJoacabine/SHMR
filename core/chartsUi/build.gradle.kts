@@ -1,17 +1,17 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.nikol.transaction"
+    namespace = "com.example.chartsui"
     compileSdk = 36
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 24
 
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -29,13 +29,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-        }
-    }
     buildFeatures {
         compose = true
+    }
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
     }
 }
 
@@ -49,14 +49,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.compose.navigation)
-    implementation(libs.dagger)
-    ksp(libs.dagger.compiler)
-
-    implementation(project(":domain"))
-    implementation(project(":data"))
-    implementation(project(":core:di"))
+    implementation(libs.androidx.ui.tooling)
     implementation(project(":core:ui"))
-    implementation(project(":core:chartsUi"))
-    implementation(project(":core:navigation"))
 }

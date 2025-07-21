@@ -9,11 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.nikol.transaction.R
-import com.nikol.transaction.screens.analysis.stateHoisting.AnalysisScreenAction
-import com.nikol.transaction.screens.analysis.stateHoisting.AnalysisScreenState
 import com.nikol.ui.customUiComponents.CustomListItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
