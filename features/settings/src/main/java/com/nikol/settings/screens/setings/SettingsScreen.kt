@@ -11,19 +11,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nikol.settings.ThemeMode
 import com.nikol.settings.R
+import com.nikol.settings.theme.ThemeMode
+import com.nikol.settings.screens.SettingsViewModel
+
 import com.nikol.settings.screens.setings.components.SettingsOptionList
 import com.nikol.settings.screens.setings.components.ThemeSwitcherItem
 import com.nikol.ui.customUiComponents.DefaultTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel) {
+fun SettingsScreen(
+    viewModel: SettingsViewModel,
+    onClickColor: () -> Unit,
+) {
     val scrollState = rememberScrollState()
     val themeMode = viewModel.themeMode.collectAsStateWithLifecycle()
 
     val isDarkTheme = themeMode.value == ThemeMode.Dark
+
+    val list = listOf(
+        stringResource(R.string.primary_color),
+        stringResource(R.string.haptics),
+        stringResource(R.string.passcode),
+        stringResource(R.string.sync),
+        stringResource(R.string.language),
+        stringResource(R.string.about)
+    )
 
     Scaffold(
         topBar = {
@@ -45,17 +59,16 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             )
 
             SettingsOptionList(
-                options = listOf(
-                    stringResource(R.string.primary_color),
-                    stringResource(R.string.sounds),
-                    stringResource(R.string.haptics),
-                    stringResource(R.string.passcode),
-                    stringResource(R.string.sync),
-                    stringResource(R.string.language),
-                    stringResource(R.string.about)
-                ),
+                options = list,
                 onClick = { option ->
-
+                    when (option){
+                        list[0] -> onClickColor()
+                        list[1] -> Unit
+                        list[2] -> Unit
+                        list[3] -> Unit
+                        list[4] -> Unit
+                        list[5] -> Unit
+                    }
                 }
             )
         }

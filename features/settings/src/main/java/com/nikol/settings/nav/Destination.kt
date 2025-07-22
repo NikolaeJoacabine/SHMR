@@ -4,3 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data object Settings
+
+@Serializable
+internal data object ColorPicker

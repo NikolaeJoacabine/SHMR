@@ -10,8 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nikol.settings.ThemeMode
-import com.nikol.settings.screens.setings.SettingsViewModel
+import com.nikol.settings.theme.ThemeMode
+import com.nikol.settings.screens.SettingsViewModel
 import com.nikol.ui.theme.YandexSchoolTheme
 import com.nikol.yandexschool.di.DaggerNavigationComponent
 import com.nikol.yandexschool.di.appComponent
@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
             )
 
             val themeMode = settingsViewModel.themeMode.collectAsStateWithLifecycle()
+            val colorScheme = settingsViewModel.colorScheme.collectAsStateWithLifecycle()
 
             val isDarkTheme = when (themeMode.value) {
                 ThemeMode.Dark -> true
@@ -44,7 +45,10 @@ class MainActivity : ComponentActivity() {
                 ThemeMode.System -> isSystemInDarkTheme()
             }
 
-            YandexSchoolTheme(isDarkTheme) {
+            YandexSchoolTheme(
+                darkTheme = isDarkTheme,
+                appColorScheme = colorScheme.value
+            ) {
 
                 val splash = remember { mutableStateOf(true) }
 

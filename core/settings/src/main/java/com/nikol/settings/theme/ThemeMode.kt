@@ -1,4 +1,4 @@
-package com.nikol.settings
+package com.nikol.settings.theme
 
 enum class ThemeMode {
     Dark,

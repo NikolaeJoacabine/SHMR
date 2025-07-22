@@ -39,5 +39,4 @@ dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
-    implementation(project(":data"))
 }
