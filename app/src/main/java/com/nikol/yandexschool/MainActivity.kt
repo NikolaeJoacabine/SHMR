@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.nikol.settings.ThemeMode
+import com.nikol.settings.screens.setings.SettingsViewModel
 import com.nikol.ui.theme.YandexSchoolTheme
 import com.nikol.yandexschool.di.DaggerNavigationComponent
 import com.nikol.yandexschool.di.appComponent
@@ -31,8 +32,22 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val listFeature = navigationComponent.featureNavigationApis.toList()
-            YandexSchoolTheme {
+            val settingsViewModel = viewModel<SettingsViewModel>(
+                factory = appComponent.settingsFeatureComponentFactory().create()
+            )
+
+            val themeMode = settingsViewModel.themeMode.collectAsStateWithLifecycle()
+
+            val isDarkTheme = when (themeMode.value) {
+                ThemeMode.Dark -> true
+                ThemeMode.Light -> false
+                ThemeMode.System -> isSystemInDarkTheme()
+            }
+
+            YandexSchoolTheme(isDarkTheme) {
+
                 val splash = remember { mutableStateOf(true) }
+
 
                 Crossfade(
                     targetState = splash.value,

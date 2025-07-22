@@ -23,13 +23,19 @@ internal fun EditTopBar(
     onClickEdit: () -> Unit
 ) {
     CenterAlignedTopAppBar(
-        title = { Text(name) },
+        title = {
+            Text(
+                name,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        },
         navigationIcon = {
             IconButton(onClick = onClickBack) {
                 Icon(
                     imageVector = Icons.Default.Clear,
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
@@ -38,7 +44,8 @@ internal fun EditTopBar(
                 Icon(
                     imageVector = Icons.Default.Done,
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },

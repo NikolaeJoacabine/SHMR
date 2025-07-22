@@ -25,10 +25,18 @@ fun HistoryTopBar(
     onClickAnalysis: () -> Unit
 ) {
     CenterAlignedTopAppBar(
-        title = { Text(stringResource(R.string.my_history)) },
+        title = {
+            Text(
+                stringResource(R.string.my_history),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         },
         actions = {
@@ -36,7 +44,8 @@ fun HistoryTopBar(
                 Icon(
                     painter = painterResource(R.drawable.analys),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },

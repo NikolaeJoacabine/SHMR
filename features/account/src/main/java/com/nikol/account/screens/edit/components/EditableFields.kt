@@ -34,6 +34,8 @@ internal fun AlwaysEditableTextField(
         }
     }
 
+    val textColor = MaterialTheme.colorScheme.onBackground
+
     BasicTextField(
         value = currentText,
         onValueChange = {
@@ -41,11 +43,10 @@ internal fun AlwaysEditableTextField(
             onTextChanged(it)
         },
         singleLine = true,
-        textStyle = textStyle,
+        textStyle = textStyle.copy(color = textColor),
         modifier = modifier
     )
 }
-
 @Composable
 internal fun FormattedAmountTextField(
     text: String,
@@ -66,6 +67,8 @@ internal fun FormattedAmountTextField(
             )
         }
     }
+
+    val textColor = MaterialTheme.colorScheme.onBackground
 
     BasicTextField(
         value = currentTextFieldValue,
@@ -89,7 +92,10 @@ internal fun FormattedAmountTextField(
             }
         },
         singleLine = true,
-        textStyle = textStyle.copy(textAlign = TextAlign.End),
+        textStyle = textStyle.copy(
+            textAlign = TextAlign.End,
+            color = textColor
+        ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done

@@ -42,6 +42,7 @@ internal fun AnalysisDateItem(
                     Text(
                         text = date.format(formatter),
                         style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
 
                 },

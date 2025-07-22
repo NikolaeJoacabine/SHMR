@@ -2,6 +2,7 @@ package com.nikol.yandexschool.di
 
 import android.content.Context
 import com.nikol.di.FeatureDependencies
+import com.nikol.settings.screens.setings.SettingsViewModel
 import com.nikol.yandexschool.ui.splash.SplashScreenViewModel
 import dagger.BindsInstance
 import dagger.Component
@@ -19,4 +20,6 @@ interface AppComponent : FeatureDependencies {
     }
 
     fun splashScreenViewModelFactory(): SplashScreenViewModel.Factory.Factory
+
+    fun settingsFeatureComponentFactory(): SettingsViewModel.Factory.Factory
 }

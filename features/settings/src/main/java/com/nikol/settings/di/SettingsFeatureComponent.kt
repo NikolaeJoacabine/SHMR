@@ -1,10 +1,12 @@
 package com.nikol.settings.di
 
+import com.nikol.settings.SettingsManager
 import com.nikol.di.FeatureDependencies
 import dagger.Component
 
 @Component(
-    dependencies = [FeatureDependencies::class]
+    dependencies = [FeatureDependencies::class],
+    modules = [SettingsFeatureRepository::class]
 )
 @SettingsFeatureScope
 interface SettingsFeatureComponent {
@@ -15,4 +17,6 @@ interface SettingsFeatureComponent {
             dependencies: FeatureDependencies
         ): SettingsFeatureComponent
     }
+
+    fun settingsManager(): SettingsManager
 }

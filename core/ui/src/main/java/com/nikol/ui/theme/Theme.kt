@@ -104,7 +104,7 @@ fun YandexSchoolTheme(
     }
 
     MaterialTheme(
-        colorScheme = lightScheme,
+        colorScheme = colorScheme,
         typography = AppTypography,
         content = content
     )

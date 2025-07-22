@@ -13,7 +13,10 @@ import com.nikol.settings.R
 import com.nikol.ui.customUiComponents.CustomListItem
 
 @Composable
-fun ThemeSwitcherItem(isDarkTheme: MutableState<Boolean>) {
+fun ThemeSwitcherItem(
+    isDarkTheme: Boolean,
+    onToggle: (Boolean) -> Unit
+) {
     CustomListItem(
         modifier = Modifier
             .height(55.dp)
@@ -21,8 +24,8 @@ fun ThemeSwitcherItem(isDarkTheme: MutableState<Boolean>) {
         content = { Text(stringResource(R.string.dark_theme)) },
         trailing = {
             Switch(
-                checked = isDarkTheme.value,
-                onCheckedChange = { isDarkTheme.value = it }
+                checked = isDarkTheme,
+                onCheckedChange = onToggle
             )
         }
     )

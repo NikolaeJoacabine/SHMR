@@ -5,9 +5,9 @@ import com.nikol.data.account.local.dataStore.AccountPreferencesDataSource
 import com.nikol.data.account.local.database.AccountDao
 import com.nikol.data.account.local.database.deleted.DeletedAccountIdDao
 import com.nikol.data.articles.local.database.ArticlesDao
-import com.nikol.data.database.AppDatabase
 import com.nikol.data.network.FinanceAPI
 import com.nikol.data.network.NetworkStatusProvider
+import com.nikol.settings.SettingsPreferencesDataStore
 import com.nikol.data.transaction.local.database.TransactionDao
 import com.nikol.data.transaction.local.database.delete.DeletedTransactionDao
 import okhttp3.OkHttpClient
@@ -25,4 +25,5 @@ interface FeatureDependencies {
     fun transactionDao(): TransactionDao
     fun deleteTransactionDao(): DeletedTransactionDao
     fun deleteAccountIdDao(): DeletedAccountIdDao
+    fun settingsPreferencesDataStore(): SettingsPreferencesDataStore
 }
