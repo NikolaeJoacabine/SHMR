@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class SettingsViewModel(
     private val settingsManager: SettingsManager
@@ -41,6 +42,9 @@ class SettingsViewModel(
         VibrationEffect.EFFECT_CLICK
     )
 
+    val locale = settingsManager.locale
+        .stateIn(viewModelScope, SharingStarted.Eagerly, Locale.getDefault())
+
     init {
         viewModelScope.launch {
             settingsManager.themeMode.collectLatest { _themeMode.value = it }
@@ -54,6 +58,10 @@ class SettingsViewModel(
         viewModelScope.launch {
             settingsManager.setThemeMode(themeMode)
         }
+    }
+
+    fun setLocale(locale: Locale) = viewModelScope.launch {
+        settingsManager.setLocale(locale.language)
     }
 
     fun setColorScheme(scheme: AppColorScheme) {

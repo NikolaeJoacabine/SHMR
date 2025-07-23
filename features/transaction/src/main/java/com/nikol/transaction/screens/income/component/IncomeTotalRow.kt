@@ -7,8 +7,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nikol.domain.model.CurrencyType
+import com.nikol.transaction.R
 import com.nikol.ui.customUiComponents.CustomListItem
 
 @Composable
@@ -22,7 +24,7 @@ fun IncomeTotalRow(
             .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(horizontal = 16.dp),
         content = {
-            Text("Всего", style = MaterialTheme.typography.bodyLarge)
+            Text(stringResource(R.string.amount), style = MaterialTheme.typography.bodyLarge)
         },
         trailing = {
             Text("$total ${currencyType.str}", style = MaterialTheme.typography.bodyLarge)

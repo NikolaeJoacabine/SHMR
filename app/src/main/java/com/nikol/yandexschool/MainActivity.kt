@@ -8,13 +8,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nikol.settings.theme.ThemeMode
 import com.nikol.settings.screens.SettingsViewModel
 import com.nikol.settings.vibrator.VibratorController
+import com.nikol.ui.locale.LocalAppLocale
+import com.nikol.ui.locale.applyLocale
 import com.nikol.ui.theme.YandexSchoolTheme
 import com.nikol.yandexschool.di.DaggerNavigationComponent
 import com.nikol.yandexschool.di.appComponent
@@ -53,33 +58,42 @@ class MainActivity : ComponentActivity() {
             val vibrationEffect = settingsViewModel.vibrationEffect.collectAsStateWithLifecycle()
             val vibratorController = remember { VibratorController(this) }
 
-            YandexSchoolTheme(
-                darkTheme = isDarkTheme,
-                appColorScheme = colorScheme.value
+            val locale by settingsViewModel.locale.collectAsStateWithLifecycle()
+            val localizedContext = remember(locale) {
+                applicationContext.applyLocale(locale)
+            }
+            CompositionLocalProvider(
+                LocalAppLocale provides locale,
+                LocalContext provides localizedContext
             ) {
+                YandexSchoolTheme(
+                    darkTheme = isDarkTheme,
+                    appColorScheme = colorScheme.value
+                ) {
 
-                val splash = remember { mutableStateOf(true) }
+                    val splash = remember { mutableStateOf(true) }
 
 
-                Crossfade(
-                    targetState = splash.value,
-                    label = "SplashToAppTransition"
-                ) { isSplash ->
-                    if (isSplash) {
-                        SplashScreen(
-                            viewModel = viewModel<SplashScreenViewModel>(
-                                factory = appComponent.splashScreenViewModelFactory().create()
-                            ),
-                        ) {
-                            splash.value = false
+                    Crossfade(
+                        targetState = splash.value,
+                        label = "SplashToAppTransition"
+                    ) { isSplash ->
+                        if (isSplash) {
+                            SplashScreen(
+                                viewModel = viewModel<SplashScreenViewModel>(
+                                    factory = appComponent.splashScreenViewModelFactory().create()
+                                ),
+                            ) {
+                                splash.value = false
+                            }
+                        } else {
+                            FinancialDetectiveApp(
+                                listFeature = listFeature,
+                                vibrationEnabled = vibrationEnabled.value,
+                                vibrationEffect = vibrationEffect.value,
+                                vibratorController = vibratorController
+                            )
                         }
-                    } else {
-                        FinancialDetectiveApp(
-                            listFeature = listFeature,
-                            vibrationEnabled = vibrationEnabled.value,
-                            vibrationEffect = vibrationEffect.value,
-                            vibratorController = vibratorController
-                        )
                     }
                 }
             }

@@ -10,3 +10,6 @@ internal data object ColorPicker
 
 @Serializable
 internal data object Vibrator
+
+@Serializable
+internal data object LocaleSettings

@@ -5,6 +5,8 @@ import androidx.annotation.RequiresApi
 import com.nikol.settings.color.AppColorScheme
 import com.nikol.settings.dataStore.SettingsPreferencesDataStore
 import com.nikol.settings.theme.ThemeMode
+import kotlinx.coroutines.flow.Flow
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -20,6 +22,8 @@ class SettingsManagerImpl @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override val vibrationEffect = settingsPreferencesDataStore.vibrationEffectFlow
+    override val locale: Flow<Locale>
+        get() = settingsPreferencesDataStore.localeFlow
 
     override suspend fun setThemeMode(themeMode: ThemeMode) {
         settingsPreferencesDataStore.editTheme(themeMode)
@@ -35,5 +39,9 @@ class SettingsManagerImpl @Inject constructor(
 
     override suspend fun setVibrationEffect(effect: Int) {
         settingsPreferencesDataStore.setVibrationEffect(effect)
+    }
+
+    override suspend fun setLocale(locale: String) {
+        settingsPreferencesDataStore.setLocale(Locale.forLanguageTag(locale))
     }
 }

@@ -28,7 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.nikol.settings.R
 import com.nikol.ui.theme.color.RosePrimaryDark
 import com.nikol.ui.theme.color.greenPrimaryDark
 import com.nikol.ui.theme.color.purplePrimaryDark
@@ -53,7 +55,7 @@ fun ColorSelectionScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Выбор цвета",
+                        text = stringResource(R.string.сolor_selection),
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onPrimary
                     )

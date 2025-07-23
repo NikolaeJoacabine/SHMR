@@ -18,13 +18,15 @@ import com.nikol.settings.screens.SettingsViewModel
 import com.nikol.settings.screens.setings.components.SettingsOptionList
 import com.nikol.settings.screens.setings.components.ThemeSwitcherItem
 import com.nikol.ui.customUiComponents.DefaultTopBar
+import org.intellij.lang.annotations.Language
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel,
     onClickColor: () -> Unit,
-    onClickVibrator: () -> Unit
+    onClickVibrator: () -> Unit,
+    onClickLanguage: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     val themeMode = viewModel.themeMode.collectAsStateWithLifecycle()
@@ -67,7 +69,7 @@ fun SettingsScreen(
                         list[1] -> onClickVibrator()
                         list[2] -> Unit
                         list[3] -> Unit
-                        list[4] -> Unit
+                        list[4] -> onClickLanguage()
                         list[5] -> Unit
                     }
                 }

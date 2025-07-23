@@ -13,6 +13,8 @@ import com.nikol.settings.color.AppColorScheme
 import com.nikol.settings.theme.ThemeMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.Locale
+
 
 class SettingsPreferencesDataStore(context: Context) {
     private val Context.dataStore by preferencesDataStore(name = "settings")
@@ -23,6 +25,7 @@ class SettingsPreferencesDataStore(context: Context) {
         private val COLOR_SCHEME_KEY = stringPreferencesKey("color_scheme")
         private val VIBRATION_ENABLED_KEY = booleanPreferencesKey("vibration_enabled")
         private val VIBRATION_EFFECT_KEY = intPreferencesKey("vibration_effect")
+        private val LOCALE_KEY = stringPreferencesKey("selected_locale")
     }
 
     suspend fun editTheme(themeMode: ThemeMode) {
@@ -61,4 +64,16 @@ class SettingsPreferencesDataStore(context: Context) {
     @RequiresApi(Build.VERSION_CODES.Q)
     val vibrationEffectFlow: Flow<Int> = dataStore.data
         .map { it[VIBRATION_EFFECT_KEY] ?: VibrationEffect.EFFECT_CLICK }
+
+    suspend fun setLocale(locale: Locale) {
+        dataStore.edit { prefs ->
+            prefs[LOCALE_KEY] = locale.toLanguageTag()
+        }
+    }
+
+    val localeFlow: Flow<Locale> = dataStore.data
+        .map { preferences ->
+            val languageTag = preferences[LOCALE_KEY] ?: Locale.getDefault().toLanguageTag()
+            Locale.forLanguageTag(languageTag)
+        }
 }

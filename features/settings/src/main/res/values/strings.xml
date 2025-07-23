@@ -25,4 +25,9 @@
     <string name="sync">Sync</string>
     <string name="language">Language</string>
     <string name="about">About</string>
+    <string name="сolor_selection">Color selection</string>
+    <string name="language_selection">Language selection</string>
+    <string name="vibration">Vibration</string>
+    <string name="turn_on_the_vibration">Turn on the vibration</string>
+    <string name="select_the_vibration_effect">Select the vibration effect</string>
 </resources>

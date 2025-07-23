@@ -1,8 +1,5 @@
-package com.nikol.settings.screens.vibrator
+package com.nikol.settings.screens.selectLanguage
 
-import android.os.Build
-import android.os.VibrationEffect
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,113 +18,85 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nikol.settings.R
 import com.nikol.settings.screens.SettingsViewModel
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun VibrationSettingsScreen(
+fun LocaleSettingsScreen(
     viewModel: SettingsViewModel,
-    onBackClick: () -> Unit
+    onBack: () -> Unit
 ) {
-    val vibrationEnabled by viewModel.vibrationEnabled.collectAsStateWithLifecycle()
-    val vibrationEffect by viewModel.vibrationEffect.collectAsStateWithLifecycle()
+    val currentLocale by viewModel.locale.collectAsStateWithLifecycle()
 
-    val vibrationOptions = listOf(
-        VibrationEffect.EFFECT_CLICK to "Click",
-        VibrationEffect.EFFECT_DOUBLE_CLICK to "Double Click",
-        VibrationEffect.EFFECT_TICK to "Tick",
-        VibrationEffect.EFFECT_HEAVY_CLICK to "Heavy Click"
+    val locales = listOf(
+        "en" to "English",
+        "ru" to "Русский"
     )
-
-    val primary = MaterialTheme.colorScheme.primary
-    val onPrimary = MaterialTheme.colorScheme.onPrimary
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = stringResource(R.string.vibration),
+                        text = stringResource(R.string.language_selection),
                         style = MaterialTheme.typography.titleLarge,
-                        color = onPrimary,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBackClick) {
+                    IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Назад",
-                            tint = onPrimary
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = primary
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             )
         }
     ) { padding ->
         Column(
-            modifier = Modifier
+            Modifier
                 .fillMaxSize()
                 .padding(padding)
                 .padding(16.dp)
         ) {
             Text(
-                text = stringResource(R.string.turn_on_the_vibration),
-                style = MaterialTheme.typography.titleMedium
+                text = stringResource(R.string.language_selection),
+                style = MaterialTheme.typography.titleLarge
             )
-            Switch(
-                checked = vibrationEnabled,
-                onCheckedChange = { viewModel.setVibrationEnabled(it) }
-            )
+            Spacer(Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                text = stringResource(R.string.select_the_vibration_effect),
-                style = MaterialTheme.typography.titleMedium
-            )
-            vibrationOptions.forEach { (effectValue, label) ->
+            locales.forEach { (code, label) ->
+                val selected = currentLocale.language == code
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .alpha(if (vibrationEnabled) 1f else 0.4f)
                         .selectable(
-                            enabled = vibrationEnabled,
-                            selected = (vibrationEffect == effectValue),
-                            onClick = {
-                                if (vibrationEnabled) {
-                                    viewModel.setVibrationEffect(effectValue)
-                                }
-                            }
+                            selected = selected,
+                            onClick = { viewModel.setLocale(Locale(code)) }
                         )
                         .padding(vertical = 8.dp)
                 ) {
                     RadioButton(
-                        selected = (vibrationEffect == effectValue),
-                        onClick = {
-                            if (vibrationEnabled) {
-                                viewModel.setVibrationEffect(effectValue)
-                            }
-                        },
-                        enabled = vibrationEnabled
+                        selected = selected,
+                        onClick = { viewModel.setLocale(Locale(code)) }
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(Modifier.width(8.dp))
                     Text(text = label)
                 }
             }

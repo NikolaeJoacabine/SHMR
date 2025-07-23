@@ -26,4 +26,9 @@
     <string name="sync">Синхронизация</string>
     <string name="language">Язык</string>
     <string name="about">О программе</string>
+    <string name="сolor_selection">Выбор цвета</string>
+    <string name="language_selection">Выбор языка</string>
+    <string name="vibration">Вибрация</string>
+    <string name="turn_on_the_vibration">Включить вибрацию</string>
+    <string name="select_the_vibration_effect">Выберите эффект вибрации</string>
 </resources>
