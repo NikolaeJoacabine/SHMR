@@ -7,7 +7,11 @@ import kotlinx.coroutines.flow.Flow
 interface SettingsManager {
     val themeMode: Flow<ThemeMode>
     val colorScheme: Flow<AppColorScheme>
+    val vibrationEnabled: Flow<Boolean>
+    val vibrationEffect: Flow<Int>
 
     suspend fun setThemeMode(themeMode: ThemeMode)
     suspend fun setColorScheme(colorScheme: AppColorScheme)
+    suspend fun setVibrationEnabled(enabled: Boolean)
+    suspend fun setVibrationEffect(effect: Int)
 }

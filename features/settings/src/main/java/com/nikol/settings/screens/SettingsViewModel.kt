@@ -1,5 +1,8 @@
 package com.nikol.settings.screens
 
+import android.os.Build
+import android.os.VibrationEffect
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -9,9 +12,11 @@ import com.nikol.settings.theme.ThemeMode
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -24,6 +29,17 @@ class SettingsViewModel(
 
     private val _colorScheme = MutableStateFlow(AppColorScheme.Green)
     val colorScheme: StateFlow<AppColorScheme> = _colorScheme.asStateFlow()
+
+
+    val vibrationEnabled =
+        settingsManager.vibrationEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, true)
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    val vibrationEffect = settingsManager.vibrationEffect.stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        VibrationEffect.EFFECT_CLICK
+    )
 
     init {
         viewModelScope.launch {
@@ -44,6 +60,14 @@ class SettingsViewModel(
         viewModelScope.launch {
             settingsManager.setColorScheme(scheme)
         }
+    }
+
+    fun setVibrationEnabled(enabled: Boolean) = viewModelScope.launch {
+        settingsManager.setVibrationEnabled(enabled)
+    }
+
+    fun setVibrationEffect(effect: Int) = viewModelScope.launch {
+        settingsManager.setVibrationEffect(effect)
     }
 
     class Factory @AssistedInject constructor(

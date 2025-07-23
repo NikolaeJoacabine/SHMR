@@ -1,9 +1,11 @@
 package com.nikol.yandexschool
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.mutableStateOf
@@ -12,6 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nikol.settings.theme.ThemeMode
 import com.nikol.settings.screens.SettingsViewModel
+import com.nikol.settings.vibrator.VibratorController
 import com.nikol.ui.theme.YandexSchoolTheme
 import com.nikol.yandexschool.di.DaggerNavigationComponent
 import com.nikol.yandexschool.di.appComponent
@@ -20,6 +23,7 @@ import com.nikol.yandexschool.ui.splash.SplashScreen
 import com.nikol.yandexschool.ui.splash.SplashScreenViewModel
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,6 +49,10 @@ class MainActivity : ComponentActivity() {
                 ThemeMode.System -> isSystemInDarkTheme()
             }
 
+            val vibrationEnabled = settingsViewModel.vibrationEnabled.collectAsStateWithLifecycle()
+            val vibrationEffect = settingsViewModel.vibrationEffect.collectAsStateWithLifecycle()
+            val vibratorController = remember { VibratorController(this) }
+
             YandexSchoolTheme(
                 darkTheme = isDarkTheme,
                 appColorScheme = colorScheme.value
@@ -66,7 +74,12 @@ class MainActivity : ComponentActivity() {
                             splash.value = false
                         }
                     } else {
-                        FinancialDetectiveApp(listFeature = listFeature)
+                        FinancialDetectiveApp(
+                            listFeature = listFeature,
+                            vibrationEnabled = vibrationEnabled.value,
+                            vibrationEffect = vibrationEffect.value,
+                            vibratorController = vibratorController
+                        )
                     }
                 }
             }

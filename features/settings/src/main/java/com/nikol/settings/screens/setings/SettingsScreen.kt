@@ -24,6 +24,7 @@ import com.nikol.ui.customUiComponents.DefaultTopBar
 fun SettingsScreen(
     viewModel: SettingsViewModel,
     onClickColor: () -> Unit,
+    onClickVibrator: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     val themeMode = viewModel.themeMode.collectAsStateWithLifecycle()
@@ -63,7 +64,7 @@ fun SettingsScreen(
                 onClick = { option ->
                     when (option){
                         list[0] -> onClickColor()
-                        list[1] -> Unit
+                        list[1] -> onClickVibrator()
                         list[2] -> Unit
                         list[3] -> Unit
                         list[4] -> Unit

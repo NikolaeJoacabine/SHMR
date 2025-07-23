@@ -7,3 +7,6 @@ internal data object Settings
 
 @Serializable
 internal data object ColorPicker
+
+@Serializable
+internal data object Vibrator

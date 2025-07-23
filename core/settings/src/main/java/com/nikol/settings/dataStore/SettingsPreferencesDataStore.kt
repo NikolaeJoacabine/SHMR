@@ -1,7 +1,12 @@
 package com.nikol.settings.dataStore
 
 import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import androidx.annotation.RequiresApi
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.nikol.settings.color.AppColorScheme
@@ -16,6 +21,8 @@ class SettingsPreferencesDataStore(context: Context) {
     companion object {
         private val THEME_KEY = stringPreferencesKey("current_theme")
         private val COLOR_SCHEME_KEY = stringPreferencesKey("color_scheme")
+        private val VIBRATION_ENABLED_KEY = booleanPreferencesKey("vibration_enabled")
+        private val VIBRATION_EFFECT_KEY = intPreferencesKey("vibration_effect")
     }
 
     suspend fun editTheme(themeMode: ThemeMode) {
@@ -39,4 +46,19 @@ class SettingsPreferencesDataStore(context: Context) {
         .map { preferences ->
             AppColorScheme.fromName(preferences[COLOR_SCHEME_KEY])
         }
+
+    suspend fun setVibrationEnabled(enabled: Boolean) {
+        dataStore.edit { it[VIBRATION_ENABLED_KEY] = enabled }
+    }
+
+    suspend fun setVibrationEffect(effect: Int) {
+        dataStore.edit { it[VIBRATION_EFFECT_KEY] = effect }
+    }
+
+    val vibrationEnabledFlow: Flow<Boolean> = dataStore.data
+        .map { it[VIBRATION_ENABLED_KEY] ?: true }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    val vibrationEffectFlow: Flow<Int> = dataStore.data
+        .map { it[VIBRATION_EFFECT_KEY] ?: VibrationEffect.EFFECT_CLICK }
 }

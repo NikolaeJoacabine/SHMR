@@ -1,5 +1,7 @@
 package com.nikol.settings.nav
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,6 +17,7 @@ import com.nikol.settings.di.DaggerSettingsFeatureComponent
 import com.nikol.settings.screens.SettingsViewModel
 import com.nikol.settings.screens.colorSelecter.ColorSelectionScreen
 import com.nikol.settings.screens.setings.SettingsScreen
+import com.nikol.settings.screens.vibrator.VibrationSettingsScreen
 import com.nikol.ui.theme.color.RosePrimaryDark
 import com.nikol.ui.theme.color.greenPrimaryDark
 import com.nikol.ui.theme.color.purplePrimaryDark
@@ -23,6 +26,7 @@ import com.nikol.ui.theme.color.violetPrimaryDark
 class SettingsFeatureImpl(
     private val dependencies: FeatureDependencies
 ) : FeatureApi {
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavHostController,
@@ -40,7 +44,8 @@ class SettingsFeatureImpl(
                 )
                 SettingsScreen(
                     viewModel = viewModel,
-                    onClickColor = { navController.navigate(ColorPicker) }
+                    onClickColor = { navController.navigate(ColorPicker) },
+                    onClickVibrator = { navController.navigate(Vibrator) }
                 )
             }
 
@@ -71,6 +76,15 @@ class SettingsFeatureImpl(
                     },
                     navigateBack = { navController.popBackStack() }
                 )
+            }
+
+            composable<Vibrator> {
+                val viewModel = viewModel<SettingsViewModel>(
+                    factory = featureComponent.viewModelFactory().create()
+                )
+                VibrationSettingsScreen(viewModel){
+                    navController.popBackStack()
+                }
             }
         }
     }
