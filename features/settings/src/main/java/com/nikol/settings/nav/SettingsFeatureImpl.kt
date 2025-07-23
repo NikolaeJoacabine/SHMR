@@ -15,6 +15,7 @@ import com.nikol.navigation.SettingsGraph
 import com.nikol.settings.color.AppColorScheme
 import com.nikol.settings.di.DaggerSettingsFeatureComponent
 import com.nikol.settings.screens.SettingsViewModel
+import com.nikol.settings.screens.appInfo.AppInfoScreen
 import com.nikol.settings.screens.colorSelecter.ColorSelectionScreen
 import com.nikol.settings.screens.selectLanguage.LocaleSettingsScreen
 import com.nikol.settings.screens.setings.SettingsScreen
@@ -47,7 +48,8 @@ class SettingsFeatureImpl(
                     viewModel = viewModel,
                     onClickColor = { navController.navigate(ColorPicker) },
                     onClickVibrator = { navController.navigate(Vibrator) },
-                    onClickLanguage = { navController.navigate(LocaleSettings)}
+                    onClickLanguage = { navController.navigate(LocaleSettings)},
+                    onClickAddDetail = { navController.navigate(AppDetail) }
                 )
             }
 
@@ -94,6 +96,17 @@ class SettingsFeatureImpl(
                     factory = featureComponent.viewModelFactory().create()
                 )
                 LocaleSettingsScreen(viewModel){
+                    navController.popBackStack()
+                }
+            }
+
+            composable<AppDetail> {
+                val viewModel = viewModel<SettingsViewModel>(
+                    factory = featureComponent.viewModelFactory().create()
+                )
+                AppInfoScreen(
+                    viewModel
+                ) {
                     navController.popBackStack()
                 }
             }

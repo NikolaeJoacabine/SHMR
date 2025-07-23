@@ -26,7 +26,8 @@ fun SettingsScreen(
     viewModel: SettingsViewModel,
     onClickColor: () -> Unit,
     onClickVibrator: () -> Unit,
-    onClickLanguage: () -> Unit
+    onClickLanguage: () -> Unit,
+    onClickAddDetail: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     val themeMode = viewModel.themeMode.collectAsStateWithLifecycle()
@@ -70,7 +71,7 @@ fun SettingsScreen(
                         list[2] -> Unit
                         list[3] -> Unit
                         list[4] -> onClickLanguage()
-                        list[5] -> Unit
+                        list[5] -> onClickAddDetail()
                     }
                 }
             )

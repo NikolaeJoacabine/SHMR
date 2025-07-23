@@ -13,3 +13,6 @@ internal data object Vibrator
 
 @Serializable
 internal data object LocaleSettings
+
+@Serializable
+internal data object AppDetail

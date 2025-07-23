@@ -15,8 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.nikol.settings.theme.ThemeMode
 import com.nikol.settings.screens.SettingsViewModel
+import com.nikol.settings.theme.ThemeMode
 import com.nikol.settings.vibrator.VibratorController
 import com.nikol.ui.locale.LocalAppLocale
 import com.nikol.ui.locale.applyLocale
@@ -62,6 +62,9 @@ class MainActivity : ComponentActivity() {
             val localizedContext = remember(locale) {
                 applicationContext.applyLocale(locale)
             }
+
+            settingsViewModel.updateAppVersion(BuildConfig.VERSION_NAME)
+
             CompositionLocalProvider(
                 LocalAppLocale provides locale,
                 LocalContext provides localizedContext

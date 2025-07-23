@@ -31,4 +31,6 @@
     <string name="vibration">Вибрация</string>
     <string name="turn_on_the_vibration">Включить вибрацию</string>
     <string name="select_the_vibration_effect">Выберите эффект вибрации</string>
+    <string name="app_version">Версия приложения</string>
+    <string name="last_update">Последнее обновление</string>
 </resources>

@@ -26,6 +26,7 @@ class SettingsPreferencesDataStore(context: Context) {
         private val VIBRATION_ENABLED_KEY = booleanPreferencesKey("vibration_enabled")
         private val VIBRATION_EFFECT_KEY = intPreferencesKey("vibration_effect")
         private val LOCALE_KEY = stringPreferencesKey("selected_locale")
+        private val APP_VERSION_KEY = stringPreferencesKey("app_version")
     }
 
     suspend fun editTheme(themeMode: ThemeMode) {
@@ -76,4 +77,11 @@ class SettingsPreferencesDataStore(context: Context) {
             val languageTag = preferences[LOCALE_KEY] ?: Locale.getDefault().toLanguageTag()
             Locale.forLanguageTag(languageTag)
         }
+
+    suspend fun setAppVersion(version: String) {
+        dataStore.edit { prefs -> prefs[APP_VERSION_KEY] = version }
+    }
+
+    val appVersionFlow: Flow<String> = dataStore.data
+        .map { prefs -> prefs[APP_VERSION_KEY] ?: "" }
 }

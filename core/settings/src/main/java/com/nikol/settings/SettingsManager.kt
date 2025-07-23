@@ -11,10 +11,12 @@ interface SettingsManager {
     val vibrationEnabled: Flow<Boolean>
     val vibrationEffect: Flow<Int>
     val locale: Flow<Locale>
+    val appVersion: Flow<String>
 
     suspend fun setThemeMode(themeMode: ThemeMode)
     suspend fun setColorScheme(colorScheme: AppColorScheme)
     suspend fun setVibrationEnabled(enabled: Boolean)
     suspend fun setVibrationEffect(effect: Int)
     suspend fun setLocale(locale: String)
+    suspend fun setAppVersion(version: String)
 }

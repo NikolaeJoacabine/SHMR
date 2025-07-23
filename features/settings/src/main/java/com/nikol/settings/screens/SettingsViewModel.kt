@@ -3,6 +3,7 @@ package com.nikol.settings.screens
 import android.os.Build
 import android.os.VibrationEffect
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -76,6 +77,15 @@ class SettingsViewModel(
 
     fun setVibrationEffect(effect: Int) = viewModelScope.launch {
         settingsManager.setVibrationEffect(effect)
+    }
+
+    val appVersion = settingsManager.appVersion
+        .stateIn(viewModelScope, SharingStarted.Eagerly, "")
+
+    fun updateAppVersion(version: String) {
+        viewModelScope.launch {
+            settingsManager.setAppVersion(version)
+        }
     }
 
     class Factory @AssistedInject constructor(

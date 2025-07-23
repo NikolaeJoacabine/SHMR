@@ -37,6 +37,13 @@ class SettingsManagerImpl @Inject constructor(
         settingsPreferencesDataStore.setVibrationEnabled(enabled)
     }
 
+    override val appVersion: Flow<String>
+        get() = settingsPreferencesDataStore.appVersionFlow
+
+    override suspend fun setAppVersion(version: String) {
+        settingsPreferencesDataStore.setAppVersion(version)
+    }
+
     override suspend fun setVibrationEffect(effect: Int) {
         settingsPreferencesDataStore.setVibrationEffect(effect)
     }
