@@ -16,3 +16,6 @@ internal data object LocaleSettings
 
 @Serializable
 internal data object AppDetail
+
+@Serializable
+internal data object WorkerSettings

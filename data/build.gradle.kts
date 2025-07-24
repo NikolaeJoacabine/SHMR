@@ -55,6 +55,7 @@ dependencies {
     ksp(libs.dagger.compiler)
 
     implementation(project(":domain"))
+    implementation(project(":core:settings"))
     implementation(libs.androidx.work.runtime.ktx)
 
     implementation(libs.androidx.datastore)

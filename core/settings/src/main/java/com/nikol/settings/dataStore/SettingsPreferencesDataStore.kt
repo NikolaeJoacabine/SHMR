@@ -27,6 +27,17 @@ class SettingsPreferencesDataStore(context: Context) {
         private val VIBRATION_EFFECT_KEY = intPreferencesKey("vibration_effect")
         private val LOCALE_KEY = stringPreferencesKey("selected_locale")
         private val APP_VERSION_KEY = stringPreferencesKey("app_version")
+        val SYNC_INTERVAL_HOURS = intPreferencesKey("sync_interval_hours")
+        const val DEFAULT_INTERVAL = 3
+    }
+
+    val syncIntervalFlow: Flow<Int> = dataStore.data
+        .map { it[SYNC_INTERVAL_HOURS] ?: DEFAULT_INTERVAL }
+
+    suspend fun setSyncInterval(hours: Int) {
+        dataStore.edit { prefs ->
+            prefs[SYNC_INTERVAL_HOURS] = hours
+        }
     }
 
     suspend fun editTheme(themeMode: ThemeMode) {

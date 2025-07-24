@@ -12,6 +12,7 @@ interface SettingsManager {
     val vibrationEffect: Flow<Int>
     val locale: Flow<Locale>
     val appVersion: Flow<String>
+    val syncInterval: Flow<Int>
 
     suspend fun setThemeMode(themeMode: ThemeMode)
     suspend fun setColorScheme(colorScheme: AppColorScheme)
@@ -19,4 +20,5 @@ interface SettingsManager {
     suspend fun setVibrationEffect(effect: Int)
     suspend fun setLocale(locale: String)
     suspend fun setAppVersion(version: String)
+    suspend fun setIntervalWorkManager(newHours: Int)
 }

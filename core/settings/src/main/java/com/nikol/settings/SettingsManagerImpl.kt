@@ -44,6 +44,13 @@ class SettingsManagerImpl @Inject constructor(
         settingsPreferencesDataStore.setAppVersion(version)
     }
 
+    override val syncInterval: Flow<Int>
+        get() = settingsPreferencesDataStore.syncIntervalFlow
+
+    override suspend fun setIntervalWorkManager(newHours: Int) {
+        settingsPreferencesDataStore.setSyncInterval(newHours)
+    }
+
     override suspend fun setVibrationEffect(effect: Int) {
         settingsPreferencesDataStore.setVibrationEffect(effect)
     }

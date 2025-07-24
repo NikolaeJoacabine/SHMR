@@ -20,6 +20,7 @@ import com.nikol.settings.screens.colorSelecter.ColorSelectionScreen
 import com.nikol.settings.screens.selectLanguage.LocaleSettingsScreen
 import com.nikol.settings.screens.setings.SettingsScreen
 import com.nikol.settings.screens.vibrator.VibrationSettingsScreen
+import com.nikol.settings.screens.workManager.SyncSettingsScreen
 import com.nikol.ui.theme.color.RosePrimaryDark
 import com.nikol.ui.theme.color.greenPrimaryDark
 import com.nikol.ui.theme.color.purplePrimaryDark
@@ -48,8 +49,9 @@ class SettingsFeatureImpl(
                     viewModel = viewModel,
                     onClickColor = { navController.navigate(ColorPicker) },
                     onClickVibrator = { navController.navigate(Vibrator) },
-                    onClickLanguage = { navController.navigate(LocaleSettings)},
-                    onClickAddDetail = { navController.navigate(AppDetail) }
+                    onClickLanguage = { navController.navigate(LocaleSettings) },
+                    onClickAddDetail = { navController.navigate(AppDetail) },
+                    onclickWorker = { navController.navigate(WorkerSettings) }
                 )
             }
 
@@ -86,7 +88,7 @@ class SettingsFeatureImpl(
                 val viewModel = viewModel<SettingsViewModel>(
                     factory = featureComponent.viewModelFactory().create()
                 )
-                VibrationSettingsScreen(viewModel){
+                VibrationSettingsScreen(viewModel) {
                     navController.popBackStack()
                 }
             }
@@ -95,7 +97,7 @@ class SettingsFeatureImpl(
                 val viewModel = viewModel<SettingsViewModel>(
                     factory = featureComponent.viewModelFactory().create()
                 )
-                LocaleSettingsScreen(viewModel){
+                LocaleSettingsScreen(viewModel) {
                     navController.popBackStack()
                 }
             }
@@ -107,6 +109,15 @@ class SettingsFeatureImpl(
                 AppInfoScreen(
                     viewModel
                 ) {
+                    navController.popBackStack()
+                }
+            }
+
+            composable<WorkerSettings> {
+                val viewModel = viewModel<SettingsViewModel>(
+                    factory = featureComponent.viewModelFactory().create()
+                )
+                SyncSettingsScreen(viewModel) {
                     navController.popBackStack()
                 }
             }

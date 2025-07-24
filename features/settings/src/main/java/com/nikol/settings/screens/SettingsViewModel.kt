@@ -1,14 +1,16 @@
 package com.nikol.settings.screens
 
+import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.nikol.data.workManager.SyncWorkerScheduler
 import com.nikol.settings.SettingsManager
 import com.nikol.settings.color.AppColorScheme
+import com.nikol.settings.dataStore.SettingsPreferencesDataStore
 import com.nikol.settings.theme.ThemeMode
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -85,6 +87,20 @@ class SettingsViewModel(
     fun updateAppVersion(version: String) {
         viewModelScope.launch {
             settingsManager.setAppVersion(version)
+        }
+    }
+
+    val syncInterval = settingsManager.syncInterval
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            SettingsPreferencesDataStore.DEFAULT_INTERVAL
+        )
+
+    fun setSyncInterval(context: Context, hours: Int) {
+        viewModelScope.launch {
+            settingsManager.setIntervalWorkManager(hours)
+            SyncWorkerScheduler.scheduleSync(context, settingsManager, shouldReplace = true)
         }
     }
 
