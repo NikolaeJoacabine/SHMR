@@ -1,5 +1,6 @@
 package com.nikol.settings.screens.colorSelecter
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -56,7 +58,7 @@ fun ColorSelectionScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.сolor_selection),
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 },
@@ -64,12 +66,12 @@ fun ColorSelectionScreen(
                     IconButton(onClick = navigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад",
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             )
@@ -79,35 +81,52 @@ fun ColorSelectionScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(24.dp),
+                .padding(horizontal = 24.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                text = stringResource(R.string.select_app_accent_color),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .padding(bottom = 24.dp)
+                    .align(Alignment.Start)
+            )
+
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ){
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
                 availableColors.forEach { color ->
-                    Box(
+                    Surface(
+                        shape = CircleShape,
+                        tonalElevation = if (color == selectedColor) 6.dp else 1.dp,
+                        border = BorderStroke(
+                            width = if (color == selectedColor) 2.dp else 1.dp,
+                            color = if (color == selectedColor)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.outlineVariant
+                        ),
+                        color = color,
                         modifier = Modifier
-                            .size(56.dp)
+                            .size(60.dp)
                             .clip(CircleShape)
-                            .background(color)
-                            .border(
-                                width = if (color == selectedColor) 3.dp else 1.dp,
-                                color = if (color == selectedColor) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.outline,
-                                shape = CircleShape
-                            )
-                            .clickable { onColorSelected(color) },
-                        contentAlignment = Alignment.Center
+                            .clickable { onColorSelected(color) }
                     ) {
                         if (color == selectedColor) {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = "Выбранный цвет",
-                                tint = MaterialTheme.colorScheme.onBackground
-                            )
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Check,
+                                    contentDescription = stringResource(R.string.selected_color),
+                                    tint = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
                         }
                     }
                 }

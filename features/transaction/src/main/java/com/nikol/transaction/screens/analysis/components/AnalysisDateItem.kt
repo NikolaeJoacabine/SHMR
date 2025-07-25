@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nikol.ui.customUiComponents.CustomListItem
+import com.nikol.ui.locale.LocalAppLocale
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -38,7 +39,7 @@ internal fun AnalysisDateItem(
                 label = {
 
                     val formatter =
-                        DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.getDefault())
+                        DateTimeFormatter.ofPattern("d MMMM yyyy", LocalAppLocale.current)
                     Text(
                         text = date.format(formatter),
                         style = MaterialTheme.typography.titleMedium,

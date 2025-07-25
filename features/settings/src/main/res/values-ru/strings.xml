@@ -33,4 +33,6 @@
     <string name="select_the_vibration_effect">Выберите эффект вибрации</string>
     <string name="app_version">Версия приложения</string>
     <string name="last_update">Последнее обновление</string>
+    <string name="select_app_accent_color">Выберите цвет акцента приложения</string>
+    <string name="selected_color">Выбранный цвет</string>
 </resources>

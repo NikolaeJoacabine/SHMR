@@ -2,10 +2,16 @@ package com.nikol.settings.screens.appInfo
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nikol.settings.R
 import com.nikol.settings.lastUpdate.getLastUpdateDate
 import com.nikol.settings.screens.SettingsViewModel
+import com.nikol.ui.locale.LocalAppLocale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +41,8 @@ fun AppInfoScreen(
 ) {
     val context = LocalContext.current
     val versionName by viewModel.appVersion.collectAsStateWithLifecycle()
-    val lastUpdate = remember { getLastUpdateDate(context) }
+    val locale = LocalAppLocale.current
+    val lastUpdate = remember { getLastUpdateDate(context, locale) }
 
     Scaffold(
         topBar = {
@@ -42,20 +50,21 @@ fun AppInfoScreen(
                 title = {
                     Text(
                         text = stringResource(R.string.about),
-                        color = MaterialTheme.colorScheme.onPrimary
+                        style = MaterialTheme.typography.titleLarge
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад",
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
         }
@@ -64,10 +73,39 @@ fun AppInfoScreen(
             modifier = Modifier
                 .padding(padding)
                 .padding(16.dp)
+                .verticalScroll(rememberScrollState())
         ) {
-            Text(stringResource(R.string.app_version) + ": $versionName")
-            Spacer(Modifier.height(8.dp))
-            Text(stringResource(R.string.last_update) + ": $lastUpdate")
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = stringResource(R.string.app_version),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = versionName,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    Spacer(Modifier.height(16.dp))
+
+                    Text(
+                        text = stringResource(R.string.last_update),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = lastUpdate,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
         }
     }
 }
+
