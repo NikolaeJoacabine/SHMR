@@ -1,8 +1,10 @@
 package com.nikol.settings.nav
 
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
@@ -17,6 +19,8 @@ import com.nikol.settings.di.DaggerSettingsFeatureComponent
 import com.nikol.settings.screens.SettingsViewModel
 import com.nikol.settings.screens.appInfo.AppInfoScreen
 import com.nikol.settings.screens.colorSelecter.ColorSelectionScreen
+import com.nikol.settings.screens.pincode.PinCodeSelectScreen
+import com.nikol.settings.screens.pincode.PinCodeViewModel
 import com.nikol.settings.screens.selectLanguage.LocaleSettingsScreen
 import com.nikol.settings.screens.setings.SettingsScreen
 import com.nikol.settings.screens.vibrator.VibrationSettingsScreen
@@ -51,7 +55,8 @@ class SettingsFeatureImpl(
                     onClickVibrator = { navController.navigate(Vibrator) },
                     onClickLanguage = { navController.navigate(LocaleSettings) },
                     onClickAddDetail = { navController.navigate(AppDetail) },
-                    onclickWorker = { navController.navigate(WorkerSettings) }
+                    onclickWorker = { navController.navigate(WorkerSettings) },
+                    onClickPinCode = { navController.navigate(PinCode) }
                 )
             }
 
@@ -120,6 +125,27 @@ class SettingsFeatureImpl(
                 SyncSettingsScreen(viewModel) {
                     navController.popBackStack()
                 }
+            }
+
+            composable<PinCode> {
+
+                val viewModel = viewModel<PinCodeViewModel>(
+                    factory = featureComponent.viewModelSecyrFactory()
+                )
+                val context = LocalContext.current
+                PinCodeSelectScreen(
+                    onPinEntered = {
+                        viewModel.setPin(it)
+                        Toast.makeText(context, "Пин код установлен", Toast.LENGTH_SHORT).show()
+                        navController.popBackStack()
+                    },
+                    onBackClick = { navController.popBackStack() },
+                    onClickClear = {
+                        viewModel.clearPin()
+                        Toast.makeText(context, "Пин код очищен", Toast.LENGTH_SHORT).show()
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }

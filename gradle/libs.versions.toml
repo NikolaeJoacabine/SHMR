@@ -18,16 +18,6 @@ datastore = "1.1.7"
 roomVersion = "2.7.2"
 lottieCompose = "6.6.7"
 workRuntimeKtx = "2.10.2"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-appcompat = "1.7.1"
-material = "1.12.0"
-junitJunit = "4.13.2"
-androidxJunit = "1.2.1"
-espressoCoreVersion = "3.6.1"
-appcompatVersion = "1.7.1"
-materialVersion = "1.12.0"
 
 
 [libraries]

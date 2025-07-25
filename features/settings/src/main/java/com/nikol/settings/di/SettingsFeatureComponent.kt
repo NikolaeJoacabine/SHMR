@@ -3,6 +3,7 @@ package com.nikol.settings.di
 import com.nikol.settings.SettingsManager
 import com.nikol.di.FeatureDependencies
 import com.nikol.settings.screens.SettingsViewModel
+import com.nikol.settings.screens.pincode.PinCodeViewModel
 import dagger.Component
 
 @Component(
@@ -22,4 +23,6 @@ interface SettingsFeatureComponent {
     fun settingsManager(): SettingsManager
 
     fun viewModelFactory(): SettingsViewModel.Factory.Factory
+
+    fun viewModelSecyrFactory(): PinCodeViewModel.Factory
 }

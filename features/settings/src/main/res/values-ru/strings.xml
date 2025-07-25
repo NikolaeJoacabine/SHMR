@@ -35,4 +35,9 @@
     <string name="last_update">Последнее обновление</string>
     <string name="select_app_accent_color">Выберите цвет акцента приложения</string>
     <string name="selected_color">Выбранный цвет</string>
+    <string name="pin_code">PIN-код</string>
+    <string name="enter_pin">Введите PIN-код</string>
+    <string name="come_up_with_a_new_PIN_code">Придумайте новый пин код</string>
+    <string name="repeat_the_PIN_code">Повторите PIN-код</string>
+    <string name="clear_passcode">Сбросить пароль</string>
 </resources>

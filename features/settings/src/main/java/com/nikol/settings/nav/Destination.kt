@@ -19,3 +19,6 @@ internal data object AppDetail
 
 @Serializable
 internal data object WorkerSettings
+
+@Serializable
+internal data object PinCode
