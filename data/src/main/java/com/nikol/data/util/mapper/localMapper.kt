@@ -157,8 +157,8 @@ fun CreateTransaction.toEntity(
         articleId = categoryId,
         comment = comment.sanitizeComment(),
         amount = amount.toDouble(),
-        createdAtFromServer = Instant.now(),
-        updatedAtFromServer = Instant.now(),
+        createdAtFromServer = transactionDate.toInstant(ZoneOffset.UTC),
+        updatedAtFromServer = transactionDate.toInstant(ZoneOffset.UTC),
         isIncome = article.isIncome,
         isSynced = isSynced,
         lastSyncedAt = lastSyncedAt

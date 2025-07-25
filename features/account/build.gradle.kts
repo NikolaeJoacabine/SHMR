@@ -59,5 +59,6 @@ dependencies {
     implementation(project(":core:di"))
     implementation(project(":core:settings"))
     implementation(project(":core:ui"))
+    implementation(project(":core:chartsUi"))
     implementation(project(":core:navigation"))
 }
