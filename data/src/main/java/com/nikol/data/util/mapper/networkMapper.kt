@@ -36,7 +36,7 @@ fun TransactionDTO.toDomain(): Transaction {
         emoji = categoryDTO?.emoji ?: "",
         amount = formatAmountToInt(amount),
         isIncome = categoryDTO?.isIncome == true,
-        createdAt = parseCreatedAt(createdAt),
+        createdAt = parseCreatedAt(transactionDate),
         accountId = accountDTO?.id ?: 1,
         articleId = categoryDTO?.id ?: 1,
         updatedAt = parseCreatedAt(updatedAt)
@@ -118,8 +118,8 @@ fun TransactionDTO.toDomainDetail(): TransactionDetail {
         ),
         comment = comment,
         amount = amount?.toDoubleOrNull()?.toInt()?.toString() ?: "0",
-        createdAt = createdAt ?: "",
-        updatedAt = updatedAt ?: "",
+        createdAt = transactionDate ?: "",
+        updatedAt = transactionDate ?: "",
         lastSynchronized = System.currentTimeMillis()
     )
 }

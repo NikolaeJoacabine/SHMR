@@ -106,7 +106,7 @@ private fun RenderAccountScreenState(
             onCurrencyClick()
         }
 
-        is AccountScreensState.Empty -> { /* Show empty placeholder if needed */
+        is AccountScreensState.Empty -> {
         }
     }
 }

@@ -2,6 +2,7 @@ package com.nikol.account.di
 
 import com.nikol.di.FeatureDependencies
 import com.nikol.domain.repository.AccountRepository
+import com.nikol.domain.repository.TransactionRepository
 import dagger.Component
 
 @AccountComponentScope
@@ -19,4 +20,6 @@ interface AccountFeatureComponent {
     }
 
     fun accountRepository(): AccountRepository
+
+    fun transactionRepository(): TransactionRepository
 }

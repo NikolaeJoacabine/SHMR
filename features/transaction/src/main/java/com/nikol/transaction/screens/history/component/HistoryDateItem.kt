@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nikol.ui.customUiComponents.CustomListItem
+import com.nikol.ui.locale.LocalAppLocale
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -23,7 +24,7 @@ fun HistoryDateItem(title: String, date: LocalDate, onClick: () -> Unit) {
             .padding(horizontal = 16.dp),
         content = { Text(title) },
         trailing = {
-            Text(date.format(DateTimeFormatter.ofPattern("d MMMM yyyy")))
+            Text(date.format(DateTimeFormatter.ofPattern("d MMMM yyyy", LocalAppLocale.current)))
         }
     )
 }

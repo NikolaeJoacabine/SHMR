@@ -1,5 +1,7 @@
 package com.nikol.yandexschool.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,12 +26,20 @@ import com.nikol.navigation.ExpenseGraph
 import com.nikol.navigation.FeatureApi
 import com.nikol.navigation.IncomeGraph
 import com.nikol.navigation.SettingsGraph
+import com.nikol.settings.vibrator.VibratorController
 import com.nikol.yandexschool.R
 import com.nikol.yandexschool.ui.nav.FinancialDetectiveNavGraph
 import com.nikol.yandexschool.ui.nav.TopLevelRoute
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun FinancialDetectiveApp(modifier: Modifier = Modifier, listFeature: List<FeatureApi>) {
+fun FinancialDetectiveApp(
+    modifier: Modifier = Modifier,
+    listFeature: List<FeatureApi>,
+    vibrationEnabled: Boolean,
+    vibrationEffect: Int,
+    vibratorController: VibratorController
+) {
 
     val list = listOf(
         TopLevelRoute(R.string.expenses, ExpenseGraph, R.drawable.downtrend),
@@ -65,6 +75,9 @@ fun FinancialDetectiveApp(modifier: Modifier = Modifier, listFeature: List<Featu
                             }, selected = currentDestination.hierarchy.any {
                                 it.hasRoute(topLevelRoute.route::class)
                             }, onClick = {
+                                if (vibrationEnabled) {
+                                    vibratorController.vibrate(vibrationEffect)
+                                }
                                 navController.navigate(topLevelRoute.route) {
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true

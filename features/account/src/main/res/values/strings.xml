@@ -28,4 +28,7 @@
     <string name="about">About</string>
     <string name="delete_account">Delete Account</string>
     <string name="cancel">Cancel</string>
+    <string name="error">Error</string>
+    <string name="successful_change">Account information has been successfully changed</string>
+    <string name="successful_deletion">Account successfully deleted</string>
 </resources>

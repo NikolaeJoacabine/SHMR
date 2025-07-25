@@ -9,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.nikol.account.R
 
 @Composable
 internal fun AccountErrorState(padding: PaddingValues) {
@@ -18,6 +20,9 @@ internal fun AccountErrorState(padding: PaddingValues) {
             .padding(padding),
         contentAlignment = Alignment.Center
     ) {
-        Text("Ошибка", style = MaterialTheme.typography.bodyLarge)
+        Text(
+            text = stringResource(R.string.error),
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }

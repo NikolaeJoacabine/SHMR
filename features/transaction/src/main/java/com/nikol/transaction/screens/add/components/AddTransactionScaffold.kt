@@ -32,10 +32,19 @@ internal fun AddTransactionScaffold(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = stringResource(R.string.adding_transaction)) },
+                title = {
+                    Text(
+                        text = stringResource(R.string.adding_transaction),
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { onAction(AddTransactionScreenAction.NavigateBack) }) {
-                        Icon(imageVector = Icons.Default.Close, contentDescription = null)
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -56,6 +65,7 @@ internal fun AddTransactionScaffold(
                     onEditText = { onAction(AddTransactionScreenAction.EditComment(it)) },
                     onClickTime = { onAction(AddTransactionScreenAction.EditTime) }
                 )
+
                 is AddTransactionScreenState.Loading -> Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center

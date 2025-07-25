@@ -1,6 +1,7 @@
 package com.nikol.account.screens.account.stateHoisting
 
 import com.nikol.account.models.AccountUi
+import com.nikol.domain.model.Analysis
 import com.nikol.domain.model.CurrencyType
 
 /**
@@ -23,6 +24,7 @@ internal sealed class AccountScreensState {
     data class Content(
         val list: List<AccountUi>,
         val currency: List<CurrencyType> = emptyList(),
-        val currentCurrency: CurrencyType
+        val currentCurrency: CurrencyType,
+        val listAnalysis: List<Analysis> = emptyList()
     ) : AccountScreensState()
 }

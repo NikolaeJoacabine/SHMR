@@ -31,7 +31,8 @@ internal fun EditTransactionScaffold(
 ) {
     Scaffold(
         topBar = {
-            TransactionTopBar(onBack = { onAction(EditTransactionScreenAction.NavigateBack) },
+            TransactionTopBar(
+                onBack = { onAction(EditTransactionScreenAction.NavigateBack) },
                 onSave = { onAction(EditTransactionScreenAction.UpdateTransaction) })
         }
     ) { paddingValues ->
@@ -58,15 +59,26 @@ internal fun EditTransactionScaffold(
 @Composable
 internal fun TransactionTopBar(onBack: () -> Unit, onSave: () -> Unit) {
     CenterAlignedTopAppBar(
-        title = { Text(stringResource(R.string.editing)) },
+        title = {
+            Text(
+                stringResource(R.string.editing),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        },
         navigationIcon = {
             IconButton(onClick = onBack) {
-                Icon(Icons.Default.Close, contentDescription = null)
+                Icon(
+                    Icons.Default.Close, contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         },
         actions = {
             IconButton(onClick = onSave) {
-                Icon(Icons.Default.Done, contentDescription = null)
+                Icon(
+                    Icons.Default.Done, contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(

@@ -7,6 +7,7 @@
       <module name="build-logic.test" target="21" />
       <module name="yandex_school.core.data" target="21" />
       <module name="yandex_school.core.domain" target="21" />
+      <module name="yandex_school.core.settingsPreferences" target="21" />
     </bytecodeTargetLevel>
   </component>
 </project>

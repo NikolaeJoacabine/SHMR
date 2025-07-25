@@ -28,4 +28,7 @@
     <string name="about">О программе</string>
     <string name="delete_account">Удалить счёт</string>
     <string name="cancel">Отмена</string>
+    <string name="error">Ошибка</string>
+    <string name="successful_change">Данные о счёте успешно изменены</string>
+    <string name="successful_deletion">Аккаунт успешно удалён</string>
 </resources>

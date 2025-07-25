@@ -19,10 +19,18 @@ import com.nikol.ui.R
 @Composable
 fun TransactionTopBar(title: String, onClick: () -> Unit) {
     CenterAlignedTopAppBar(
-        title = { Text(text = title + " ${stringResource(R.string.today)}") },
+        title = {
+            Text(
+                text = title + " ${stringResource(R.string.today)}",
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        },
         actions = {
             IconButton(onClick = onClick) {
-                Icon(painterResource(R.drawable.history), contentDescription = "history")
+                Icon(
+                    painterResource(R.drawable.history), contentDescription = "history",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -35,10 +43,18 @@ fun TransactionTopBar(title: String, onClick: () -> Unit) {
 @Composable
 fun AccountTopBar(onClick: () -> Unit) {
     CenterAlignedTopAppBar(
-        title = { Text(text = stringResource(R.string.my_account)) },
+        title = {
+            Text(
+                text = stringResource(R.string.my_account),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        },
         actions = {
             IconButton(onClick = onClick) {
-                Icon(Icons.Default.Create, contentDescription = "create")
+                Icon(
+                    Icons.Default.Create, contentDescription = "create",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -51,7 +67,12 @@ fun AccountTopBar(onClick: () -> Unit) {
 @Composable
 fun DefaultTopBar(text: String) {
     CenterAlignedTopAppBar(
-        title = { Text(text = text) },
+        title = {
+            Text(
+                text = text,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
         )

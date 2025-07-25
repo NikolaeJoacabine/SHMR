@@ -1,10 +1,14 @@
 package com.nikol.settings.di
 
+import com.nikol.settings.SettingsManager
 import com.nikol.di.FeatureDependencies
+import com.nikol.settings.screens.SettingsViewModel
+import com.nikol.settings.screens.pincode.PinCodeViewModel
 import dagger.Component
 
 @Component(
-    dependencies = [FeatureDependencies::class]
+    dependencies = [FeatureDependencies::class],
+    modules = [SettingsFeatureRepository::class]
 )
 @SettingsFeatureScope
 interface SettingsFeatureComponent {
@@ -15,4 +19,10 @@ interface SettingsFeatureComponent {
             dependencies: FeatureDependencies
         ): SettingsFeatureComponent
     }
+
+    fun settingsManager(): SettingsManager
+
+    fun viewModelFactory(): SettingsViewModel.Factory.Factory
+
+    fun viewModelSecyrFactory(): PinCodeViewModel.Factory
 }

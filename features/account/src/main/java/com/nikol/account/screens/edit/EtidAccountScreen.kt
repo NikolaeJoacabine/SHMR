@@ -45,6 +45,9 @@ internal fun EditAccountScreen(
 
     val showErrorDialog = remember { mutableStateOf(false) }
 
+    val successfulChange = stringResource(R.string.successful_change)
+    val successfulDeletion = stringResource(R.string.successful_deletion)
+
     val context = LocalContext.current
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
@@ -53,7 +56,7 @@ internal fun EditAccountScreen(
                 is EditScreenEffect.OnEditedAccount -> {
                     Toast.makeText(
                         context,
-                        "Данные о счёте успешно изменены",
+                        successfulChange,
                         Toast.LENGTH_SHORT
                     ).show()
                     onNavigateBack()
@@ -63,7 +66,7 @@ internal fun EditAccountScreen(
                 is EditScreenEffect.OnDeletedAccount -> {
                     Toast.makeText(
                         context,
-                        "Аккаунт успешно удалён",
+                        successfulDeletion,
                         Toast.LENGTH_SHORT
                     ).show()
                     onNavigateBack()

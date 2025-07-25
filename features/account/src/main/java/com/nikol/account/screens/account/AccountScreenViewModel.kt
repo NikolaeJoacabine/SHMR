@@ -13,6 +13,7 @@ import com.nikol.domain.state.AccountState
 import com.nikol.domain.useCase.GetAccountUseCase
 import com.nikol.domain.useCase.GetAllCurrencyUseCase
 import com.nikol.domain.useCase.GetCurrentCurrencyUseCase
+import com.nikol.domain.useCase.GetStatisticForAccount
 import com.nikol.domain.useCase.SaveCurrencyUseCase
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -40,7 +41,8 @@ internal class AccountScreenViewModel(
     private val getAccountUseCase: GetAccountUseCase,
     private val getAllCurrencyUseCase: GetAllCurrencyUseCase,
     private val saveCurrencyUseCase: SaveCurrencyUseCase,
-    private val getCurrentCurrencyUseCase: GetCurrentCurrencyUseCase
+    private val getCurrentCurrencyUseCase: GetCurrentCurrencyUseCase,
+    private val getStatisticForAccount: GetStatisticForAccount
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AccountScreensState>(AccountScreensState.Loading)
@@ -76,9 +78,11 @@ internal class AccountScreenViewModel(
                     } else {
                         val accounts = result.items.map { it.toUi() }
                         val currency = getCurrentCurrencyUseCase()
+                        val analysis = getStatisticForAccount()
                         _state.value = AccountScreensState.Content(
                             list = accounts,
-                            currentCurrency = currency
+                            currentCurrency = currency,
+                            listAnalysis = analysis
                         )
                     }
                 }
@@ -127,7 +131,8 @@ internal class AccountScreenViewModel(
         private val getAccountUseCase: GetAccountUseCase,
         private val getAllCurrencyUseCase: GetAllCurrencyUseCase,
         private val saveCurrencyUseCase: SaveCurrencyUseCase,
-        private val getCurrentCurrencyUseCase: GetCurrentCurrencyUseCase
+        private val getCurrentCurrencyUseCase: GetCurrentCurrencyUseCase,
+        private val getStatisticForAccount: GetStatisticForAccount
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
@@ -136,7 +141,8 @@ internal class AccountScreenViewModel(
                 getAccountUseCase,
                 getAllCurrencyUseCase,
                 saveCurrencyUseCase,
-                getCurrentCurrencyUseCase
+                getCurrentCurrencyUseCase,
+                getStatisticForAccount
             ) as T
         }
 
